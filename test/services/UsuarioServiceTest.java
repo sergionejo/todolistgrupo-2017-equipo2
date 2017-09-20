@@ -10,6 +10,7 @@ import models.Usuario;
 import models.UsuarioRepository;
 import models.JPAUsuarioRepository;
 import services.UsuarioService;
+import services.UsuarioServiceException;
 
 
 public class UsuarioServiceTest {
@@ -42,5 +43,25 @@ public class UsuarioServiceTest {
       assertEquals("luciaruiz", usuario.getLogin());
       assertEquals("lucia.ruiz@gmail.com", usuario.getEmail());
       assertEquals("123456", usuario.getPassword());
+   }
+
+   //Test 6: crearNuevoUsuarioLoginRepetidoLanzaExcepcion
+   @Test(expected = UsuarioServiceException.class)
+   public void crearNuevoUsuarioLoginRepetidoLanzaExcepcion(){
+      UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
+      UsuarioService usuarioService = new UsuarioService(repository);
+      //En la DB de prueba usuarios_database se ha cargado el usuario juangutierrez
+      Usuario usuario = usuarioService.creaUsuario("juangutierrez", "juan.gutierrez@mail.com", "123456");
+   }
+
+   //Test 7: findUsuarioPorId
+   @Test
+   public void findUsuarioPorId(){
+      UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
+      UsuarioService usuarioService = new UsuarioService(repository);
+      // EN la base de datos de prueba usuarios_dataset se ha cargado el usuario juangutierrez
+      Usuario usuario = usuarioService.findUsuarioPorLogin("juangutierrez");
+      assertNotNull(usuario);
+      assertEquals((Long) 1000L, usuario.getId());
    }
 }
