@@ -70,9 +70,9 @@ public class UsuarioServiceTest {
       Usuario usuario = usuarioService.creaUsuario("juangutierrez", "juan.gutierrez@mail.com", "123456");
    }
 
-   //Test 7: findUsuarioPorId
+   //Test 7: findUsuarioPorLogin
    @Test
-   public void findUsuarioPorId(){
+   public void findUsuarioPorLogin(){
       UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
       UsuarioService usuarioService = new UsuarioService(repository);
       // EN la base de datos de prueba usuarios_dataset se ha cargado el usuario juangutierrez
@@ -99,5 +99,16 @@ public class UsuarioServiceTest {
       // En la BD de prueba usuarios_dataset se ha cargado el usuario juangutierrez
       Usuario usuario = usuarioService.login("juan", "123456789");
       assertNull(usuario);
-}
+   }
+
+   //Test 10: findUsuarioPorId
+   @Test
+   public void findUsuarioPorId(){
+      UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
+      UsuarioService usuarioService = new UsuarioService(repository);
+      // En la BD de prueba usuarios_dataset se ha cargado el usuario juangutierrez
+      Usuario usuario = usuarioService.findUsuarioPorId(1000L);
+      assertNotNull(usuario);
+      assertEquals("juangutierrez", usuario.getLogin());
+   }
 }

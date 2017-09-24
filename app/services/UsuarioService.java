@@ -37,4 +37,8 @@ public class UsuarioService {
          return null;
       }
    }
+
+   public Usuario findUsuarioPorId(Long id){
+      return repository.findById(id);
+   }
 }
