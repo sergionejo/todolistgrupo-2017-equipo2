@@ -9,7 +9,7 @@ import play.data.FormFactory;
 
 import services.UsuarioService;
 import models.Usuario;
-
+import play.Logger;
 
 public class UsuarioController extends Controller {
 
@@ -58,6 +58,16 @@ public class UsuarioController extends Controller {
          return notFound(formLogin.render(form, "Login y contraseña no existentes."));
       }else{
          return ok(saludo.render("Logeado "+usuario.toString()));
+      }
+   }
+
+   public Result detalleUsuario(Long id){
+      Usuario usuario = usuarioService.findUsuarioPorId(id);
+      if (usuario == null){
+         return notFound("Usuario no encontrado");
+      }else {
+         Logger.debug("Encontrado usuario " + usuario.getId() + ": " + usuario.getLogin());
+         return ok(detalleUsuario.render(usuario));
       }
    }
 }
