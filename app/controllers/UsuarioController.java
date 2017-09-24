@@ -9,7 +9,7 @@ import play.data.FormFactory;
 
 import services.UsuarioService;
 import models.Usuario;
-
+import play.Logger;
 
 public class UsuarioController extends Controller {
 
@@ -57,7 +57,28 @@ public class UsuarioController extends Controller {
       if (usuario == null){
          return notFound(formLogin.render(form, "Login y contraseña no existentes."));
       }else{
+         session("connected", usuario.getId().toString());
          return ok(saludo.render("Logeado "+usuario.toString()));
+      }
+   }
+
+   public Result detalleUsuario(Long id){
+      Usuario usuario = usuarioService.findUsuarioPorId(id);
+      if (usuario == null){
+         return notFound("Usuario no encontrado");
+      }else {
+         Logger.debug("Encontrado usuario " + usuario.getId() + ": " + usuario.getLogin());
+         return ok(detalleUsuario.render(usuario));
+      }
+   }
+
+   public Result logout(){
+      String connectedUserStr = session("connected");
+      if (connectedUserStr != null){
+         session().remove("connected");
+         return ok(saludo.render("Adión usuario "+ connectedUserStr));
+      }else{
+         return ok(saludo.render("No hay ningún usuario conectado"));
       }
    }
 }
