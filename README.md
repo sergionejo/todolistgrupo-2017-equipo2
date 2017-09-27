@@ -41,4 +41,4 @@ y lo único que hay que hacer es escribir `run`:
 [mads-todolist-2017] $ run
 ```
 
-Podrás acceder a la aplicación web en el ordenador host en <http:localhost>.
+Podrás acceder a la aplicación web en el ordenador host en <http:localhost:8080>.
