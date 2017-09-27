@@ -66,20 +66,21 @@ public class UsuarioServiceTest {
    public void crearNuevoUsuarioLoginRepetidoLanzaExcepcion(){
       UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
       UsuarioService usuarioService = new UsuarioService(repository);
-      //En la DB de prueba usuarios_database se ha cargado el usuario juangutierrez
-      Usuario usuario = usuarioService.creaUsuario("juangutierrez", "juan.gutierrez@mail.com", "123456");
+      // En la BD de prueba usuarios_dataset se ha cargado el usuario juangutierrez
+      Usuario usuario = usuarioService.creaUsuario("juangutierrez", "juan.gutierrez@gmail.com", "123456");
    }
 
    //Test 7: findUsuarioPorLogin
    @Test
-   public void findUsuarioPorLogin(){
+   public void findUsuarioPorLogin() {
       UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
       UsuarioService usuarioService = new UsuarioService(repository);
-      // EN la base de datos de prueba usuarios_dataset se ha cargado el usuario juangutierrez
+      // En la BD de prueba usuarios_dataset se ha cargado el usuario juangutierrez
       Usuario usuario = usuarioService.findUsuarioPorLogin("juangutierrez");
       assertNotNull(usuario);
       assertEquals((Long) 1000L, usuario.getId());
    }
+
 
    //Test 8: loginUsuarioExistenteTest
    @Test
@@ -103,7 +104,7 @@ public class UsuarioServiceTest {
 
    //Test 10: findUsuarioPorId
    @Test
-   public void findUsuarioPorId(){
+   public void findUsuarioPorId() {
       UsuarioRepository repository = new JPAUsuarioRepository(jpaApi);
       UsuarioService usuarioService = new UsuarioService(repository);
       // En la BD de prueba usuarios_dataset se ha cargado el usuario juangutierrez
