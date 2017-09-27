@@ -72,11 +72,31 @@ public class TareaServiceTest {
       List<Tarea> tareas = tareaService.allTareasUsuario(1001L);
    }
 
-   // Test #21 nuevaTareaUsuario
+   // Test #21: nuevaTareaUsuario
    @Test
-   public void nuevaTareaUsuario(){
+   public void nuevaTareaUsuario() {
       TareaService tareaService = newTareaService();
-      tareaService.nuevaTarea(1000L, "Pagar el alquiler");
+      long idUsuario = 1000L;
+      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler");
       assertEquals(3, tareaService.allTareasUsuario(1000L).size());
+   }
+
+   // Test #22: modificación de tareas
+   @Test
+   public void modificacionTarea() {
+      TareaService tareaService = newTareaService();
+      long idTarea = 1000L;
+      tareaService.modificaTarea(idTarea, "Pagar el alquiler");
+      Tarea tarea = tareaService.obtenerTarea(idTarea);
+      assertEquals("Pagar el alquiler", tarea.getTitulo());
+   }
+
+   // Test #23: borrado tarea
+   @Test
+   public void borradoTarea() {
+      TareaService tareaService = newTareaService();
+      long idTarea = 1000L;
+      tareaService.borraTarea(idTarea);
+      assertNull(tareaService.obtenerTarea(idTarea));
    }
 }
