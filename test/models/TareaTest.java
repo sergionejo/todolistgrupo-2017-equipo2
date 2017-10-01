@@ -131,4 +131,44 @@ public class TareaTest {
       List<Tarea> tareas = repository.findAllTareas(idUsuario);
       assertEquals(2, tareas.size());
    }
+
+   // Test #24 testCrearTareaDescripcion
+   @Test
+   public void testCrearTareaDescripcion(){
+      Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+      Tarea tarea = new Tarea(usuario, "Práctica 1 de MADS","Ejemplo de contenido de la descripción.");
+
+      assertEquals("juangutierrez", tarea.getUsuario().getLogin());
+      assertEquals("juangutierrez@gmail.com", tarea.getUsuario().getEmail());
+      assertEquals("Práctica 1 de MADS", tarea.getTitulo());
+      assertEquals("Ejemplo de contenido de la descripción.", tarea.getDescripcion());
+   }
+
+   // Test #25: testAddTareaDescripcionJPARepositoryInsertsTareaDatabase
+   @Test
+   public void testAddTareaDescripcionJPARepositoryInsertsTareaDatabase() {
+      assertNotNull(jpaApi);
+      UsuarioRepository usuarioRepository = new JPAUsuarioRepository(jpaApi);
+      TareaRepository tareaRepository = new JPATareaRepository(jpaApi);
+      Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
+      usuario = usuarioRepository.add(usuario);
+      Tarea tarea = new Tarea(usuario,"Renovar DNI","Hace falta coger cita en la policía.");
+      tarea = tareaRepository.add(tarea);
+      Logger.info("Número de tarea: " + Long.toString(tarea.getId()));
+      assertNotNull(tarea.getId());
+      assertEquals("Renovar DNI", getTituloFromTareaDB(tarea.getId()));
+      assertEquals("Hace falta coger cita en la policía.", getDescripcionFromTareaDB(tarea.getId()));
+   }
+
+   private String getDescripcionFromTareaDB(Long tareaId) {
+      String titulo = db.withConnection(connection -> {
+         String selectStatement = "SELECT DESCRIPCION FROM TAREA WHERE ID = ? ";
+         PreparedStatement prepStmt = connection.prepareStatement(selectStatement);
+         prepStmt.setLong(1, tareaId);
+         ResultSet rs = prepStmt.executeQuery();
+         rs.next();
+         return rs.getString("DESCRIPCION");
+      });
+      return titulo;
+   }
 }
