@@ -108,4 +108,15 @@ public class TareaServiceTest {
       tareaService.nuevaTarea(idUsuario, "Pagar el alquiler","La factura a nombre Pepito Pérez, nº cuenta XXXXXXX");
       assertEquals(3, tareaService.allTareasUsuario(1000L).size());
    }
+
+   // Test #27: modificación de tareas
+   @Test
+   public void modificacionTareaDescripcion() {
+      TareaService tareaService = newTareaService();
+      long idTarea = 1000L;
+      tareaService.modificaTarea(idTarea, "Pagar el alquiler","La factura a nombre Pepito Pérez, nº cuenta XXXXXXX");
+      Tarea tarea = tareaService.obtenerTarea(idTarea);
+      assertEquals("Pagar el alquiler", tarea.getTitulo());
+      assertEquals("La factura a nombre Pepito Pérez, nº cuenta XXXXXXX", tarea.getDescripcion());
+   }
 }

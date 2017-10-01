@@ -84,6 +84,7 @@ public class GestionTareasController extends Controller {
             return ok(formModificacionTarea.render(tarea.getUsuario().getId(),
             tarea.getId(),
             tarea.getTitulo(),
+            tarea.getDescripcion(),
             ""));
          }
       }
@@ -93,7 +94,8 @@ public class GestionTareasController extends Controller {
    public Result grabaTareaModificada(Long idTarea) {
       DynamicForm requestData = formFactory.form().bindFromRequest();
       String nuevoTitulo = requestData.get("titulo");
-      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo);
+      String nuevaDescripcion = requestData.get("descripcion");
+      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo,nuevaDescripcion);
       return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
    }
 

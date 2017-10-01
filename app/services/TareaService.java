@@ -63,6 +63,16 @@ public class TareaService {
       return tarea;
    }
 
+   public Tarea modificaTarea(Long idTarea, String nuevoTitulo, String nuevaDescripcion) {
+      Tarea tarea = tareaRepository.findById(idTarea);
+      if (tarea == null)
+           throw new TareaServiceException("No existe tarea");
+      tarea.setTitulo(nuevoTitulo);
+      tarea.setDescripcion(nuevaDescripcion);
+      tarea = tareaRepository.update(tarea);
+      return tarea;
+   }
+
    public void borraTarea(Long idTarea) {
       Tarea tarea = tareaRepository.findById(idTarea);
       if (tarea == null)
