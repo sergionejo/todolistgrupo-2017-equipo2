@@ -8,6 +8,7 @@ public class Tarea {
    @GeneratedValue(strategy=GenerationType.AUTO)
    private Long id;
    private String titulo;
+   private String descripcion;
    // Relación muchos-a-uno entre tareas y usuario
    @ManyToOne
    // Nombre de la columna en la BD que guarda físicamente
@@ -20,6 +21,12 @@ public class Tarea {
    public Tarea(Usuario usuario, String titulo) {
       this.usuario = usuario;
       this.titulo = titulo;
+      this.descripcion = "";
+   }
+   public Tarea(Usuario usuario, String titulo, String descripcion) {
+      this.usuario = usuario;
+      this.titulo = titulo;
+      this.descripcion = descripcion;
    }
 
    // Getters y setters necesarios para JPA
@@ -38,6 +45,14 @@ public class Tarea {
 
    public void setTitulo(String titulo) {
       this.titulo = titulo;
+   }
+
+   public void setDescripcion(String descripcion){
+      this.descripcion = descripcion;
+   }
+
+   public String getDescripcion(){
+      return descripcion;
    }
 
    public Usuario getUsuario() {
