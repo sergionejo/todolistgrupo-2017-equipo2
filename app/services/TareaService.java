@@ -37,7 +37,16 @@ public class TareaService {
       if (usuario == null) {
          throw new TareaServiceException("Usuario no existente");
       }
-      Tarea tarea = new Tarea(usuario, titulo);
+      Tarea tarea = new Tarea(usuario, titulo,"");
+      return tareaRepository.add(tarea);
+   }
+
+   public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion) {
+      Usuario usuario = usuarioRepository.findById(idUsuario);
+      if (usuario == null) {
+         throw new TareaServiceException("Usuario no existente");
+      }
+      Tarea tarea = new Tarea(usuario, titulo, descripcion);
       return tareaRepository.add(tarea);
    }
 

@@ -99,4 +99,13 @@ public class TareaServiceTest {
       tareaService.borraTarea(idTarea);
       assertNull(tareaService.obtenerTarea(idTarea));
    }
+
+   // Test #26: nuevaTareaDescripcionUsuario
+   @Test
+   public void nuevaTareaDescripcionUsuario() {
+      TareaService tareaService = newTareaService();
+      long idUsuario = 1000L;
+      tareaService.nuevaTarea(idUsuario, "Pagar el alquiler","La factura a nombre Pepito Pérez, nº cuenta XXXXXXX");
+      assertEquals(3, tareaService.allTareasUsuario(1000L).size());
+   }
 }
