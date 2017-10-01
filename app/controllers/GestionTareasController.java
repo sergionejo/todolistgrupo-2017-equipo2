@@ -50,7 +50,7 @@ public class GestionTareasController extends Controller {
             return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), "Hay errores en el formulario"));
          }
          Tarea tarea = tareaForm.get();
-         tareaService.nuevaTarea(idUsuario, tarea.getTitulo());
+         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(),tarea.getDescripcion());
          flash("aviso", "La tarea se ha grabado correctamente");
          return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
       }
@@ -84,6 +84,7 @@ public class GestionTareasController extends Controller {
             return ok(formModificacionTarea.render(tarea.getUsuario().getId(),
             tarea.getId(),
             tarea.getTitulo(),
+            tarea.getDescripcion(),
             ""));
          }
       }
@@ -93,7 +94,8 @@ public class GestionTareasController extends Controller {
    public Result grabaTareaModificada(Long idTarea) {
       DynamicForm requestData = formFactory.form().bindFromRequest();
       String nuevoTitulo = requestData.get("titulo");
-      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo);
+      String nuevaDescripcion = requestData.get("descripcion");
+      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo,nuevaDescripcion);
       return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
    }
 
