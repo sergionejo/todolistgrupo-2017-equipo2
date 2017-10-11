@@ -20,7 +20,7 @@ public class Usuario {
    private String apellidos;
    @Temporal(TemporalType.DATE)
    private Date fechaNacimiento;
-   @OneToMany(mappedBy="usuario")
+   @OneToMany(mappedBy="usuario", fetch=FetchType.EAGER)
    public List<Tarea> tareas = new ArrayList<Tarea>();
 
    // Un constructor vacío necesario para JPA
