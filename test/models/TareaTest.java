@@ -32,7 +32,7 @@ import models.JPATareaRepository;
 public class TareaTest {
    static Database db;
    static private Injector injector;
-   static JPAApi jpaApi;
+
    // Se ejecuta sólo una vez, al principio de todos los tests
    @BeforeClass
    static public void initApplication() {

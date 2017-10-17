@@ -1,9 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import play.db.Database;
-import play.db.Databases;
-
 import play.db.jpa.*;
 
 import org.dbunit.*;
@@ -12,28 +9,21 @@ import org.dbunit.dataset.xml.*;
 import org.dbunit.operation.*;
 import java.io.FileInputStream;
 
-import models.Usuario;
-import models.UsuarioRepository;
-import models.JPAUsuarioRepository;
-
-import services.UsuarioService;
-import services.UsuarioServiceException;
-
 import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
 import play.Environment;
 
+import play.db.jpa.JPAApi;
+
+import models.Usuario;
+import models.UsuarioRepository;
+
+import services.UsuarioService;
+import services.UsuarioServiceException;
 
 public class UsuarioServiceTest {
-   static Database db;
-   static JPAApi jpaApi;
    static private Injector injector;
-
-
-   private UsuarioService newUsuarioService() {
-      return injector.instanceOf(UsuarioService.class);
-   }
 
    // Se ejecuta sólo una vez, al principio de todos los tests
    @BeforeClass
@@ -43,6 +33,10 @@ public class UsuarioServiceTest {
       injector = guiceApplicationBuilder.injector();
       // Instanciamos un JPAApi para que inicializar JPA
       injector.instanceOf(JPAApi.class);
+   }
+
+   private UsuarioService newUsuarioService() {
+      return injector.instanceOf(UsuarioService.class);
    }
 
    @Before
