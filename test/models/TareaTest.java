@@ -169,7 +169,7 @@ public class TareaTest {
 
    private String getDescripcionFromTareaDB(Long tareaId) {
       String titulo = db.withConnection(connection -> {
-         String selectStatement = "SELECT DESCRIPCION FROM TAREA WHERE ID = ? ";
+         String selectStatement = "SELECT DESCRIPCION FROM Tarea WHERE ID = ? ";
          PreparedStatement prepStmt = connection.prepareStatement(selectStatement);
          prepStmt.setLong(1, tareaId);
          ResultSet rs = prepStmt.executeQuery();
