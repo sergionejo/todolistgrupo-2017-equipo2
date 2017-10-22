@@ -16,17 +16,17 @@ public class Tablero {
    private String nombre;
    @ManyToOne
    // Nombre de la columna en la BD que guarda físicamente
-   // el ID del usuario con el que está asociado un tablero
-   @JoinColumn(name="usuarioId")
-   public Usuario usuario;
+   // el ID del usuario (administrador) con el que está asociado un tablero
+   @JoinColumn(name="administradorId")
+   public Usuario administrador;
 
 
    // Un constructor vacío necesario para JPA
    public Tablero() {}
 
    // El constructor principal con los campos obligatorios
-   public Tablero(Usuario usuario, String nombre) {
-      this.usuario = usuario;
+   public Tablero(Usuario administrador, String nombre) {
+      this.administrador = administrador;
       this.nombre = nombre;
    }
 
@@ -48,20 +48,17 @@ public class Tablero {
       this.nombre = nombre;
    }
 
-   public Usuario getUsuario() {
-      return usuario;
+   public Usuario getAdministrador() {
+      return administrador;
    }
 
-   public void setUsuario(Usuario usuario) {
-      this.usuario = usuario;
+   public void setAdministrador(Usuario administrador) {
+      this.administrador = administrador;
    }
 
    public String toString() {
-      return String.format("Tablero id: %s nombre: %s usuario: %s",
-                      id, nombre, usuario.toString());
-   }
-   public Usuario getAdministrador(){
-       return getUsuario();
+      return String.format("Tablero id: %s nombre: %s administrador: %s",
+                      id, nombre, administrador.toString());
    }
 
    @Override
@@ -84,9 +81,9 @@ public class Tablero {
          if (nombre == null) {
             if (other.nombre != null) return false;
          } else if (!nombre.equals(other.nombre)) return false;
-         if (usuario == null) {
-            if (other.usuario != null) return false;
-            else if (!usuario.equals(other.usuario)) return false;
+         if (administrador == null) {
+            if (other.administrador != null) return false;
+            else if (!administrador.equals(other.administrador)) return false;
          }
       }
       return true;
