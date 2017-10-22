@@ -60,6 +60,9 @@ public class Tablero {
       return String.format("Tablero id: %s nombre: %s usuario: %s",
                       id, nombre, usuario.toString());
    }
+   public Usuario getAdministrador(){
+       return getUsuario();
+   }
 
    @Override
    public int hashCode() {
