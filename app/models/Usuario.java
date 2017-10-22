@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
  
 import java.util.Date;
 import javax.persistence.*;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 public class Usuario {
@@ -21,7 +21,11 @@ public class Usuario {
    @Temporal(TemporalType.DATE)
    private Date fechaNacimiento;
    @OneToMany(mappedBy="usuario", fetch=FetchType.EAGER)
-   public List<Tarea> tareas = new ArrayList<Tarea>();
+   public Set<Tarea> tareas = new HashSet<Tarea>();
+   @OneToMany(mappedBy="administrador", fetch=FetchType.EAGER)
+   private Set<Tablero> administrados = new HashSet<Tablero>();
+   @ManyToMany(mappedBy="participantes", fetch=FetchType.EAGER)
+   private Set<Tablero> tableros = new HashSet<Tablero>();
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}
@@ -90,6 +94,22 @@ public class Usuario {
       this.fechaNacimiento = fechaNacimiento;
    }
 
+   public Set<Tablero> getAdministrados() {
+      return administrados;
+   }
+
+   public void setAdministrados(Set<Tablero> administrados) {
+      this.administrados = administrados;
+   }
+
+   public Set<Tablero> getTableros() {
+      return tableros;
+   }
+
+   public void setTableros(Set<Tablero> tableros) {
+      this.tableros = tableros;
+   }
+
    public String toString() {
       String fechaStr = null;
       if (fechaNacimiento != null) {
@@ -100,10 +120,10 @@ public class Usuario {
                       "apellidos: %s e-mail: %s fechaNacimiento: %s",
                       id, login, password, nombre, apellidos, email, fechaNacimiento);
    }
-   public List<Tarea> getTareas(){
+   public Set<Tarea> getTareas(){
       return tareas;
    }
-   public void setTareas(List<Tarea> tareas){
+   public void setTareas(Set<Tarea> tareas){
       this.tareas = tareas;
    }
 
@@ -122,7 +142,7 @@ public class Usuario {
       Usuario other = (Usuario) obj;
       // Si tenemos los ID, comparamos por ID
       if (id != null && other.id != null)
-      return (id == other.id);
+        return ((long) id == (long) other.id);
       // sino comparamos por campos obligatorios
       else {
          if (login == null) {
