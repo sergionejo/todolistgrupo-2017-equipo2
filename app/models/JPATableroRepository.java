@@ -35,4 +35,11 @@ public class JPATableroRepository implements TableroRepository {
           return entityManager.find(Tablero.class, idTablero);
        });
     }
+    public void delete(Long idTablero) {
+      jpaApi.withTransaction(() -> {
+         EntityManager entityManager = jpaApi.em();
+         Tablero tareaBD = entityManager.getReference(Tablero.class, idTablero);
+         entityManager.remove(tareaBD);
+      });
+   }
 }
