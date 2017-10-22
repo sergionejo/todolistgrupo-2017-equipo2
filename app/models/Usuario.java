@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
  
 import java.util.Date;
 import javax.persistence.*;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 public class Usuario {
@@ -21,7 +21,7 @@ public class Usuario {
    @Temporal(TemporalType.DATE)
    private Date fechaNacimiento;
    @OneToMany(mappedBy="usuario", fetch=FetchType.EAGER)
-   public List<Tarea> tareas = new ArrayList<Tarea>();
+   public Set<Tarea> tareas = new HashSet<Tarea>();
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}
@@ -100,10 +100,10 @@ public class Usuario {
                       "apellidos: %s e-mail: %s fechaNacimiento: %s",
                       id, login, password, nombre, apellidos, email, fechaNacimiento);
    }
-   public List<Tarea> getTareas(){
+   public Set<Tarea> getTareas(){
       return tareas;
    }
-   public void setTareas(List<Tarea> tareas){
+   public void setTareas(Set<Tarea> tareas){
       this.tareas = tareas;
    }
 
