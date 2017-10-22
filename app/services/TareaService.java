@@ -2,8 +2,11 @@ package services;
 
 import javax.inject.*;
 
+import java.util.Set;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.HashSet;
 
 import models.Usuario;
 import models.UsuarioRepository;
@@ -28,9 +31,11 @@ public class TareaService {
       if (usuario == null) {
          throw new TareaServiceException("Usuario no existente");
       }
-      List<Tarea> tareas = usuario.getTareas();
-      Collections.sort(tareas, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
-      return tareas;
+      Set<Tarea> tareas = usuario.getTareas();
+      List<Tarea> tareasList = new ArrayList<Tarea>();
+      tareasList.addAll(tareas);
+      Collections.sort(tareasList, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+      return tareasList;
    }
 
    public Tarea nuevaTarea(Long idUsuario, String titulo) {
