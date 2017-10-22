@@ -22,6 +22,8 @@ public class Usuario {
    private Date fechaNacimiento;
    @OneToMany(mappedBy="usuario", fetch=FetchType.EAGER)
    public Set<Tarea> tareas = new HashSet<Tarea>();
+   @OneToMany(mappedBy="administrador", fetch=FetchType.EAGER)
+   private Set<Tablero> administrados = new HashSet<Tablero>();
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}
@@ -88,6 +90,14 @@ public class Usuario {
 
    public void setFechaNacimiento(Date fechaNacimiento) {
       this.fechaNacimiento = fechaNacimiento;
+   }
+
+   public Set<Tablero> getAdministrados() {
+      return administrados;
+   }
+
+   public void setAdministrados(Set<Tablero> administrados) {
+      this.administrados = administrados;
    }
 
    public String toString() {
