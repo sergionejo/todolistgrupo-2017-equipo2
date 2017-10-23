@@ -1,0 +1,22 @@
+@(idUsuario: Long, idTablero: Long, nombre: String, mensaje: String)
+@main("Modificar Tablero") {
+   @if(mensaje != "") {
+      <div class="alert alert-danger">
+         @mensaje
+      </div>
+   }
+   <h1>Modificar tablero</h1>
+   @helper.form(action = routes.TableroController.grabaTableroModificado(idTablero)) {
+      <div class="form-group">
+      <fieldset>
+         <legend>Tablero</legend>
+         Nombre:  <input type="text" size=70 name="nombre" value= "@nombre" class="form-control">
+      </fieldset>
+      <p/>
+      </div>
+      <p>
+         <input type="submit" class="btn btn-primary" value="Guardar">
+         <a class="btn btn-warning" href="@routes.TableroController.listaTableros(idUsuario)">Cancelar</a>
+      </p>
+   }
+}
