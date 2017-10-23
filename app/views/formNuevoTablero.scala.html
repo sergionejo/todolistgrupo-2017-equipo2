@@ -1,0 +1,20 @@
+@(usuario: Usuario, tableroForm: Form[Tablero], mensaje: String)
+@main("Nuevo tablero") {
+    @if(mensaje != "") {
+        <div class="alert alert-danger">
+            @mensaje
+        </div>
+    }
+    <h1>Nuevo tablero para @usuario.getLogin()</h1>
+    @helper.form(action = routes.TableroController.creaNuevoTablero(usuario.getId())) {
+        <div class="form-group">
+        <fieldset>
+            <legend>Nuevo tablero</legend>
+            @helper.inputText(tableroForm("nombre"), '_label -> "Nombre", 'size -> 70 ,'class-> "form-control")
+        </fieldset>
+        </div>
+        <p>
+           <input type="submit" class="btn btn-primary" value="Guardar">
+        </p>
+    }
+}
