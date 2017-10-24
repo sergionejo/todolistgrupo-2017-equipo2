@@ -22,9 +22,9 @@ public class Tablero {
    // el ID del usuario (administrador) con el que está asociado un tablero
    @JoinColumn(name="administradorId")
    public Usuario administrador;
-   @ManyToMany(fetch=FetchType.EAGER)
+   @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
    @JoinTable(name="Persona_Tablero")
-   private Set<Usuario> participantes = new HashSet<Usuario>();   
+   private Set<Usuario> participantes = new HashSet<Usuario>();
 
 
    // Un constructor vacío necesario para JPA
@@ -73,6 +73,10 @@ public class Tablero {
  
     public void setParticipantes(Set<Usuario> participantes) {
        this.participantes = participantes;
+    }
+
+    public boolean addParticipante(Usuario usuario){
+        return participantes.add(usuario);
     }
  
     @Override

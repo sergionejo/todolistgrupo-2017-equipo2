@@ -48,4 +48,10 @@ public class JPAUsuarioRepository implements UsuarioRepository {
          }
       });
    }
+   public Usuario update(Usuario usuario) {
+       return jpaApi.withTransaction(entityManager -> {
+          Usuario actualizado = entityManager.merge(usuario);
+          return actualizado;
+       });
+    }
 }
