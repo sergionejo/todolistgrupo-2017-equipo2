@@ -84,7 +84,13 @@ public class ApuntarseylistadoTest {
     @Test
     public void getAllTablerosNoUsuario() {
         TableroService tableroService = newTableroService();
+        UsuarioService usuarioService = newUsuarioService();
         Tablero tablero1 = tableroService.nuevoTablero(1001L, "Tablero 3");
+        assertEquals(3,tableroService.allTableros().size());
         assertEquals(2,tableroService.allTablerosNoUsuario(1001L).size());
+        Usuario participante = usuarioService.findUsuarioPorId(1000L);
+        assertTrue(tablero1.addParticipante(participante));
+        tableroService.updateTablero(tablero1);
+        assertEquals(0,tableroService.allTablerosNoUsuario(1000L).size());
     }
 }
