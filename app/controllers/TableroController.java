@@ -71,6 +71,16 @@ public class TableroController extends Controller {
          return ok(listaTableros.render(tablerosAdministrados,tablerosParticipados,tablerosResto,usuario,aviso));
       }
    }
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result detalleTablero(Long idTablero) {
+        String connectedUserStr = session("connected");
+        Long connectedUser =  Long.valueOf(connectedUserStr);
+        String aviso = flash("aviso");
+        Tablero tablero = tableroService.obtenerTablero(idTablero);
+        List<Usuario> participantes = tableroService.allParticipantesTablero(tablero.getId());
+        Usuario administrador = tablero.getAdministrador();
+        return ok(detalleTablero.render(tablero,administrador,participantes,aviso));
+    }
 
     @Security.Authenticated(ActionAuthenticator.class)
     public Result seguirTablero(Long idUsuario, Long idTablero) {
