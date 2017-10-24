@@ -53,7 +53,7 @@ public class DescripciontableroTest {
    }
 
     @Test
-    public void checkParticipantes() {
+    public void checkParticipantesTablero() {
         TableroService tableroService = newTableroService();
         UsuarioService usuarioService = newUsuarioService();
         Usuario administrador = usuarioService.findUsuarioPorId(1000L);
@@ -71,11 +71,20 @@ public class DescripciontableroTest {
     }
 
     @Test
-    public void checkAdministrador() {
+    public void checkAdministradorTablero() {
         TableroService tableroService = newTableroService();
         UsuarioService usuarioService = newUsuarioService();
         Usuario administrador = usuarioService.findUsuarioPorId(1000L);
         Tablero tablero1 = tableroService.nuevoTablero(administrador.getId(), "Tablero TEST");
         assertEquals(administrador,tableroService.administradorTablero(tablero1.getId()));
+    }
+
+    @Test
+    public void checkNombreTablero() {
+        TableroService tableroService = newTableroService();
+        UsuarioService usuarioService = newUsuarioService();
+        Usuario administrador = usuarioService.findUsuarioPorId(1000L);
+        Tablero tablero1 = tableroService.nuevoTablero(administrador.getId(), "Tablero TEST");
+        assertEquals("Tablero TEST",tableroService.obtenerTablero(tablero1.getId()).getNombre());
     }
 }
