@@ -78,6 +78,10 @@ public class Tablero {
     public boolean addParticipante(Usuario usuario){
         return participantes.add(usuario);
     }
+
+    public boolean removeParticipante(Usuario usuario){
+        return participantes.remove(usuario);
+    }
  
     @Override
     public int hashCode() {

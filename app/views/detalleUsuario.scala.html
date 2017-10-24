@@ -11,6 +11,8 @@
 				@usuario.getFechaNacimiento().format("dd-MM-yyyy")
 			}</li>
 	</ul>
-	<div><a href="usuarios/@usuario.getId()/tareas" class="btn btn-sm">Ver tareas</a></div>
-	<div><a href="usuarios/@usuario.getId()/tableros" class="btn btn-sm">Ver tableros</a></div>
+	<div class="container">
+		<div class="col-sm-3"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())" class="btn btn-info">Ver tareas</a></div>
+		<div class="col-sm-3"><a href="@routes.TableroController.listaTableros(usuario.getId())" class="btn btn-info">Ver tableros</a></div>
+	</div>
 }

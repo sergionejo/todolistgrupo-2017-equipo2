@@ -1,4 +1,4 @@
-@(tableros: List[Tablero], usuario: Usuario, mensaje: String)
+@(administrados: List[Tablero], participados: List[Tablero], resto: List[Tablero], usuario: Usuario, mensaje: String)
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -15,14 +15,14 @@
 }
 @main("Tableros del usuario @usuario.getLogin()", scripts) {
 
-    <h2> Listado de tableros de @usuario.getLogin()</h2>
+    <h2> Listado de tableros administrados por @usuario.getLogin()</h2>
 
     <table class="table table-striped">
         <tr>
             <th>Tableros</th>
             <th>Acción</th>
         </tr>
-    @for(tablero <- tableros) {
+    @for(tablero <- administrados) {
         <tr>
             <td>@tablero.getNombre()</td>
             <td><a href="@routes.TableroController.formularioEditaTablero(tablero.getId())">
@@ -39,11 +39,52 @@
           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
       </tr>
 
-  </table>
+    </table>
 
-  @if(mensaje != null) {
-      <div class="alert alert-success">
-          @mensaje
-      </div>
-  }
+    @if(mensaje != null) {
+        <div class="alert alert-success">
+            @mensaje
+        </div>
+    }
+  <h2> Listado de tableros participados por @usuario.getLogin()</h2>
+  
+    <table class="table table-striped">
+        <tr>
+            <th>Tableros</th>
+            <th>Acción</th>
+        </tr>
+    @for(tablero <- participados) {
+        <tr>
+            <td>@tablero.getNombre()</td>
+            <td><a onmouseover="" style="cursor: pointer;"
+                onclick="del('@routes.TableroController.noSeguirTablero(usuario.getId(),tablero.getId())')">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></a></td>
+        </tr>
+    }
+    </table>
+    @if(mensaje != null) {
+        <div class="alert alert-success">
+            @mensaje
+        </div>
+    }
+
+    <h2> Tableros que le podrían interesar al usuario @usuario.getLogin()</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Tableros</th>
+            <th>Acción</th>
+        </tr>
+    @for(tablero <- resto) {
+        <tr>
+            <td>@tablero.getNombre()</td>
+            <td><a href="@routes.TableroController.seguirTablero(usuario.getId(),tablero.getId())">
+                <span class="glyphicon glyphicon-eye-open"></span></td>
+        </tr>
+        }
+    </table>
+    @if(mensaje != null) {
+        <div class="alert alert-success">
+            @mensaje
+        </div>
+    }   
 }
