@@ -80,4 +80,11 @@ public class ApuntarseylistadoTest {
         Tablero tablero1 = tableroService.nuevoTablero(1000L, "Tablero 3");
         assertEquals(3,tableroService.allTableros().size());
     }
+
+    @Test
+    public void getAllTablerosNoUsuario() {
+        TableroService tableroService = newTableroService();
+        Tablero tablero1 = tableroService.nuevoTablero(1001L, "Tablero 3");
+        assertEquals(2,tableroService.allTablerosNoUsuario(1001L).size());
+    }
 }

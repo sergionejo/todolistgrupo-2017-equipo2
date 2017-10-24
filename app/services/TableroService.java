@@ -52,6 +52,19 @@ public class TableroService {
       return tablerosList;
    }
 
+   public List<Tablero> allTablerosNoUsuario(Long idUsuario) {
+      Usuario administrador = usuarioRepository.findById(idUsuario);
+      if (administrador == null) {
+         throw new TableroServiceException("Usuario no existente");
+      }
+      List<Tablero> administrados = allTablerosUsuario(idUsuario);
+      List<Tablero> participados = allTablerosUsuarioParticipados(idUsuario);
+      List<Tablero> tableros = allTableros();
+      tableros.removeAll(administrados);
+      tableros.removeAll(participados);
+      return tableros;
+   }
+
    public Tablero nuevoTablero(Long idUsuario, String nombre) {
       Usuario administrador = usuarioRepository.findById(idUsuario);
       if (administrador == null) {
