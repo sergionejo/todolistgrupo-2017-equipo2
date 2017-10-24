@@ -69,4 +69,13 @@ public class DescripciontableroTest {
         tablero1 = tableroService.updateTablero(tablero1);
         assertEquals(4,tableroService.allParticipantesTablero(tablero1.getId()).size());
     }
+
+    @Test
+    public void checkAdministrador() {
+        TableroService tableroService = newTableroService();
+        UsuarioService usuarioService = newUsuarioService();
+        Usuario administrador = usuarioService.findUsuarioPorId(1000L);
+        Tablero tablero1 = tableroService.nuevoTablero(administrador.getId(), "Tablero TEST");
+        assertEquals(administrador,tableroService.administradorTablero(tablero1.getId()));
+    }
 }
