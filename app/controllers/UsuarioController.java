@@ -64,7 +64,8 @@ public class UsuarioController extends Controller {
          // la sesión de Play
          // https://www.playframework.com/documentation/2.5.x/JavaSessionFlash
          session("connected", usuario.getId().toString());
-         return redirect(controllers.routes.GestionTareasController.listaTareas(usuario.getId()));
+         //return redirect(controllers.routes.GestionTareasController.listaTareas(usuario.getId()));
+         return redirect(controllers.routes.UsuarioController.detalleUsuario(usuario.getId()));
       }
    }
 
@@ -81,7 +82,7 @@ public class UsuarioController extends Controller {
    public Result detalleUsuario(Long id) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (connectedUser != id) {
+      if (!connectedUser.equals(id)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Usuario usuario = usuarioService.findUsuarioPorId(id);

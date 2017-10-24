@@ -29,7 +29,7 @@ public class TableroController extends Controller {
    public Result formularioNuevoTablero(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (connectedUser != idUsuario) {
+      if (!connectedUser.equals(idUsuario)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
@@ -41,7 +41,7 @@ public class TableroController extends Controller {
    public Result creaNuevoTablero(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (connectedUser != idUsuario) {
+      if (!connectedUser.equals(idUsuario)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Form<Tablero> tableroForm = formFactory.form(Tablero.class).bindFromRequest();
@@ -60,15 +60,49 @@ public class TableroController extends Controller {
    public Result listaTableros(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (connectedUser != idUsuario) {
+      if (!connectedUser.equals(idUsuario)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          String aviso = flash("aviso");
          Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-         List<Tablero> tableros = tableroService.allTablerosUsuario(idUsuario);
-         return ok(listaTableros.render(tableros, usuario, aviso));
+         List<Tablero> tablerosAdministrados = tableroService.allTablerosUsuario(idUsuario);
+         List<Tablero> tablerosParticipados = tableroService.allTablerosUsuarioParticipados(idUsuario);
+         List<Tablero> tablerosResto = tableroService.allTablerosNoUsuario(idUsuario);
+         return ok(listaTableros.render(tablerosAdministrados,tablerosParticipados,tablerosResto,usuario,aviso));
       }
    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result seguirTablero(Long idUsuario, Long idTablero) {
+        String connectedUserStr = session("connected");
+        Long connectedUser =  Long.valueOf(connectedUserStr);
+        if (!connectedUser.equals(idUsuario)) {
+            return unauthorized("Lo siento, no estás autorizado");
+        } else {
+            String aviso = flash("aviso");
+            Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+            Tablero tablero = tableroService.obtenerTablero(idTablero);
+            tablero.addParticipante(usuario);
+            tablero = tableroService.updateTablero(tablero);
+            return redirect(controllers.routes.TableroController.listaTableros(idUsuario));
+        }
+    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result noSeguirTablero(Long idUsuario, Long idTablero) {
+        String connectedUserStr = session("connected");
+        Long connectedUser =  Long.valueOf(connectedUserStr);
+        if (!connectedUser.equals(idUsuario)) {
+            return unauthorized("Lo siento, no estás autorizado");
+        } else {
+            String aviso = flash("aviso");
+            Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+            Tablero tablero = tableroService.obtenerTablero(idTablero);
+            tablero.removeParticipante(usuario);
+            tablero = tableroService.updateTablero(tablero);
+            return redirect(controllers.routes.TableroController.listaTableros(idUsuario));
+        }
+    }
 
    @Security.Authenticated(ActionAuthenticator.class)
    public Result formularioEditaTablero(Long idTablero) {
@@ -78,7 +112,7 @@ public class TableroController extends Controller {
       } else {
          String connectedUserStr = session("connected");
          Long connectedUser =  Long.valueOf(connectedUserStr);
-         if (connectedUser != tablero.getAdministrador().getId()) {
+         if (!connectedUser.equals(tablero.getAdministrador().getId())) {
             return unauthorized("Lo siento, no estás autorizado");
          } else {
             return ok(formModificacionTablero.render(tablero.getAdministrador().getId(),
