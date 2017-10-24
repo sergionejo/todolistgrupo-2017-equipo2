@@ -15,7 +15,7 @@
 }
 @main("Tareas del usuario @usuario.getLogin()", scripts) {
 
-    <h2> Listado de tareas de @usuario.getLogin()</h2>
+    <h2> Listado de tareas de <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">@usuario.getLogin()</a></h2>
 
     <table class="table table-striped">
         <tr>
