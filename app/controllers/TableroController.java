@@ -60,7 +60,7 @@ public class TableroController extends Controller {
    public Result listaTableros(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (!connectedUser.equals(idUsuarioid)) {
+      if (!connectedUser.equals(idUsuario)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          String aviso = flash("aviso");
