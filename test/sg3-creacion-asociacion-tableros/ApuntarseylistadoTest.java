@@ -59,6 +59,18 @@ public class ApuntarseylistadoTest {
         Usuario administrador = usuarioService.findUsuarioPorId(1000L);
         Usuario participante = usuarioService.findUsuarioPorId(1001L);
         Tablero tablero1 = new Tablero(administrador, "Tablero 1");
-        assertTrue(participante.participar(tablero1));
+        assertTrue(tablero1.addParticipante(participante));
+    }
+
+    @Test
+    public void checkUsuarioParticipante() {
+        TableroService tableroService = newTableroService();
+        UsuarioService usuarioService = newUsuarioService();
+        Usuario administrador = usuarioService.findUsuarioPorId(1000L);
+        Usuario participante = usuarioService.findUsuarioPorId(1001L);
+        Tablero tablero1 = new Tablero(administrador, "Tablero 1");
+        assertTrue(tablero1.addParticipante(participante));
+        tableroService.updateTablero(tablero1);
+        assertEquals(1,tableroService.allTablerosUsuarioParticipados(participante.getId()).size());
     }
 }

@@ -69,6 +69,11 @@ public class TableroService {
       return tablero;
    }
 
+    public Tablero updateTablero(Tablero tableroActualizado){
+        Tablero tablero = tableroRepository.update(tableroActualizado);
+        return tablero;
+    }
+
    public void borraTablero(Long idTablero) {
       Tablero tablero = tableroRepository.findById(idTablero);
       if (tablero == null)
