@@ -109,7 +109,9 @@ public class Usuario {
    public void setTableros(Set<Tablero> tableros) {
       this.tableros = tableros;
    }
-
+   public boolean participar(Tablero tablero){
+     return tableros.add(tablero);
+   }
    public String toString() {
       String fechaStr = null;
       if (fechaNacimiento != null) {

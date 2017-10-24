@@ -24,7 +24,7 @@ public class Tablero {
    public Usuario administrador;
    @ManyToMany(fetch=FetchType.EAGER)
    @JoinTable(name="Persona_Tablero")
-   private Set<Usuario> participantes = new HashSet<Usuario>();   
+   private Set<Usuario> participantes = new HashSet<Usuario>();
 
 
    // Un constructor vacío necesario para JPA

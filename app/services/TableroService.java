@@ -36,6 +36,17 @@ public class TableroService {
       return tablerosList;
    }
 
+   public List<Tablero> allTablerosUsuarioParticipados(Long idUsuario) {
+      Usuario administrador = usuarioRepository.findById(idUsuario);
+      if (administrador == null) {
+         throw new TableroServiceException("Usuario no existente");
+      }
+      Set<Tablero> tableros = administrador.getTableros();
+      List<Tablero> tablerosList = new ArrayList<Tablero>();
+      tablerosList.addAll(tableros);
+      return tablerosList;
+   }
+
    public Tablero nuevoTablero(Long idUsuario, String nombre) {
       Usuario administrador = usuarioRepository.findById(idUsuario);
       if (administrador == null) {
