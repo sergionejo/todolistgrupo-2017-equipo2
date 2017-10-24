@@ -73,4 +73,11 @@ public class ApuntarseylistadoTest {
         tableroService.updateTablero(tablero1);
         assertEquals(1,tableroService.allTablerosUsuarioParticipados(participante.getId()).size());
     }
+
+    @Test
+    public void getAllTableros() {
+        TableroService tableroService = newTableroService();
+        Tablero tablero1 = tableroService.nuevoTablero(1000L, "Tablero 3");
+        assertEquals(3,tableroService.allTableros().size());
+    }
 }

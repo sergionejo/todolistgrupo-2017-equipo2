@@ -23,6 +23,11 @@ public class TableroService {
       this.tableroRepository = tableroRepository;
    }
 
+    public List<Tablero> allTableros(){
+        List<Tablero> tablerosList = tableroRepository.findAll();
+        return tablerosList;
+    }
+
    // Devuelve la lista de tableros de un usuario, ordenadas por su id
    // (equivalente al orden de creación)
    public List<Tablero> allTablerosUsuario(Long idUsuario) {

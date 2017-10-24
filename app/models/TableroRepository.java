@@ -9,5 +9,6 @@ public interface TableroRepository {
     public Tablero add(Tablero tablero);
     public Tablero update(Tablero tablero);
     public Tablero findById(Long idTablero);
+    public List<Tablero> findAll();
     public void delete(Long idTablero);
 }
