@@ -29,7 +29,7 @@ public class GestionTareasController extends Controller {
    public Result formularioNuevaTarea(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (!connectedUser.equals(id)) {
+      if (!connectedUser.equals(idUsuario)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
@@ -41,7 +41,7 @@ public class GestionTareasController extends Controller {
    public Result creaNuevaTarea(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (!connectedUser.equals(id)) {
+      if (!connectedUser.equals(idUsuario)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Form<Tarea> tareaForm = formFactory.form(Tarea.class).bindFromRequest();
@@ -60,7 +60,7 @@ public class GestionTareasController extends Controller {
    public Result listaTareas(Long idUsuario) {
       String connectedUserStr = session("connected");
       Long connectedUser =  Long.valueOf(connectedUserStr);
-      if (!connectedUser.equals(id)) {
+      if (!connectedUser.equals(idUsuario)) {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          String aviso = flash("aviso");
