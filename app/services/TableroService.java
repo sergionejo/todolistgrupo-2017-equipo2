@@ -98,4 +98,23 @@ public class TableroService {
            throw new TableroServiceException("No existe tablero");
       tableroRepository.delete(idTablero);
    }
+
+   public List<Usuario> allParticipantesTablero(Long idTablero){
+       Tablero tablero = tableroRepository.findById(idTablero);
+      if (tablero == null) {
+         throw new UsuarioServiceException("Tablero no existente");
+      }
+      Set<Usuario> participantes = tablero.getParticipantes();
+      List<Usuario> participantesList = new ArrayList<Usuario>();
+      participantesList.addAll(participantes);
+      return participantesList;
+   }
+
+   public Usuario administradorTablero(Long idTablero){
+       Tablero tablero = tableroRepository.findById(idTablero);
+      if (tablero == null) {
+         throw new UsuarioServiceException("Tablero no existente");
+      }
+      return tablero.getAdministrador();
+   }
 }
