@@ -1,6 +1,9 @@
 # Práctica asignatura MADS
 
-Realizada por Diego Maroto.
+## Integrantes del equipo:
+- Diego Maroto.
+- Traian Mirci
+- Sergio Conesa
 
 La práctica consiste en un proyecto implementado en [Play Framework 2.5](https://www.playframework.com/documentation/2.5.x/Home) para gestionar las tareas pendientes de un conjunto de usuarios de una empresa.
 
