@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-   - docker build -t madsequipo2/mads-equipo2-201718 .
+   - docker build -t madsequipo2/mads-equipo2-201718:0.3 .
 
 script:
    - docker run --rm madsequipo2/mads-equipo2-201718 /bin/bash -c "sbt test"
