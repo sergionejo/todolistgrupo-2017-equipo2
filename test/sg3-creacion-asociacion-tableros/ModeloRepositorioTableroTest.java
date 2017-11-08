@@ -60,7 +60,7 @@ public class ModeloRepositorioTableroTest {
 		Database db = injector.instanceOf(Database.class);
 		Connection connection = db.getConnection();
 		DatabaseMetaData meta = connection.getMetaData();
-		ResultSet resH2 = meta.getTables(null, null, "Tablero", new String[] {"TABLE"});
+		ResultSet resH2 = meta.getTables(null, null, "TABLERO", new String[] {"TABLE"});
 		ResultSet resMySQL = meta.getTables(null, null, "Tablero", new String[] {"TABLE"});
 		boolean existeTabla = resH2.next() || resMySQL.next();
 		assertTrue(existeTabla);
