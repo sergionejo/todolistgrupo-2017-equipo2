@@ -6,6 +6,14 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.11.11"
 
+buildInfoSettings
+
+sourceGenerators in Compile <+= buildInfo
+
+buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion)
+
+buildInfoPackage := "actualBuild"
+
 libraryDependencies += javaJpa
 libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.5.Final"
 libraryDependencies +=  "mysql" % "mysql-connector-java" % "5.1.18"
