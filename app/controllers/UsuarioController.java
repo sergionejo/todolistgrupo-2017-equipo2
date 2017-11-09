@@ -117,6 +117,7 @@ public class UsuarioController extends Controller {
         List<String> miembros = new ArrayList<String>();
         miembros.add("Diego Maroto");
         miembros.add("Sergio Conesa");
+        miembros.add("Traian Mirci");
         String version = actualBuild.BuildInfo.version();
         return ok(aboutUs.render(miembros,version));
     }
