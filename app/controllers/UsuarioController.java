@@ -115,6 +115,7 @@ public class UsuarioController extends Controller {
         //Esta vista debe mostrar los miembros del equipo - TODO
         //Esta vista debe mostrar la versión del proyecto - TODO
         List<String> miembros = new ArrayList<String>();
+        miembros.add("Diego Maroto");
         String version = "Lo suyo sería recuperarla de la variable almacenada en build.sbt, si se puede";
         return ok(aboutUs.render(miembros,version));
     }
