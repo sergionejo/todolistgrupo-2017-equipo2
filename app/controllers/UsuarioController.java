@@ -8,6 +8,9 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.Logger;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import services.UsuarioService;
 import models.Usuario;
 import security.ActionAuthenticator;
@@ -106,5 +109,13 @@ public class UsuarioController extends Controller {
             Logger.debug("Encontrado usuario " + usuario.getId() + ": " + usuario.getLogin());
             return ok(detalleUsuario.render(usuario));
         }
+    }
+
+    public Result aboutUs(){
+        //Esta vista debe mostrar los miembros del equipo - TODO
+        //Esta vista debe mostrar la versión del proyecto - TODO
+        List<String> miembros = new ArrayList<String>();
+        String version = "Lo suyo sería recuperarla de la variable almacenada en build.sbt, si se puede";
+        return ok(aboutUs.render(miembros,version));
     }
 }
