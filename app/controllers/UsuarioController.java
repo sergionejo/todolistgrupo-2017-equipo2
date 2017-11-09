@@ -114,7 +114,6 @@ public class UsuarioController extends Controller {
 
     public Result aboutUs(){
         //Esta vista debe mostrar los miembros del equipo - TODO
-        //Esta vista debe mostrar la versión del proyecto - TODO
         List<String> miembros = new ArrayList<String>();
         miembros.add("Diego Maroto");
         miembros.add("Sergio Conesa");
