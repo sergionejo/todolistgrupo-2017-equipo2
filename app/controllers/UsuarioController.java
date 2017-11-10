@@ -1,5 +1,6 @@
 package controllers;
 
+import play.*;
 import play.mvc.*;
 
 import views.html.*;
@@ -7,6 +8,9 @@ import javax.inject.*;
 import play.data.Form;
 import play.data.FormFactory;
 import play.Logger;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import services.UsuarioService;
 import models.Usuario;
@@ -106,5 +110,15 @@ public class UsuarioController extends Controller {
             Logger.debug("Encontrado usuario " + usuario.getId() + ": " + usuario.getLogin());
             return ok(detalleUsuario.render(usuario));
         }
+    }
+
+    public Result aboutUs(){
+        //Esta vista debe mostrar los miembros del equipo - TODO
+        List<String> miembros = new ArrayList<String>();
+        miembros.add("Diego Maroto");
+        miembros.add("Sergio Conesa");
+        miembros.add("Traian Mirci");
+        String version = actualBuild.BuildInfo.version();
+        return ok(aboutUs.render(miembros,version));
     }
 }
