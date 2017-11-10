@@ -1,13 +1,37 @@
 @(miembros: List[String], version: String)
 
 @main("aboutUs") {
-   <p></p>
-   <div class="panel panel-success">
-      <!-- En terminar la vista quitar ek panel-heading de En construcción -->
-      <div class="panel-heading">En construcción</div>
-      <div class="panel-body">
-         <p>Versión: @version</p>
-         <p>Miembros: blablabla</p>
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center" style="padding-bottom:50px">About Us</h1>
+      <div class="clearfix"></div>
+      <div class="row">
+       <div class="col-md-6">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Componentes del grupo</h3>
+              </div>
+              <ul class="list-group">
+                @for(index <- 0 until miembros.size) {
+                   <a href="#" class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @miembros(index)</a>
+                  }
+              </ul>
+          </div>
+        </div>
+          <div class="col-md-6">
+             <div class="panel panel-default">
+                 <div class="panel-heading">
+                     <h3 class="panel-title">Versión</h3>
+                 </div>
+                 <ul class="list-group">
+                     <a href="#" class="list-group-item"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> @version</a>
+                 </ul>
+             </div>
+           </div>
+         </div>
       </div>
-   </div>
+    </div>
+
+
+
 }
