@@ -67,7 +67,7 @@ public class TareaTest {
       Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");
       Tarea tarea = new Tarea(usuario, "Práctica 1 de MADS");
 
-      assertEquals("juangutierrez", tarea.getUsuario().getLogin());
+      assertEquals("error", tarea.getUsuario().getLogin());
       assertEquals("juangutierrez@gmail.com", tarea.getUsuario().getEmail());
       assertEquals("Práctica 1 de MADS", tarea.getTitulo());
    }
