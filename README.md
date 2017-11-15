@@ -1,4 +1,6 @@
 # Práctica asignatura MADS
+Build rama master: 
+[![Build Status](https://travis-ci.com/mads-ua/todolistgrupo-2017-equipo2.svg?token=BgcpDyB7PEqrttqCPjou&branch=master)](https://travis-ci.com/mads-ua/todolistgrupo-2017-equipo2)
 
 ## Integrantes del equipo:
 - Diego Maroto.
