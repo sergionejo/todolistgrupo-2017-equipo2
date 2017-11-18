@@ -15,7 +15,7 @@ before_install:
 
 script:
    - docker run --rm madsequipo2/mads-equipo2-201718:$TRAVIS_BUILD_NUMBER /bin/bash -c "sbt test"
-   - docker run -d --rm -p 3306:3306 --name play-mysql -e MYSQL_DATABASE="mads" -e MYSQL_ROOT_PASSWORD="mads" mysql
+   - docker run -d --rm --name play-mysql -v ${PWD}/stage:/docker-entrypoint-initdb.d -e MYSQL_ROOT_PASSWORD=mads -e MYSQL_DATABASE=mads mysql
    - docker run --link play-mysql:mysql --rm -e DB_URL="jdbc:mysql://play-mysql:3306/mads" -e DB_USER_NAME="root" -e DB_USER_PASSWD="mads" -v${PWD}:/code madsequipo2/mads-equipo2-201718:$TRAVIS_BUILD_NUMBER /bin/bash -c "./runsbttest.sh"
 
 
@@ -23,5 +23,5 @@ after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "diegomgar" -p "mipassmads1234";
     docker push madsequipo2/mads-equipo2-201718:$TRAVIS_BUILD_NUMBER;
-    docker push madsequipo2/mads-equipo2-201718:latest;
+    docker push madsequipo2/mads-equipo2-201718;
     fi
