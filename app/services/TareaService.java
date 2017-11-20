@@ -85,4 +85,58 @@ public class TareaService {
            throw new TareaServiceException("No existe tarea");
       tareaRepository.delete(idTarea);
    }
+
+   public List<Tarea> allTareasUsuarioNoTerminadas(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario);
+        if (usuario == null) {
+            throw new TareaServiceException("Usuario no existente");
+        }
+        Set<Tarea> tareas = usuario.getTareas();
+        List<Tarea> tareasList = new ArrayList<Tarea>();
+        tareasList.addAll(tareas);
+
+        List<Tarea> dev = new ArrayList<Tarea>();
+
+        for(Tarea t : tareasList){
+            if(t.getEstado().equals("iniciada")){
+                dev.add(t);
+            }
+        }
+
+        
+        Collections.sort(dev, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+        return dev;
+   }
+
+   public List<Tarea> allTareasUsuarioTerminadas(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario);
+        if (usuario == null) {
+            throw new TareaServiceException("Usuario no existente");
+        }
+        Set<Tarea> tareas = usuario.getTareas();
+        List<Tarea> tareasList = new ArrayList<Tarea>();
+        tareasList.addAll(tareas);
+
+        List<Tarea> dev = new ArrayList<Tarea>();
+
+        for(Tarea t : tareasList){
+            if(t.getEstado().equals("terminada")){
+                dev.add(t);
+            }
+        }
+
+        
+        Collections.sort(dev, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+        return dev;
+   }
+
+   public Tarea terminarTarea(Long idTarea){
+       Tarea tarea = tareaRepository.findById(idTarea);
+       
+       tarea.setEstado("terminada");
+
+       tarea = tareaRepository.update(tarea);
+
+       return tarea;
+   }
 }

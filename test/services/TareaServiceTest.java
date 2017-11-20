@@ -111,4 +111,39 @@ public class TareaServiceTest {
       assertEquals("Pagar el alquiler", tarea.getTitulo());
       assertEquals("La factura a nombre Pepito Pérez, nº cuenta XXXXXXX", tarea.getDescripcion());
    }
+
+    @Test
+    public void testTerminarTarea(){
+        TareaService tareaService = newTareaService();
+
+        Tarea tarea = tareaService.terminarTarea(1001L);
+
+        assertEquals("Práctica 1 MADS", tarea.getTitulo());
+        assertEquals("terminada", tarea.getEstado());
+    }
+
+    @Test
+    public void testVerTareasNoTerminadas(){
+        TareaService tareaService = newTareaService();
+        long idUsuario = 1000L;
+        tareaService.nuevaTarea(idUsuario, "Comprar auriculares","Quiero los Sony que son bonitos y se escuchan bien");
+
+        tareaService.terminarTarea(1001L);
+        List<Tarea> tareas = tareaService.allTareasUsuarioNoTerminadas(idUsuario);
+
+        assertEquals("Comprar auriculares", tareas.get(0).getTitulo());
+        assertEquals("Renovar DNI", tareas.get(1).getTitulo());
+    }
+
+    @Test
+    public void testVerTareasTerminadas(){
+        TareaService tareaService = newTareaService();
+        long idUsuario = 1000L;
+        tareaService.nuevaTarea(idUsuario, "Comprar auriculares","Quiero los Sony que son bonitos y se escuchan bien");
+
+        tareaService.terminarTarea(1001L);
+        List<Tarea> tareas = tareaService.allTareasUsuarioTerminadas(idUsuario);
+
+        assertEquals("Práctica 1 MADS", tareas.get(0).getTitulo());
+    }
 }

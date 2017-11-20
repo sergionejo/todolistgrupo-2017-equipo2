@@ -9,6 +9,7 @@ public class Tarea {
    private Long id;
    private String titulo;
    private String descripcion;
+   private String estado;
    // Relación muchos-a-uno entre tareas y usuario
    @ManyToOne
    // Nombre de la columna en la BD que guarda físicamente
@@ -22,11 +23,13 @@ public class Tarea {
       this.usuario = usuario;
       this.titulo = titulo;
       this.descripcion = "";
+      this.estado = "iniciada";
    }
    public Tarea(Usuario usuario, String titulo, String descripcion) {
       this.usuario = usuario;
       this.titulo = titulo;
       this.descripcion = descripcion;
+      this.estado = "iniciada";
    }
 
    // Getters y setters necesarios para JPA
@@ -66,6 +69,14 @@ public class Tarea {
    public String toString() {
       return String.format("Tarea id: %s titulo: %s usuario: %s",
                       id, titulo, usuario.toString());
+   }
+
+   public String getEstado(){
+      return estado;
+   }
+
+   public void setEstado(String estado){
+      this.estado = estado;
    }
 
    @Override
