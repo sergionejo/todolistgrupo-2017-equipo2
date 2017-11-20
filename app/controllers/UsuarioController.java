@@ -130,6 +130,7 @@ public class UsuarioController extends Controller {
         miembros.add("Sergio Conesa");
         miembros.add("Traian Mirci");
         String version = actualBuild.BuildInfo.version();
-        return ok(aboutUs.render(usuario,miembros,version));
+        String versiondate = "19 Noviembre 2017";
+        return ok(aboutUs.render(miembros,version,versiondate));
     }
 }
