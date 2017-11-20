@@ -29,7 +29,7 @@ GET     /usuarios/:id/tareas        controllers.GestionTareasController.listaTar
 GET     /tareas/:id/editar          controllers.GestionTareasController.formularioEditaTarea(id: Long)
 POST    /tareas/:id/editar          controllers.GestionTareasController.grabaTareaModificada(id: Long)
 DELETE  /tareas/:id                 controllers.GestionTareasController.borraTarea(id: Long)
-POST    /tablero/:id/terminarTarea  controllers.GestionTareasController.terminaTarea(id: Long)
+POST    /tablero/:id/terminarTarea  controllers.GestionTareasController.cambiaTarea(id: Long)
 GET     /tablero/:id/terminarTarea  controllers.GestionTareasController.cambioEstado(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo    controllers.TableroController.formularioNuevoTablero(id: Long)

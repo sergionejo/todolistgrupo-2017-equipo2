@@ -130,13 +130,17 @@ public class TareaService {
         return dev;
    }
 
-   public Tarea terminarTarea(Long idTarea){
-       Tarea tarea = tareaRepository.findById(idTarea);
-       
-       tarea.setEstado("terminada");
+   public Tarea toggleEstadoTarea(Long idTarea){
+        Tarea tarea = tareaRepository.findById(idTarea);
+        
+        if(tarea.getEstado().equals("iniciada"))
+            tarea.setEstado("terminada");
 
-       tarea = tareaRepository.update(tarea);
+        else
+            tarea.setEstado("iniciada");
 
-       return tarea;
+        tarea = tareaRepository.update(tarea);
+
+        return tarea;
    }
 }

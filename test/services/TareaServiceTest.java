@@ -116,7 +116,7 @@ public class TareaServiceTest {
     public void testTerminarTarea(){
         TareaService tareaService = newTareaService();
 
-        Tarea tarea = tareaService.terminarTarea(1001L);
+        Tarea tarea = tareaService.toggleEstadoTarea(1001L);
 
         assertEquals("Práctica 1 MADS", tarea.getTitulo());
         assertEquals("terminada", tarea.getEstado());
@@ -128,7 +128,7 @@ public class TareaServiceTest {
         long idUsuario = 1000L;
         tareaService.nuevaTarea(idUsuario, "Comprar auriculares","Quiero los Sony que son bonitos y se escuchan bien");
 
-        tareaService.terminarTarea(1001L);
+        tareaService.toggleEstadoTarea(1001L);
         List<Tarea> tareas = tareaService.allTareasUsuarioNoTerminadas(idUsuario);
 
         assertEquals("Comprar auriculares", tareas.get(0).getTitulo());
@@ -141,9 +141,20 @@ public class TareaServiceTest {
         long idUsuario = 1000L;
         tareaService.nuevaTarea(idUsuario, "Comprar auriculares","Quiero los Sony que son bonitos y se escuchan bien");
 
-        tareaService.terminarTarea(1001L);
+        tareaService.toggleEstadoTarea(1001L);
         List<Tarea> tareas = tareaService.allTareasUsuarioTerminadas(idUsuario);
 
         assertEquals("Práctica 1 MADS", tareas.get(0).getTitulo());
+    }
+
+    @Test
+    public void testIniciarTareaTerminada(){
+        TareaService tareaService = newTareaService();
+
+        Tarea tarea = tareaService.toggleEstadoTarea(1001L);
+        tarea = tareaService.toggleEstadoTarea(1001L);
+
+        assertEquals("Práctica 1 MADS", tarea.getTitulo());
+        assertEquals("iniciada", tarea.getEstado());
     }
 }
