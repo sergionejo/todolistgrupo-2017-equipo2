@@ -113,12 +113,24 @@ public class UsuarioController extends Controller {
     }
 
     public Result aboutUs(){
-        //Esta vista debe mostrar los miembros del equipo - TODO
+        Usuario usuario = null;
+        try{
+            String connectedUserStr = session("connected");
+            Long connectedUser =  Long.valueOf(connectedUserStr);
+            usuario = usuarioService.findUsuarioPorId(connectedUser);
+        }catch(NumberFormatException e){
+            //Error obteniendo la sesión, mantengo el usuario a null, no me importa nada más.
+        }
+        if (usuario == null) {
+        } else {
+            Logger.debug("About us con el usuario " + usuario.getId() + ": " + usuario.getLogin());
+        }
         List<String> miembros = new ArrayList<String>();
         miembros.add("Diego Maroto");
         miembros.add("Sergio Conesa");
         miembros.add("Traian Mirci");
         String version = actualBuild.BuildInfo.version();
-        return ok(aboutUs.render(miembros,version));
+        String versiondate = "19 Noviembre 2017";
+        return ok(aboutUs.render(usuario,miembros,version,versiondate));
     }
 }
