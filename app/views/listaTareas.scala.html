@@ -13,6 +13,7 @@
         }
     </script>
 }
+@views.html.navbar(usuario,true,false)
 @main("Tareas del usuario @usuario.getLogin()", scripts) {
 
     <h2> Listado de tareas de <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">@usuario.getLogin()</a></h2>
