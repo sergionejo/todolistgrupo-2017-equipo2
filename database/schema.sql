@@ -63,6 +63,7 @@ CREATE TABLE `Tarea` (
   `id` bigint(20) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
   `titulo` varchar(255) DEFAULT NULL,
+  `estado` varchar(255) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
