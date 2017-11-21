@@ -133,4 +133,29 @@ public class UsuarioController extends Controller {
         String versiondate = "19 Noviembre 2017";
         return ok(aboutUs.render(usuario,miembros,version,versiondate));
     }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result formularioEditarUsuario(Long id){
+         String connectedUserStr = session("connected");
+         Long connectedUser =  Long.valueOf(connectedUserStr);
+ 
+         if (connectedUser != id) {
+          return unauthorized("Lo siento, no estás autorizado");
+         } else {
+             Usuario usuario = usuarioService.findUsuarioPorId(id);
+             if (usuario == null) {
+                 return notFound("Usuario no encontrado");
+             } else {
+                 return ok(formModificacionUsuario.render(formFactory.form(Editar.class), usuario.getId(), ""));
+             }
+         }
+    }
+ 
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result actualizarUsuario(Long idUsuario) {
+       Form<Editar> form = formFactory.form(Editar.class).bindFromRequest();
+       Editar datos = form.get();
+       Usuario usuario = usuarioService.modificarUsuario(idUsuario, datos.pass, datos.nombre, datos.apellidos, datos.fecha);
+       return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
+    }
 }
