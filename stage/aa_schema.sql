@@ -63,6 +63,9 @@ CREATE TABLE `Tarea` (
   `id` bigint(20) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
   `titulo` varchar(255) DEFAULT NULL,
+  `estado` varchar(255) DEFAULT NULL,
+  `fCreacion` varchar(255) DEFAULT NULL,
+  `fLimite` varchar(255) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
@@ -110,4 +113,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-22  9:15:03
+-- Dump completed on 2017-11-21  20:49:35
