@@ -7,6 +7,9 @@ Build rama master:
 - Traian Mirci
 - Sergio Conesa
 
+### Máquinas docker de este proyecto: [madsequipo2/mads-equipo2-201718](https://hub.docker.com/r/madsequipo2/mads-equipo2-201718/tags/)
+
+# Descripción
 La práctica consiste en un proyecto implementado en [Play Framework 2.5](https://www.playframework.com/documentation/2.5.x/Home) para gestionar las tareas pendientes de un conjunto de usuarios de una empresa.
 
 Aquí hay una breve descripción de cómo lanzar la práctica. La documentación
