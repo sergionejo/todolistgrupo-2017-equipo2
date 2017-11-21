@@ -1,6 +1,8 @@
 package models;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 public class Tarea {
@@ -10,6 +12,8 @@ public class Tarea {
    private String titulo;
    private String descripcion;
    private String estado;
+   private String fCreacion;
+   private String fLimite;
    // Relación muchos-a-uno entre tareas y usuario
    @ManyToOne
    // Nombre de la columna en la BD que guarda físicamente
@@ -24,12 +28,41 @@ public class Tarea {
       this.titulo = titulo;
       this.descripcion = "";
       this.estado = "iniciada";
+
+      Date ahora = new Date();
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss");
+      String fechaConFormato = formatter.format(ahora);
+      this.fCreacion=fechaConFormato;
+
+      this.fLimite = null;
    }
    public Tarea(Usuario usuario, String titulo, String descripcion) {
       this.usuario = usuario;
       this.titulo = titulo;
       this.descripcion = descripcion;
       this.estado = "iniciada";
+
+      Date ahora = new Date();
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss");//ejeplo salida: 21-11-2017-03.44.18
+      String fechaConFormato = formatter.format(ahora);
+      this.fCreacion=fechaConFormato;
+
+      this.fLimite = null;
+   }
+
+   public Tarea(Usuario usuario, String titulo, String descripcion, String fechaLimite) {
+      this.usuario = usuario;
+      this.titulo = titulo;
+      this.descripcion = descripcion;
+      this.estado = "iniciada";
+      this.fLimite = fechaLimite;
+
+      Date ahora = new Date();
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss");//ejeplo salida: 21-11-2017-03.44.18
+      String fechaConFormato = formatter.format(ahora);
+      this.fCreacion=fechaConFormato;
+
+      this.fLimite = fechaLimite;
    }
 
    // Getters y setters necesarios para JPA
@@ -77,6 +110,18 @@ public class Tarea {
 
    public void setEstado(String estado){
       this.estado = estado;
+   }
+
+   public String getFCreacion(){
+     return this.fCreacion;
+   }
+
+   public String getFLimite(){
+     return this.fLimite;
+   }
+
+   public void setFLimite(String fecha){
+     this.fLimite = fecha;
    }
 
    @Override

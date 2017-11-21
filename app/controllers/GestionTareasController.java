@@ -33,7 +33,7 @@ public class GestionTareasController extends Controller {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-         return ok(formNuevaTarea.render(usuario, formFactory.form(Tarea.class),""));
+         return ok(formNuevaTarea.render(usuario, formFactory.form(Tarea.class),"",""));
       }
    }
 
@@ -47,10 +47,10 @@ public class GestionTareasController extends Controller {
          Form<Tarea> tareaForm = formFactory.form(Tarea.class).bindFromRequest();
          if (tareaForm.hasErrors()) {
             Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-            return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class), "Hay errores en el formulario"));
+            return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class),"", "Hay errores en el formulario"));
          }
          Tarea tarea = tareaForm.get();
-         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(),tarea.getDescripcion());
+         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(),tarea.getDescripcion(),tarea.getFLimite());
          flash("aviso", "La tarea se ha grabado correctamente");
          return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
       }
@@ -85,6 +85,7 @@ public class GestionTareasController extends Controller {
             tarea.getId(),
             tarea.getTitulo(),
             tarea.getDescripcion(),
+            tarea.getFLimite(),
             ""));
          }
       }
@@ -95,7 +96,8 @@ public class GestionTareasController extends Controller {
       DynamicForm requestData = formFactory.form().bindFromRequest();
       String nuevoTitulo = requestData.get("titulo");
       String nuevaDescripcion = requestData.get("descripcion");
-      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo,nuevaDescripcion);
+      String nuevaFLimite = requestData.get("fLimite");
+      Tarea tarea = tareaService.modificaTarea(idTarea, nuevoTitulo,nuevaDescripcion,nuevaFLimite);
       return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
    }
 

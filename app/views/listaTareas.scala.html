@@ -19,12 +19,12 @@
     <h2> Listado de tareas de <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">@usuario.getLogin()</a></h2>
 
     <div class="container">
-           
+
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#pendientes">Pendientes</a></li>
             <li><a data-toggle="tab" href="#terminadas">Terminadas</a></li>
         </ul>
-          
+
         <div class="tab-content">
             <div id="pendientes" class="tab-pane fade in active">
                 <h3>Tareas Pendientes</h3>
@@ -49,13 +49,13 @@
                             </tr>
                         }
                       }
-                
+
                       <tr>
                           <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
                               <span class="glyphicon glyphicon-plus"/></a></td>
                           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
                       </tr>
-                
+
                 </table>
             </div>
             <div id="terminadas" class="tab-pane fade">
@@ -81,19 +81,19 @@
                             </tr>
                         }
                     }
-                
+
                       <tr>
                           <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
                               <span class="glyphicon glyphicon-plus"/></a></td>
                           <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
                       </tr>
-                
+
                 </table>
             </div>
-              
+
         </div>
     </div>
-    
+
 
   @if(mensaje != null) {
       <div class="alert alert-success">
