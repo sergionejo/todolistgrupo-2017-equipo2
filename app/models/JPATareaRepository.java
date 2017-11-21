@@ -29,6 +29,8 @@ public class JPATareaRepository implements TareaRepository {
          Tarea tareaBD = entityManager.find(Tarea.class, tarea.getId());
          tareaBD.setTitulo(tarea.getTitulo());
          tareaBD.setDescripcion(tarea.getDescripcion());
+         tareaBD.setEstado(tarea.getEstado());
+         tareaBD.setFLimite(tarea.getFLimite());
          return tareaBD;
       });
    }

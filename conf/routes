@@ -22,6 +22,8 @@ GET     /logout                 controllers.UsuarioController.logout()
 GET     /home                   controllers.UsuarioController.currentUsuario()
 GET     /aboutus                controllers.UsuarioController.aboutUs()
 GET     /usuarios/:id           controllers.UsuarioController.detalleUsuario(id: Long)
+GET     /usuarios/:id/editar    controllers.UsuarioController.formularioEditarUsuario(id: Long)
+POST    /usuarios/:id/editar    controllers.UsuarioController.actualizarUsuario(id: Long)
 
 GET     /usuarios/:id/tareas/nueva  controllers.GestionTareasController.formularioNuevaTarea(id: Long)
 POST    /usuarios/:id/tareas/nueva  controllers.GestionTareasController.creaNuevaTarea(id: Long)
@@ -29,6 +31,8 @@ GET     /usuarios/:id/tareas        controllers.GestionTareasController.listaTar
 GET     /tareas/:id/editar          controllers.GestionTareasController.formularioEditaTarea(id: Long)
 POST    /tareas/:id/editar          controllers.GestionTareasController.grabaTareaModificada(id: Long)
 DELETE  /tareas/:id                 controllers.GestionTareasController.borraTarea(id: Long)
+POST    /tablero/:id/terminarTarea  controllers.GestionTareasController.cambiaTarea(id: Long)
+GET     /tablero/:id/terminarTarea  controllers.GestionTareasController.cambioEstado(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo    controllers.TableroController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo    controllers.TableroController.creaNuevoTablero(id: Long)

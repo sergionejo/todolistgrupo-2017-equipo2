@@ -5,6 +5,9 @@ import javax.inject.*;
 import models.Usuario;
 import models.UsuarioRepository;
 
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 
 public class UsuarioService {
    UsuarioRepository repository;
@@ -41,4 +44,24 @@ public class UsuarioService {
    public Usuario findUsuarioPorId(Long id){
       return repository.findById(id);
    }
+
+   public Usuario modificarUsuario(Long idUsuario, String pass, String nombre, String apellidos, Date fecha) {
+    Usuario usuario = repository.findById(idUsuario);
+
+        if(usuario == null){
+            throw new UsuarioServiceException("No existe el usuario");
+        }
+
+        if(pass != null && pass != ""){
+            usuario.setPassword(pass);
+        }
+
+        usuario.setNombre(nombre);
+        usuario.setApellidos(apellidos);
+        usuario.setFechaNacimiento(fecha);
+        
+        usuario = repository.update(usuario);
+
+        return usuario;
+    }
 }

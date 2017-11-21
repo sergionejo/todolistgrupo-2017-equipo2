@@ -1,6 +1,7 @@
 @(usuario: Usuario)
+@views.html.navbar(usuario,false,false)
 @main("Detalle usuario"){
-	<h1>Detalle del usuario @usuario.getId()</h1>
+	<h1>Detalle de @usuario.getLogin()</h1>
 	<ul>
 		<li><strong>Login: </strong>@usuario.getLogin()</li>
 		<li><strong>Email: </strong>@usuario.getEmail()</li>
@@ -12,8 +13,9 @@
 			}</li>
 	</ul>
 	<div class="container">
-		<div class="col-sm-2"><a href="@routes.GestionTareasController.listaTareas(usuario.getId())" class="btn btn-info">Ver tareas</a></div>
-		<div class="col-sm-2"><a href="@routes.TableroController.listaTableros(usuario.getId())" class="btn btn-info">Ver tableros</a></div>
-		<div class="col-sm-2"><a href="@routes.UsuarioController.logout()" class="btn btn-info">Salir</a></div>
+		<a href="@routes.GestionTareasController.listaTareas(usuario.getId())" class="btn btn-info">Ver tareas</a>
+		<a href="@routes.TableroController.listaTableros(usuario.getId())" class="btn btn-info">Ver tableros</a>
+		<a href="@routes.UsuarioController.formularioEditarUsuario(usuario.getId())" class="btn btn-info">Actualizar Perfil</a>
+		<a href="@routes.UsuarioController.logout()" class="btn btn-info">Salir</a>
 	</div>
 }

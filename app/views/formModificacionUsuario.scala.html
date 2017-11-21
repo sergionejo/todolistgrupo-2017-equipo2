@@ -1,0 +1,24 @@
+@(updateForm: Form[Editar], idUsuario: Long, mensaje: String)
+@main("Modificar Usuario") {
+    @if(mensaje != "") {
+       <div class="alert alert-danger">
+          @mensaje
+       </div>
+    }
+    <h1>Modificar usuario</h1>
+    @helper.form(action = routes.UsuarioController.actualizarUsuario(idUsuario)) {
+       <fieldset>
+          <legend>Usuario</legend>
+          @helper.inputText(updateForm("pass"), '_label -> "Password")
+          @helper.inputText(updateForm("nombre"), '_label -> "Nombre")
+          @helper.inputText(updateForm("apellidos"), '_label -> "Apellidos")
+          @helper.inputDate(updateForm("fecha"), '_label -> "Fecha de Nacimiento")
+
+       </fieldset>
+       <p/>
+       <p>
+          <input type="submit" class="btn btn-primary" value="Guardar">
+          <a class="btn btn-warning" href="@routes.GestionTareasController.listaTareas(idUsuario)">Cancelar</a>
+       </p>
+    }
+ }

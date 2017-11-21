@@ -11,35 +11,94 @@
                 }
             });
         }
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip(); //data-toggle="tooltip" data-placement="top" title="Tooltip on top"
+        })
     </script>
 }
+@views.html.navbar(usuario,true,false)
 @main("Tareas del usuario @usuario.getLogin()", scripts) {
 
     <h2> Listado de tareas de <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">@usuario.getLogin()</a></h2>
 
-    <table class="table table-striped">
-        <tr>
-            <th>Tareas</th>
-            <th>Acción</th>
-        </tr>
-    @for(tarea <- tareas) {
-        <tr>
-            <td>@tarea.getTitulo()</td>
-            <td><a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                <a onmouseover="" style="cursor: pointer;"
-                onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
-        </tr>
-      }
+    <div class="container">
 
-      <tr>
-          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
-              <span class="glyphicon glyphicon-plus"/></a></td>
-          <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
-      </tr>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#pendientes">Pendientes</a></li>
+            <li><a data-toggle="tab" href="#terminadas">Terminadas</a></li>
+        </ul>
 
-  </table>
+        <div class="tab-content">
+            <div id="pendientes" class="tab-pane fade in active">
+                <h3>Tareas Pendientes</h3>
+                <table class="table table-striped">
+                        <tr>
+                            <th>Tareas</th>
+                            <th>Fecha Límite</th>
+                            <th>Acción</th>
+                        </tr>
+                    @for(tarea <- tareas) {
+                        @if(tarea.getEstado() == "iniciada"){
+                            <tr>
+                                <td>@tarea.getTitulo()</td>
+                                <td>@tarea.getFLimite()</td>
+                                <td><a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                                    <a onmouseover="" style="cursor: pointer;"
+                                    onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    <a href="@routes.GestionTareasController.cambiaTarea(tarea.getId())">
+                                    <span class="glyphicon glyphicon-unchecked"></span>&nbsp;
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                      }
+                    <tr>
+                        <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())"
+                            data-toggle="tooltip" data-placement="right" title="Añadir nueva tarea">
+                            <span class="glyphicon glyphicon-plus"/></a></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="terminadas" class="tab-pane fade">
+                <h3>Tareas Terminadas</h3>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Tareas</th>
+                        <th>Acción</th>
+                    </tr>
+                    @for(tarea <- tareas) {
+                        @if(tarea.getEstado() == "terminada"){
+                            <tr>
+                                <td>@tarea.getTitulo()</td>
+                                <td><a href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())">
+                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                                    <a onmouseover="" style="cursor: pointer;"
+                                    onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    <a href="@routes.GestionTareasController.cambiaTarea(tarea.getId())">
+                                    <span class="glyphicon glyphicon-check"></span>&nbsp;
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    <tr>
+                        <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())"
+                            data-toggle="tooltip" data-placement="right" title="Añadir nueva tarea">
+                            <span class="glyphicon glyphicon-plus"/></a></td>
+                        <td></td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
 
   @if(mensaje != null) {
       <div class="alert alert-success">

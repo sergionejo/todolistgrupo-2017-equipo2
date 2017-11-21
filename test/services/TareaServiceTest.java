@@ -111,4 +111,71 @@ public class TareaServiceTest {
       assertEquals("Pagar el alquiler", tarea.getTitulo());
       assertEquals("La factura a nombre Pepito Pérez, nº cuenta XXXXXXX", tarea.getDescripcion());
    }
+
+    @Test
+    public void testTerminarTarea(){
+        TareaService tareaService = newTareaService();
+
+        Tarea tarea = tareaService.toggleEstadoTarea(1001L);
+
+        assertEquals("Práctica 1 MADS", tarea.getTitulo());
+        assertEquals("terminada", tarea.getEstado());
+    }
+
+    @Test
+    public void testVerTareasNoTerminadas(){
+        TareaService tareaService = newTareaService();
+        long idUsuario = 1000L;
+        tareaService.nuevaTarea(idUsuario, "Comprar auriculares","Quiero los Sony que son bonitos y se escuchan bien");
+
+        tareaService.toggleEstadoTarea(1001L);
+        List<Tarea> tareas = tareaService.allTareasUsuarioNoTerminadas(idUsuario);
+
+        assertEquals("Comprar auriculares", tareas.get(0).getTitulo());
+        assertEquals("Renovar DNI", tareas.get(1).getTitulo());
+    }
+
+    @Test
+    public void testVerTareasTerminadas(){
+        TareaService tareaService = newTareaService();
+        long idUsuario = 1000L;
+        tareaService.nuevaTarea(idUsuario, "Comprar auriculares","Quiero los Sony que son bonitos y se escuchan bien");
+
+        tareaService.toggleEstadoTarea(1001L);
+        List<Tarea> tareas = tareaService.allTareasUsuarioTerminadas(idUsuario);
+
+        assertEquals("Práctica 1 MADS", tareas.get(0).getTitulo());
+    }
+
+    @Test
+    public void testIniciarTareaTerminada(){
+        TareaService tareaService = newTareaService();
+
+        Tarea tarea = tareaService.toggleEstadoTarea(1001L);
+        tarea = tareaService.toggleEstadoTarea(1001L);
+
+        assertEquals("Práctica 1 MADS", tarea.getTitulo());
+        assertEquals("iniciada", tarea.getEstado());
+    }
+
+    @Test
+    public void testTareaConFechaCreacion(){
+      TareaService tareaService = newTareaService();
+
+      Tarea tarea = tareaService.toggleEstadoTarea(1001L);
+      tarea = tareaService.toggleEstadoTarea(1001L);
+
+      assertEquals("21-11-2017-03.44.18", tarea.getFCreacion());
+    }
+
+    @Test
+    public void testTareaConFechaLimite(){
+      TareaService tareaService = newTareaService();
+
+      Tarea tarea = tareaService.toggleEstadoTarea(1001L);
+      tarea = tareaService.toggleEstadoTarea(1001L);
+      tarea.setFLimite("12/12/2012");
+      assertEquals("12/12/2012", tarea.getFLimite());
+    }
+
 }
