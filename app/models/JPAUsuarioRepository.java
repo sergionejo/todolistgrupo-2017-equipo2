@@ -49,9 +49,26 @@ public class JPAUsuarioRepository implements UsuarioRepository {
       });
    }
    public Usuario update(Usuario usuario) {
-       return jpaApi.withTransaction(entityManager -> {
-          Usuario actualizado = entityManager.merge(usuario);
-          return actualizado;
-       });
+    return jpaApi.withTransaction(entityManager -> {
+        Usuario usuarioBD = entityManager.find(Usuario.class, usuario.getId());
+
+        if(!usuario.getPassword().equals("")){
+            usuarioBD.setPassword(usuario.getPassword());
+        }
+
+        if(!usuario.getNombre().equals("")){
+            usuarioBD.setNombre(usuario.getNombre());
+        }
+
+        if(!usuario.getApellidos().equals("")){
+            usuarioBD.setApellidos(usuario.getApellidos());
+        }
+
+        if(usuario.getFechaNacimiento() != null){
+            usuarioBD.setFechaNacimiento(usuario.getFechaNacimiento());
+        }
+
+        return usuarioBD;
+      });
     }
 }
