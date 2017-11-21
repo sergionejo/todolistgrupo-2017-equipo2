@@ -56,6 +56,15 @@ public class TareaService {
       return tareaRepository.add(tarea);
    }
 
+   public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion,String fechaLimite) {
+      Usuario usuario = usuarioRepository.findById(idUsuario);
+      if (usuario == null) {
+         throw new TareaServiceException("Usuario no existente");
+      }
+      Tarea tarea = new Tarea(usuario, titulo, descripcion, fechaLimite);
+      return tareaRepository.add(tarea);
+   }
+
    public Tarea obtenerTarea(Long idTarea) {
       return tareaRepository.findById(idTarea);
    }
@@ -75,6 +84,17 @@ public class TareaService {
            throw new TareaServiceException("No existe tarea");
       tarea.setTitulo(nuevoTitulo);
       tarea.setDescripcion(nuevaDescripcion);
+      tarea = tareaRepository.update(tarea);
+      return tarea;
+   }
+
+   public Tarea modificaTarea(Long idTarea, String nuevoTitulo, String nuevaDescripcion,String fechaLimite) {
+      Tarea tarea = tareaRepository.findById(idTarea);
+      if (tarea == null)
+           throw new TareaServiceException("No existe tarea");
+      tarea.setTitulo(nuevoTitulo);
+      tarea.setDescripcion(nuevaDescripcion);
+      tarea.setFLimite(fechaLimite);
       tarea = tareaRepository.update(tarea);
       return tarea;
    }
@@ -103,7 +123,7 @@ public class TareaService {
             }
         }
 
-        
+
         Collections.sort(dev, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
         return dev;
    }
@@ -125,14 +145,14 @@ public class TareaService {
             }
         }
 
-        
+
         Collections.sort(dev, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
         return dev;
    }
 
    public Tarea toggleEstadoTarea(Long idTarea){
         Tarea tarea = tareaRepository.findById(idTarea);
-        
+
         if(tarea.getEstado().equals("iniciada"))
             tarea.setEstado("terminada");
 

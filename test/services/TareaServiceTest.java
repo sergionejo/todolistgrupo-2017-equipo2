@@ -167,4 +167,15 @@ public class TareaServiceTest {
 
       assertEquals("21-11-2017-03.44.18", tarea.getFCreacion());
     }
+
+    @Test
+    public void testTareaConFechaLimite(){
+      TareaService tareaService = newTareaService();
+
+      Tarea tarea = tareaService.toggleEstadoTarea(1001L);
+      tarea = tareaService.toggleEstadoTarea(1001L);
+      tarea.setFLimite("12/12/2012");
+      assertEquals("12/12/2012", tarea.getFLimite());
+    }
+
 }

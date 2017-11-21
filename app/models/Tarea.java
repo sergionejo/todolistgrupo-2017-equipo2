@@ -33,6 +33,8 @@ public class Tarea {
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss");
       String fechaConFormato = formatter.format(ahora);
       this.fCreacion=fechaConFormato;
+
+      this.fLimite = null;
    }
    public Tarea(Usuario usuario, String titulo, String descripcion) {
       this.usuario = usuario;
@@ -44,6 +46,23 @@ public class Tarea {
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss");//ejeplo salida: 21-11-2017-03.44.18
       String fechaConFormato = formatter.format(ahora);
       this.fCreacion=fechaConFormato;
+
+      this.fLimite = null;
+   }
+
+   public Tarea(Usuario usuario, String titulo, String descripcion, String fechaLimite) {
+      this.usuario = usuario;
+      this.titulo = titulo;
+      this.descripcion = descripcion;
+      this.estado = "iniciada";
+      this.fLimite = fechaLimite;
+
+      Date ahora = new Date();
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss");//ejeplo salida: 21-11-2017-03.44.18
+      String fechaConFormato = formatter.format(ahora);
+      this.fCreacion=fechaConFormato;
+
+      this.fLimite = fechaLimite;
    }
 
    // Getters y setters necesarios para JPA
@@ -95,6 +114,14 @@ public class Tarea {
 
    public String getFCreacion(){
      return this.fCreacion;
+   }
+
+   public String getFLimite(){
+     return this.fLimite;
+   }
+
+   public void setFLimite(String fecha){
+     this.fLimite = fecha;
    }
 
    @Override

@@ -8,9 +8,9 @@
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
     <Usuario id="1002" login="juangutierrez3" nombre="Juan" apellidos="Gutierrez Tres"
          password="123456789" eMail="juan.gutierrez@gmail.com" fechaNacimiento="1993-12-10"/>
-	<Tarea id="1000" titulo="Renovar DNI" usuarioId="1000" estado="iniciada" fCreacion="21-11-2017-03.44.18"/>
-	<Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" estado="iniciada" fCreacion="21-11-2017-03.44.18"/>
-	<Tarea id="1002" titulo="Práctica 2 MADS" usuarioId="1001" estado="iniciada" fCreacion="21-11-2017-03.44.18"/>
+	<Tarea id="1000" titulo="Renovar DNI" usuarioId="1000" estado="iniciada" fCreacion="21-11-2017-03.44.18" fLimite="21-11-2017-05.44.12"/>
+	<Tarea id="1001" titulo="Práctica 1 MADS" usuarioId="1000" estado="iniciada" fCreacion="21-11-2017-03.44.18" fLimite="21-11-2017-05.44.12"/>
+	<Tarea id="1002" titulo="Práctica 2 MADS" usuarioId="1001" estado="iniciada" fCreacion="21-11-2017-03.44.18" fLimite="21-11-2017-05.44.12"/>
 	<Tablero id="1000" nombre="Tablero test 1" administradorId="1000"/>
     <Tablero id="1001" nombre="Tablero test 2" administradorId="1000"/>
 	<Persona_Tablero/>
