@@ -11,6 +11,9 @@
                 }
             });
         }
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip(); //data-toggle="tooltip" data-placement="top" title="Tooltip on top"
+        })
     </script>
 }
 @views.html.navbar(usuario,true,false)
@@ -51,13 +54,13 @@
                             </tr>
                         }
                       }
-
-                      <tr>
-                          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
-                              <span class="glyphicon glyphicon-plus"/></a></td>
-                          <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
-                      </tr>
-
+                    <tr>
+                        <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())"
+                            data-toggle="tooltip" data-placement="right" title="Añadir nueva tarea">
+                            <span class="glyphicon glyphicon-plus"/></a></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </table>
             </div>
             <div id="terminadas" class="tab-pane fade">
@@ -83,12 +86,12 @@
                             </tr>
                         }
                     }
-
-                      <tr>
-                          <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())">
-                              <span class="glyphicon glyphicon-plus"/></a></td>
-                          <td><a href="@routes.UsuarioController.logout()">Salir</a></td>
-                      </tr>
+                    <tr>
+                        <td><a href="@routes.GestionTareasController.formularioNuevaTarea(usuario.getId())"
+                            data-toggle="tooltip" data-placement="right" title="Añadir nueva tarea">
+                            <span class="glyphicon glyphicon-plus"/></a></td>
+                        <td></td>
+                    </tr>
 
                 </table>
             </div>
