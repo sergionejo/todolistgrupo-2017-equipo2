@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.text.ParseException;
 
 import play.db.jpa.*;
 
@@ -21,6 +22,10 @@ import models.UsuarioRepository;
 
 import services.UsuarioService;
 import services.UsuarioServiceException;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 
 public class UsuarioServiceTest {
    static private Injector injector;
@@ -104,5 +109,23 @@ public class UsuarioServiceTest {
       Usuario usuario = usuarioService.findUsuarioPorId(1000L);
       assertNotNull(usuario);
       assertEquals("juangutierrez", usuario.getLogin());
+   }
+
+   @Test
+   public void testUpdateService() throws ParseException{
+       UsuarioService service = newUsuarioService();
+
+       // En la BD de prueba usuarios_dataset se ha cargado el usuario juangutierrez
+       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+       Date d = sdf.parse("12-08-1986");
+
+       Usuario dev = service.modificarUsuario(1000L, "1234", "Pedro", "Escabias Lloret", d);
+
+       assertEquals("juangutierrez", dev.getLogin());
+       assertEquals("juan.gutierrez@gmail.com", dev.getEmail());
+       assertEquals("1234", dev.getPassword());
+       assertEquals("Pedro", dev.getNombre());
+       assertEquals("Escabias Lloret", dev.getApellidos());
+       assertTrue(dev.getFechaNacimiento().compareTo(sdf.parse("12-08-1986")) == 0);
    }
 }
