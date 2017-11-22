@@ -77,9 +77,11 @@ CREATE TABLE `Tarea` (
   `fCreacion` varchar(255) DEFAULT NULL,
   `fLimite` varchar(255) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
+  `papeleraId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
-  CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`)
+  CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`),
+  CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l58` FOREIGN KEY (`PapeleraId`) REFERENCES `Papelera` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

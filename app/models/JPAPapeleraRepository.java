@@ -31,17 +31,4 @@ public class JPAPapeleraRepository implements PapeleraRepository {
           return entityManager.find(Papelera.class, idPapelera);
        });
     }
-
-    public List<Papelera> findAllTareas() {
-      return jpaApi.withTransaction(entityManager -> {
-         TypedQuery<Papelera> query = entityManager.createQuery(
-                   "select p.tareas from Papelera p ", Papelera.class);
-         try {
-             List<Tarea> listTareas = query.getResultList();
-             return listTareas;
-         } catch (NoResultException ex) {
-             return null;
-         }
-      });
-    }
 }
