@@ -1,15 +1,40 @@
 @(administrados: List[Tablero], participados: List[Tablero], resto: List[Tablero], usuario: Usuario, mensaje: String)
 @scripts = {
     <script type="text/javascript">
-        function del(urlBorrar) {
-            $.ajax({
-                url: urlBorrar,
-                type: 'DELETE',
-                success: function(results) {
-                    //refresh the page
-                    location.reload();
+        function del(urlBorrar,tableroId) {
+            swal({
+                title: 'Estás seguro?',
+                text: "Borrar este tablero será irrevertible!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, borrar.'
+                }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: urlBorrar,
+                        type: 'DELETE',
+                        success: function(results) {
+                            $("[tablero_id='"+tableroId+"']").hide();
+                            //PENSABA HACERLO DINÁMICO PERO NO ME QUIERO PELEAR CON LOS FLASH
+                            location.reload();
+                        },
+                        error: function(){
+                            swal(
+                            'Ooopss...',
+                            'Ha habido un error borrando el tablero.',
+                            'Error'
+                            )
+                        }
+                    });
+                    swal(
+                    'Borrando!',
+                    'Tu tablero se está borrando.',
+                    'success'
+                    )
                 }
-            });
+            })            
         }
         $(function () {
             $('[data-toggle="tooltip"]').tooltip(); //data-toggle="tooltip" data-placement="top" title="Tooltip on top"
@@ -29,7 +54,7 @@
             <th>Acción</th>
         </tr>
     @for(tablero <- administrados) {
-        <tr>
+        <tr tablero_id="@tablero.getId()">
             <td width="50%"><a onmouseover="" style="cursor: pointer; margin-right:10px;"
                 href="@routes.TableroController.detalleTablero(tablero.getId())"
                 data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
@@ -38,7 +63,7 @@
                 data-toggle="tooltip" data-placement="top" title="Editar tablero">
                 <span class="glyphicon glyphicon-pencil"></span>&nbsp;
                 <a onmouseover="" style="cursor: pointer;"
-                onclick="del('@routes.TableroController.borraTablero(tablero.getId())')"
+                onclick="del('@routes.TableroController.borraTablero(tablero.getId())',@tablero.getId())"
                 data-toggle="tooltip" data-placement="top" title="Eliminar tablero">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
         </tr>
