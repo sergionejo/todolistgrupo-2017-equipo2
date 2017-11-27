@@ -3,6 +3,7 @@ package models;
 import javax.persistence.*;
 
 import models.Tarea;
+import models.Usuario;
 
 import java.util.List;
 import java.util.ArrayList;

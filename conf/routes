@@ -31,8 +31,12 @@ GET     /usuarios/:id/tareas        controllers.GestionTareasController.listaTar
 GET     /tareas/:id/editar          controllers.GestionTareasController.formularioEditaTarea(id: Long)
 POST    /tareas/:id/editar          controllers.GestionTareasController.grabaTareaModificada(id: Long)
 DELETE  /tareas/:id                 controllers.GestionTareasController.borraTarea(id: Long)
-POST    /tablero/:id/terminarTarea  controllers.GestionTareasController.cambiaTarea(id: Long)
-GET     /tablero/:id/terminarTarea  controllers.GestionTareasController.cambioEstado(id: Long)
+POST    /tareas/:id/terminarTarea   controllers.GestionTareasController.cambiaTarea(id: Long)
+GET     /tareas/:id/terminarTarea   controllers.GestionTareasController.cambioEstado(id: Long)
+GET     /tareas/:id/ToPapelera      controllers.GestionTareasController.ToPapelera(id: Long)
+POST    /tareas/:id/ToPapelera      controllers.GestionTareasController.papelera(id: Long)
+GET     /tareas/:id/restaurar       controllers.GestionTareasController.restaurar(id: Long)
+POST    /tareas/:id/restaurar       controllers.GestionTareasController.restaurado(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo    controllers.TableroController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo    controllers.TableroController.creaNuevoTablero(id: Long)
@@ -44,6 +48,8 @@ DELETE  /tablero/:id                    controllers.TableroController.borraTable
 
 GET     /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.seguirTablero(idu: Long,idt: Long)
 DELETE  /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.noSeguirTablero(idu: Long,idt: Long)
+
+GET     /usuarios/:id/papelera      controllers.PapeleraController.listaPapelera(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

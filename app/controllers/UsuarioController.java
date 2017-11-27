@@ -12,7 +12,9 @@ import play.Logger;
 import java.util.List;
 import java.util.ArrayList;
 
+import services.PapeleraService;
 import services.UsuarioService;
+import models.Papelera;
 import models.Usuario;
 import security.ActionAuthenticator;
 
@@ -23,6 +25,7 @@ public class UsuarioController extends Controller {
    // Play injecta un usuarioService junto con todas las dependencias necesarias:
    // UsuarioRepository y JPAApi
    @Inject UsuarioService usuarioService;
+   @Inject PapeleraService papeleraService;
 
    public Result saludo(String mensaje) {
       return ok(saludo.render("El mensaje que he recibido es: " + mensaje));
@@ -46,7 +49,8 @@ public class UsuarioController extends Controller {
       if (!datosRegistro.password.equals(datosRegistro.confirmacion)) {
          return badRequest(formRegistro.render(form, "No coinciden la contraseña y la confirmación"));
       }
-      Usuario usuario = usuarioService.creaUsuario(datosRegistro.login, datosRegistro.email, datosRegistro.password);
+      Papelera papelera = papeleraService.nuevaPapelera();
+      Usuario usuario = usuarioService.creaUsuario(datosRegistro.login, datosRegistro.email, datosRegistro.password, papelera);
       return redirect(controllers.routes.UsuarioController.formularioLogin());
    }
 

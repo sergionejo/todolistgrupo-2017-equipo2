@@ -15,6 +15,7 @@ import services.UsuarioService;
 import services.TareaService;
 import models.Usuario;
 import models.Tarea;
+import models.Papelera;
 import security.ActionAuthenticator;
 
 public class GestionTareasController extends Controller {
@@ -120,4 +121,28 @@ public class GestionTareasController extends Controller {
         flash("aviso", "Cambiado estado correctamente");
         return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
    }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result papelera(Long idTarea) {
+        return ok();
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result ToPapelera(Long idTarea) {
+        Tarea tarea = tareaService.ToPapelera(idTarea);
+        flash("aviso", "Tarea movida a la papelera");
+        return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
+    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result restaurado(Long idTarea) {
+         return ok();
+    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result restaurar(Long idTarea) {
+        Tarea tarea = tareaService.restaurarTarea(idTarea);
+        flash("aviso", "Tarea restaurada de la papelera");
+        return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
+    }
 }

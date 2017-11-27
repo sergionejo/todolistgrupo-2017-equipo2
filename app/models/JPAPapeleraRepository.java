@@ -31,4 +31,11 @@ public class JPAPapeleraRepository implements PapeleraRepository {
           return entityManager.find(Papelera.class, idPapelera);
        });
     }
+
+    public Papelera update(Papelera papelera) {
+        return jpaApi.withTransaction(entityManager -> {
+            Papelera actualizado = entityManager.merge(papelera);
+            return actualizado;
+         });
+     }
 }

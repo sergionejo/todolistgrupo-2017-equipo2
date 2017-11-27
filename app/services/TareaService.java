@@ -10,6 +10,8 @@ import java.util.HashSet;
 
 import models.Usuario;
 import models.UsuarioRepository;
+import models.PapeleraRepository;
+import models.Papelera;
 import models.Tarea;
 import models.TareaRepository;
 
@@ -17,11 +19,13 @@ import models.TareaRepository;
 public class TareaService {
    UsuarioRepository usuarioRepository;
    TareaRepository tareaRepository;
+   PapeleraRepository papeleraRepository;
 
    @Inject
-   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository) {
+   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository, PapeleraRepository papeleraRepository) {
       this.usuarioRepository = usuarioRepository;
       this.tareaRepository = tareaRepository;
+      this.papeleraRepository = papeleraRepository;
    }
 
    // Devuelve la lista de tareas de un usuario, ordenadas por su id
@@ -162,5 +166,21 @@ public class TareaService {
         tarea = tareaRepository.update(tarea);
 
         return tarea;
+   }
+
+   public Tarea ToPapelera(Long idTarea){
+        Tarea tarea = tareaRepository.findById(idTarea);
+        Usuario usuario = tarea.getUsuario();
+        Papelera papelera = papeleraRepository.findById(usuario.getPapelera());
+        tarea.setPapelera(papelera);
+
+        return tareaRepository.update(tarea);
+   }
+
+   public Tarea restaurarTarea(Long idTarea){
+        Tarea tarea = tareaRepository.findById(idTarea);
+        tarea.setPapelera(null);
+
+        return tareaRepository.update(tarea);
    }
 }

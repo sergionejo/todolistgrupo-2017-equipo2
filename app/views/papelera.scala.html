@@ -1,0 +1,54 @@
+@(tareas: List[Tarea], usuario: Usuario, mensaje: String)
+@scripts = {
+    <script type="text/javascript">
+        function del(urlBorrar) {
+            $.ajax({
+                url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip(); //data-toggle="tooltip" data-placement="top" title="Tooltip on top"
+        })
+    </script>
+}
+@views.html.navbar(usuario,false,false)
+@main("Tareas del usuario @usuario.getLogin()", scripts) {
+
+    <h2> Papelera de <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">@usuario.getLogin()</a></h2>
+
+    <div class="container">
+                <h3>Tareas en la papelera</h3>
+                <table class="table table-striped">
+                        <tr>
+                            <th>Tareas</th>
+                            <th>Acción</th>
+                        </tr>
+                        @for(tarea <- tareas) {
+                            <tr>
+                                <td>@tarea.getTitulo()</td>
+                                <td>
+                                    <a href="@routes.GestionTareasController.restaurar(tarea.getId())">
+                                    <span class="glyphicon glyphicon-eject"></span>&nbsp;
+                                    <a onmouseover="" style="cursor: pointer;"
+                                    onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                        }
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+  @if(mensaje != null) {
+      <div class="alert alert-success">
+          @mensaje
+      </div>
+  }
+}
