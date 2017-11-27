@@ -26,6 +26,8 @@ import models.Usuario;
 import models.Tarea;
 import models.UsuarioRepository;
 import models.JPAUsuarioRepository;
+import models.PapeleraRepository;
+import models.JPAPapeleraRepository;
 import models.TareaRepository;
 import models.JPATareaRepository;
 import services.UsuarioService;
@@ -50,7 +52,8 @@ public class Practica2Test {
    private TareaService newTareaService() {
       UsuarioRepository usuarioRepository = new JPAUsuarioRepository(jpaApi);
       TareaRepository tareaRepository = new JPATareaRepository(jpaApi);
-      return new TareaService(usuarioRepository, tareaRepository);
+      PapeleraRepository papeleraRepository = new JPAPapeleraRepository(jpaApi);
+      return new TareaService(usuarioRepository, tareaRepository, papeleraRepository);
    }
    
    @Test

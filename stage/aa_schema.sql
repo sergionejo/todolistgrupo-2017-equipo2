@@ -16,6 +16,19 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Papelera`
+--
+
+DROP TABLE IF EXISTS `Papelera`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Papelera` (
+  `id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `Persona_Tablero`
 --
 
@@ -42,12 +55,9 @@ DROP TABLE IF EXISTS `Tablero`;
 CREATE TABLE `Tablero` (
   `id` bigint(20) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
-  `usuarioId` bigint(20) DEFAULT NULL,
   `administradorId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK1f7k75xppoy5ge6phuwlq1bnd` (`usuarioId`),
   KEY `FKq82919iay2b8h77msdj8289p0` (`administradorId`),
-  CONSTRAINT `FK1f7k75xppoy5ge6phuwlq1bnd` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`),
   CONSTRAINT `FKq82919iay2b8h77msdj8289p0` FOREIGN KEY (`administradorId`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -62,13 +72,16 @@ DROP TABLE IF EXISTS `Tarea`;
 CREATE TABLE `Tarea` (
   `id` bigint(20) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
-  `titulo` varchar(255) DEFAULT NULL,
   `estado` varchar(255) DEFAULT NULL,
   `fCreacion` varchar(255) DEFAULT NULL,
   `fLimite` varchar(255) DEFAULT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `papeleraId` bigint(20) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `FK8i7qqi8fgjgbskvxiutfif3uu` (`papeleraId`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
+  CONSTRAINT `FK8i7qqi8fgjgbskvxiutfif3uu` FOREIGN KEY (`papeleraId`) REFERENCES `Papelera` (`id`),
   CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -87,6 +100,7 @@ CREATE TABLE `Usuario` (
   `fechaNacimiento` date DEFAULT NULL,
   `login` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
+  `papelera` bigint(20) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -113,4 +127,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-21  20:49:35
+-- Dump completed on 2017-11-27 14:43:02

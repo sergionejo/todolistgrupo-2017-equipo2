@@ -25,6 +25,11 @@
             </ul>
         }
         <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="@routes.PapeleraController.listaPapelera(usuario.getId())">
+                    <span class="glyphicon glyphicon-trash"></span> Papelera 
+                </a>
+            </li>
             <li><a href="@routes.UsuarioController.aboutUs()">About Us</a></li>
             @if(usuario != null){
                 <li class="dropdown">

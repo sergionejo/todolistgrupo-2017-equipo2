@@ -1,43 +1,7 @@
 @(tareas: List[Tarea], usuario: Usuario, mensaje: String)
-@scripts = {
-    <script type="text/javascript">
-        function del(urlBorrar) {
-            swal({
-                title: 'Cuidado',
-                text: 'Borrar esta tarea será irrevertible',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, borrar.',
-                showLoaderOnConfirm: true,
-                allowOutsideClick: false
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        url: urlBorrar,
-                        type: 'DELETE',
-                        success: function(results) {
-                            location.reload();
-                        },
-                        error: function(){
-                            swal(
-                            'Ooopss...',
-                            'Ha habido un error borrando la tarea.',
-                            'Error'
-                            )
-                        }
-                    });
-                }
-            })           
-        }
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip(); //data-toggle="tooltip" data-placement="top" title="Tooltip on top"
-        })
-    </script>
-}
+
 @views.html.navbar(usuario,true,false)
-@main("Tareas del usuario @usuario.getLogin()", scripts) {
+@main("Tareas del usuario @usuario.getLogin()") {
 
     <h2> Listado de tareas de <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">@usuario.getLogin()</a></h2>
 
@@ -58,7 +22,7 @@
                             <th>Acción</th>
                         </tr>
                     @for(tarea <- tareas) {
-                        @if(tarea.getEstado() == "iniciada"){
+                        @if(tarea.getEstado() == "iniciada" && tarea.getPapelera() == null){
                             <tr>
                                 <td>@tarea.getTitulo()</td>
                                 <td>@tarea.getFLimite()</td>
@@ -67,11 +31,8 @@
                                     data-toggle="tooltip" data-placement="top" title="Editar tarea">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
-                                    <a class="icono" onmouseover=""
-                                    onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')"
-                                    data-toggle="tooltip" data-placement="top" title="Eliminar tarea">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </a>
+                                    <a href="@routes.GestionTareasController.ToPapelera(tarea.getId())">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                     <a class="icono" href="@routes.GestionTareasController.cambiaTarea(tarea.getId())"
                                     data-toggle="tooltip" data-placement="top" title="Cerrar tarea">
                                         <span class="glyphicon glyphicon-unchecked"></span>
@@ -100,7 +61,7 @@
                         <th>Acción</th>
                     </tr>
                     @for(tarea <- tareas) {
-                        @if(tarea.getEstado() == "terminada"){
+                        @if(tarea.getEstado() == "terminada" && tarea.getPapelera() == null){
                             <tr>
                                 <td>@tarea.getTitulo()</td>
                                 <td>
@@ -108,11 +69,8 @@
                                     data-toggle="tooltip" data-placement="top" title="Editar tarea">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </a>
-                                    <a class="icono" onmouseover=""
-                                    onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')"
-                                    data-toggle="tooltip" data-placement="top" title="Eliminar tarea">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                    </a>
+                                    <a href="@routes.GestionTareasController.ToPapelera(tarea.getId())">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                     <a class="icono" href="@routes.GestionTareasController.cambiaTarea(tarea.getId())"
                                     data-toggle="tooltip" data-placement="top" title="Reabrir tarea">
                                         <span class="glyphicon glyphicon-check"></span>

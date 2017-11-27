@@ -2,6 +2,7 @@ package services;
 
 import javax.inject.*;
 
+import models.Papelera;
 import models.Usuario;
 import models.UsuarioRepository;
 
@@ -19,12 +20,13 @@ public class UsuarioService {
       this.repository = repository;
    }
 
-   public Usuario creaUsuario(String login, String email, String password) {
+   public Usuario creaUsuario(String login, String email, String password, Papelera papelera) {
       if(repository.findByLogin(login) != null){
       	throw new UsuarioServiceException("Login ya existente");
       }
       Usuario usuario = new Usuario(login, email);
       usuario.setPassword(password);
+      usuario.setPapelera(papelera.getId());
       return repository.add(usuario);
    }
 

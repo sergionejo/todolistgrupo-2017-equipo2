@@ -13,6 +13,7 @@ import java.util.List;
 
 import models.Usuario;
 import models.Tablero;
+import models.Papelera;
 
 import play.inject.guice.GuiceApplicationBuilder;
 import play.inject.Injector;
@@ -60,9 +61,14 @@ public class DescripciontableroTest {
         Usuario participante = usuarioService.findUsuarioPorId(1001L);
         Tablero tablero1 = new Tablero(administrador, "Tablero 1");
         assertTrue(tablero1.addParticipante(participante));
-        Usuario usuario1 = usuarioService.creaUsuario("usuario1", "usuario1@gmail.com","1234");
-        Usuario usuario2 = usuarioService.creaUsuario("usuario2", "usuario2@gmail.com","1234");
-        Usuario usuario3 = usuarioService.creaUsuario("usuario3", "usuario3@gmail.com","1234");
+
+        Papelera papelera1 = new Papelera();
+        Papelera papelera2 = new Papelera();
+        Papelera papelera3 = new Papelera();
+
+        Usuario usuario1 = usuarioService.creaUsuario("usuario1", "usuario1@gmail.com","1234", papelera1);
+        Usuario usuario2 = usuarioService.creaUsuario("usuario2", "usuario2@gmail.com","1234", papelera2);
+        Usuario usuario3 = usuarioService.creaUsuario("usuario3", "usuario3@gmail.com","1234", papelera3);
         assertTrue(tablero1.addParticipante(usuario1));
         assertTrue(tablero1.addParticipante(usuario2));
         assertTrue(tablero1.addParticipante(usuario3));

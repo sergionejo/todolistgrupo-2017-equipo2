@@ -21,6 +21,10 @@ public class Tarea {
    @JoinColumn(name="usuarioId")
    public Usuario usuario;
 
+   @ManyToOne
+   @JoinColumn(name="papeleraId")
+   public Papelera papelera;
+
    public Tarea() {}
 
    public Tarea(Usuario usuario, String titulo) {
@@ -122,6 +126,14 @@ public class Tarea {
 
    public void setFLimite(String fecha){
      this.fLimite = fecha;
+   }
+
+   public Papelera getPapelera(){
+      return papelera;
+   }
+
+   public void setPapelera(Papelera papelera){
+      this.papelera = papelera;
    }
 
    @Override
