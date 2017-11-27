@@ -15,15 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP TABLE IF EXISTS `Papelera`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Papelera` (
-  `id` bigint(20) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `Persona_Tablero`
@@ -77,11 +68,9 @@ CREATE TABLE `Tarea` (
   `fCreacion` varchar(255) DEFAULT NULL,
   `fLimite` varchar(255) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
-  `papeleraId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
-  CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`),
-  CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l58` FOREIGN KEY (`PapeleraId`) REFERENCES `Papelera` (`id`)
+  CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,7 +89,6 @@ CREATE TABLE `Usuario` (
   `login` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `papelera` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
