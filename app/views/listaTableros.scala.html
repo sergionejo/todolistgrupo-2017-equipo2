@@ -2,14 +2,34 @@
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
-            $.ajax({
-                url: urlBorrar,
-                type: 'DELETE',
-                success: function(results) {
-                    //refresh the page
-                    location.reload();
+            swal({
+                title: 'Cuidado',
+                text: 'Borrar este tablero será irrevertible',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, borrar.',
+                showLoaderOnConfirm: true,
+                allowOutsideClick: false
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: urlBorrar,
+                        type: 'DELETE',
+                        success: function(results) {
+                            location.reload();
+                        },
+                        error: function(){
+                            swal(
+                            'Ooopss...',
+                            'Ha habido un error borrando el tablero.',
+                            'Error'
+                            )
+                        }
+                    });
                 }
-            });
+            })           
         }
         $(function () {
             $('[data-toggle="tooltip"]').tooltip(); //data-toggle="tooltip" data-placement="top" title="Tooltip on top"
@@ -30,27 +50,35 @@
         </tr>
     @for(tablero <- administrados) {
         <tr>
-            <td width="50%"><a onmouseover="" style="cursor: pointer; margin-right:10px;"
+            <td width="50%">
+                <a class="icono" onmouseover=""
                 href="@routes.TableroController.detalleTablero(tablero.getId())"
                 data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>@tablero.getNombre()</td>
-            <td><a href="@routes.TableroController.formularioEditaTablero(tablero.getId())"
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                </a>@tablero.getNombre()
+            </td>
+            <td>
+                <a class="icono" href="@routes.TableroController.formularioEditaTablero(tablero.getId())"
                 data-toggle="tooltip" data-placement="top" title="Editar tablero">
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                <a onmouseover="" style="cursor: pointer;"
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="icono" onmouseover=""
                 onclick="del('@routes.TableroController.borraTablero(tablero.getId())')"
                 data-toggle="tooltip" data-placement="top" title="Eliminar tablero">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </a>
+            </td>
         </tr>
       }
-
-      <tr>
-          <td><a href="@routes.TableroController.formularioNuevoTablero(usuario.getId())"
+    <tr>
+        <td>
+            <a class="icono" href="@routes.TableroController.formularioNuevoTablero(usuario.getId())"
             data-toggle="tooltip" data-placement="right" title="Añadir tablero">
-              <span class="glyphicon glyphicon-plus"/></a></td>
-          <td>-</td>
-      </tr>
-
+                <span class="glyphicon glyphicon-plus"/>
+            </a>
+        </td>
+        <td>-</td>
+    </tr>
     </table>
 
     @if(mensaje != null) {
@@ -69,14 +97,20 @@
         </tr>
     @for(tablero <- participados) {
         <tr>
-            <td width="50%"><a onmouseover="" style="cursor: pointer; margin-right:10px;"
+            <td width="50%">
+                <a class="icono" onmouseover=""
                 href="@routes.TableroController.detalleTablero(tablero.getId())"
                 data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>@tablero.getNombre()</td>
-            <td><a onmouseover="" style="cursor: pointer;"
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                </a>@tablero.getNombre()
+            </td>
+            <td>
+                <a class="icono" onmouseover=""
                 onclick="del('@routes.TableroController.noSeguirTablero(usuario.getId(),tablero.getId())')"
                 data-toggle="tooltip" data-placement="top" title="Dejar de seguir">
-                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a></td>
+                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                </a>
+            </td>
         </tr>
     }
     </table>
@@ -91,13 +125,19 @@
         </tr>
     @for(tablero <- resto) {
         <tr>
-            <td width="50%"><a onmouseover="" style="cursor: pointer; margin-right:10px;"
+            <td width="50%">
+                <a class="icono" onmouseover=""
                 href="@routes.TableroController.detalleTablero(tablero.getId())"
                 data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>@tablero.getNombre()</td>
-            <td><a href="@routes.TableroController.seguirTablero(usuario.getId(),tablero.getId())"
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                </a>@tablero.getNombre()
+            </td>
+            <td>
+                <a class="icono" href="@routes.TableroController.seguirTablero(usuario.getId(),tablero.getId())"
                 data-toggle="tooltip" data-placement="top" title="Seguir el tablero">
-                <span class="glyphicon glyphicon-star"></span></td>
+                    <span class="glyphicon glyphicon-star"></span>
+                </a>
+            </td>
         </tr>
         }
     </table>
