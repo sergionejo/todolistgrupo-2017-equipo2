@@ -55,6 +55,7 @@ DROP TABLE IF EXISTS `Tablero`;
 CREATE TABLE `Tablero` (
   `id` bigint(20) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
+  `estado` varchar(255) DEFAULT NULL,
   `administradorId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKq82919iay2b8h77msdj8289p0` (`administradorId`),
