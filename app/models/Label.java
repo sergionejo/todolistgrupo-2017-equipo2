@@ -35,6 +35,10 @@ public String getTitulo(){
     return titulo;
 }
 
+public Long getId(){
+    return id;
+}
+
 public String getDescripcion(){
     return descripcion;
 }

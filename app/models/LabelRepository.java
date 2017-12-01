@@ -2,10 +2,10 @@ package models;
 
 import com.google.inject.ImplementedBy;
 import java.util.List;
-@ImplementedBy(JPATareaRepository.class)
+@ImplementedBy(JPALabelRepository.class)
 public interface LabelRepository {
    Label add(Label label);
-   //Tarea update(Tarea tarea);
-   //void delete(Long idTarea);
-   //Tarea findById(Long idTarea);
+   Label update(Label label);
+   void delete(Long idLabel);
+   Label findById(Long idLabel);
 }

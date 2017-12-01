@@ -56,7 +56,7 @@ public class LabelController extends Controller {
           Label label = labelForm.get();
           labelService.nuevoLabel(idUsuario, label.getTitulo(),label.getDescripcion(),label.getColor());
           flash("aviso", "El label se ha grabado correctamente");
-          return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));//continuar aqui
+          return redirect(controllers.routes.TableroController.listaTableros(idUsuario));//continuar aqui
        }
     }
 

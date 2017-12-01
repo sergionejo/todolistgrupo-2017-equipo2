@@ -38,7 +38,7 @@
 }
 @views.html.navbar(usuario,false,true)
 @main("Tableros del usuario", scripts) {
-<div class="container">
+<div class="container col-md-8">
     <h2> Listado de tableros administrados por
         <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
         data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
@@ -142,4 +142,8 @@
         }
     </table>
 </div> 
+<div class="labels col-md-4">
+    <h2>Labels</h2>
+    <a class="crear-label" href="@routes.LabelController.formularioNuevoLabel(usuario.getId())">Crear nuevo label</a>
+</div>
 }
