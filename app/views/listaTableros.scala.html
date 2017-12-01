@@ -1,4 +1,4 @@
-@(administrados: List[Tablero], participados: List[Tablero], resto: List[Tablero], usuario: Usuario, mensaje: String)
+@(tableros:List[Tablero], administrados: List[Tablero], participados: List[Tablero], resto: List[Tablero], usuario: Usuario, mensaje: String)
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -39,107 +39,163 @@
 @views.html.navbar(usuario,false,true)
 @main("Tableros del usuario", scripts) {
 <div class="container">
-    <h2> Listado de tableros administrados por
-        <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
-        data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
 
-    <table class="table table-striped">
-        <tr>
-            <th>Tableros</th>
-            <th>Acción</th>
-        </tr>
-    @for(tablero <- administrados) {
-        <tr>
-            <td width="50%">
-                <a class="icono" onmouseover=""
-                href="@routes.TableroController.detalleTablero(tablero.getId())"
-                data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
-                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                </a>@tablero.getNombre()
-            </td>
-            <td>
-                <a class="icono" href="@routes.TableroController.formularioEditaTablero(tablero.getId())"
-                data-toggle="tooltip" data-placement="top" title="Editar tablero">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-                <a class="icono" onmouseover=""
-                onclick="del('@routes.TableroController.borraTablero(tablero.getId())')"
-                data-toggle="tooltip" data-placement="top" title="Eliminar tablero">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                </a>
-            </td>
-        </tr>
-      }
-    <tr>
-        <td>
-            <a class="icono" href="@routes.TableroController.formularioNuevoTablero(usuario.getId())"
-            data-toggle="tooltip" data-placement="right" title="Añadir tablero">
-                <span class="glyphicon glyphicon-plus"/>
-            </a>
-        </td>
-        <td>-</td>
-    </tr>
-    </table>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#administrados">Administrados</a></li>
+        <li><a data-toggle="tab" href="#participados">Participados</a></li>
+        <li><a data-toggle="tab" href="#interes">Interesantes</a></li>
+        <li><a data-toggle="tab" href="#cerrados">Cerrados</a></li>
+    </ul>
 
-    @if(mensaje != null) {
-        <div class="alert alert-success">
-            @mensaje
+    <div class="tab-content">
+        <div id="administrados" class="tab-pane fade in active">
+            <h2> Listado de tableros administrados por
+                <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
+                data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Tableros</th>
+                    <th>Acción</th>
+                </tr>
+            @for(tablero <- administrados) {
+                @if(tablero.getEstado() != "cerrado") {
+                    <tr>
+                        <td width="50%">
+                            <a class="icono" onmouseover=""
+                            href="@routes.TableroController.detalleTablero(tablero.getId())"
+                            data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                            </a>@tablero.getNombre()
+                        </td>
+                        <td>
+                            <a class="icono" href="@routes.TableroController.formularioEditaTablero(tablero.getId())"
+                            data-toggle="tooltip" data-placement="top" title="Editar tablero">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                            <a class="icono" onmouseover=""
+                            onclick="del('@routes.TableroController.borraTablero(tablero.getId())')"
+                            data-toggle="tooltip" data-placement="top" title="Eliminar tablero">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>
+                            <a class="icono" href="@routes.TableroController.cerrarTablero(tablero.getId())"
+                            data-toggle="tooltip" data-placement="right" title="Cerrar tablero">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            <tr>
+                <td>
+                    <a class="icono" href="@routes.TableroController.formularioNuevoTablero(usuario.getId())"
+                    data-toggle="tooltip" data-placement="right" title="Añadir tablero">
+                        <span class="glyphicon glyphicon-plus"/>
+                    </a>
+                </td>
+                <td>-</td>
+            </tr>
+            </table>
+
+            @if(mensaje != null) {
+                <div class="alert alert-success">
+                    @mensaje
+                </div>
+            }
         </div>
-    }
-  <h2> Listado de tableros participados por
-      <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
-      data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
-  
-    <table class="table table-striped">
-        <tr>
-            <th>Tableros</th>
-            <th>Acción</th>
-        </tr>
-    @for(tablero <- participados) {
-        <tr>
-            <td width="50%">
-                <a class="icono" onmouseover=""
-                href="@routes.TableroController.detalleTablero(tablero.getId())"
-                data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
-                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                </a>@tablero.getNombre()
-            </td>
-            <td>
-                <a class="icono" onmouseover=""
-                onclick="del('@routes.TableroController.noSeguirTablero(usuario.getId(),tablero.getId())')"
-                data-toggle="tooltip" data-placement="top" title="Dejar de seguir">
-                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                </a>
-            </td>
-        </tr>
-    }
-    </table>
 
-    <h2> Tableros que le podrían interesar al usuario
-        <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
-        data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
-    <table class="table table-striped">
-        <tr>
-            <th>Tableros</th>
-            <th>Acción</th>
-        </tr>
-    @for(tablero <- resto) {
-        <tr>
-            <td width="50%">
-                <a class="icono" onmouseover=""
-                href="@routes.TableroController.detalleTablero(tablero.getId())"
-                data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
-                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                </a>@tablero.getNombre()
-            </td>
-            <td>
-                <a class="icono" href="@routes.TableroController.seguirTablero(usuario.getId(),tablero.getId())"
-                data-toggle="tooltip" data-placement="top" title="Seguir el tablero">
-                    <span class="glyphicon glyphicon-star"></span>
-                </a>
-            </td>
-        </tr>
-        }
-    </table>
+
+        <div id="participados" class="tab-pane fade">
+            <h2> Listado de tableros participados por
+                <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
+                data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
+            
+                <table class="table table-striped">
+                    <tr>
+                        <th>Tableros</th>
+                        <th>Acción</th>
+                    </tr>
+                @for(tablero <- participados) {
+                    @if(tablero.getEstado() != "cerrado") {
+                        <tr>
+                            <td width="50%">
+                                <a class="icono" onmouseover=""
+                                href="@routes.TableroController.detalleTablero(tablero.getId())"
+                                data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
+                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                </a>@tablero.getNombre()
+                            </td>
+                            <td>
+                                <a class="icono" onmouseover=""
+                                onclick="del('@routes.TableroController.noSeguirTablero(usuario.getId(),tablero.getId())')"
+                                data-toggle="tooltip" data-placement="top" title="Dejar de seguir">
+                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                </table>
+        </div>
+
+
+
+        <div id="interes" class="tab-pane fade">
+            <h2> Tableros que le podrían interesar al usuario
+                <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
+                data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Tableros</th>
+                    <th>Acción</th>
+                </tr>
+            @for(tablero <- resto) {
+                @if(tablero.getEstado() != "cerrado"){
+                    <tr>
+                        <td width="50%">
+                            <a class="icono" onmouseover=""
+                            href="@routes.TableroController.detalleTablero(tablero.getId())"
+                            data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                            </a>@tablero.getNombre()
+                        </td>
+                        <td>
+                            <a class="icono" href="@routes.TableroController.seguirTablero(usuario.getId(),tablero.getId())"
+                            data-toggle="tooltip" data-placement="top" title="Seguir el tablero">
+                                <span class="glyphicon glyphicon-star"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            </table>
+        </div>
+
+
+
+            <div id="cerrados" class="tab-pane fade">
+                <h2> Tableros cerrados del usuario
+                    <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())"
+                    data-toggle="tooltip" data-placement="bottom" title="Mi perfil">@usuario.getLogin()</a></h2>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Tableros</th>
+                    </tr>
+                @for(tablero <- tableros) {
+                    @if(tablero.getEstado() == "cerrado") {
+                        <tr>
+                            <td width="50%">
+                                <a class="icono" onmouseover=""
+                                href="@routes.TableroController.detalleTablero(tablero.getId())"
+                                data-toggle="tooltip" data-placement="right" title="Detalle: @tablero.getNombre()">
+                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                </a>@tablero.getNombre()
+                            </td>
+                        </tr>
+                    }
+                }
+                </table>
+            </div>
+    </div>
 </div> 
 }
