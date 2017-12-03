@@ -25,6 +25,10 @@ public class Tablero {
    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
    @JoinTable(name="Persona_Tablero")
    private Set<Usuario> participantes = new HashSet<Usuario>();
+   @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+   @JoinTable(name="Labels_asignados")
+   private Set<Label> labels = new HashSet<Label>();
+
    private String estado;
 
 
@@ -84,6 +88,22 @@ public class Tablero {
     public boolean removeParticipante(Usuario usuario){
         return participantes.remove(usuario);
     }
+
+    public Set<Label> getLabels() {
+        return labels;
+     }
+  
+     public void setLabels(Set<Label> labels) {
+        this.labels = labels;
+     }
+ 
+     public boolean addLabel(Label label){
+         return labels.add(label);
+     }
+ 
+     public boolean removeLabel(Label label){
+         return labels.remove(label);
+     }
 
     /**
      * @return the estado

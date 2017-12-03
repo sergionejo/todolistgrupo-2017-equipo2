@@ -13,8 +13,29 @@
             @helper.inputText(tableroForm("nombre"), '_label -> "Nombre", 'size -> 70 ,'class-> "form-control")
         </fieldset>
         </div>
-        <p>
-           <input type="submit" class="btn btn-primary" value="Guardar">
-        </p>
+        
+        <div class="form-group">
+                
+            <legend>Labels</legend>
+            <ul class="list-inline">
+                <p>Labels asignados</p>
+                <li><span class="label label-primary">Label nuevo</span></li>               
+            </ul> 
+            
+                
+            <select name="label">  
+                <p>Añadir nuevo label </p>              
+                <option value="volvo">Label 1</option>
+                <option value="saab">Label 2</option>
+            </select>
+
+            <input type="submit" class="btn btn-primary" value="Añadir">
+                
+        </div>
+        
+            <p style="padding-top: 40px;">
+            <input type="submit" class="btn btn-primary" value="Guardar">
+            </p>
+        
     }
 }

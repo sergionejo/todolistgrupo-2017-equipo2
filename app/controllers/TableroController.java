@@ -15,6 +15,7 @@ import services.UsuarioService;
 import services.TableroService;
 import models.Usuario;
 import models.Tablero;
+import models.Label;
 import security.ActionAuthenticator;
 
 public class TableroController extends Controller {
