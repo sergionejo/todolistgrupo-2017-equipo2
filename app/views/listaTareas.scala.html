@@ -1,6 +1,6 @@
 @(tareas: List[Tarea], usuario: Usuario, mensaje: String)
 
-@views.html.navbar(usuario,true,false)
+@views.html.navbar(usuario,true,false,false)
 @main("Tareas del usuario @usuario.getLogin()") {
 
     <h2> Listado de tareas de <a href="@routes.UsuarioController.detalleUsuario(usuario.getId())">@usuario.getLogin()</a></h2>

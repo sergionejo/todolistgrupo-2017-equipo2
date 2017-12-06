@@ -1,0 +1,39 @@
+@(grupo: Grupo, administrador: Usuario, participantes: List[Usuario], mensaje: String)
+@scripts = {
+    <script type="text/javascript">
+        function del(urlBorrar) {
+            $.ajax({
+                url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+    </script>
+}
+@main("Detalle grupo", scripts) {
+    <h2>Detalle del grupo: <b>@grupo.getNombre()</b></h2>
+    <h3>Administrador: @administrador.getLogin() (@administrador.getEmail())</h3>
+    <br>
+    <h4>Listado de participantes:</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Login</th>
+            <th>Email</th>
+        </tr>
+    @for(participante <- participantes) {
+        <tr>
+            <td width="50%">@participante.getLogin()</td>
+            <td>@participante.getEmail()</td>
+        </tr>
+      }
+    </table>
+
+    @if(mensaje != null) {
+        <div class="alert alert-success">
+            @mensaje
+        </div>
+    }
+}

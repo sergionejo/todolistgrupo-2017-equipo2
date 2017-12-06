@@ -16,6 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Grupo`
+--
+
+DROP TABLE IF EXISTS `Grupo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Grupo` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `admingrupoId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKoxeyi5gstkeugraoclh6fgdr0` (`admingrupoId`),
+  CONSTRAINT `FKoxeyi5gstkeugraoclh6fgdr0` FOREIGN KEY (`admingrupoId`) REFERENCES `Usuario` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Label`
+--
+
+DROP TABLE IF EXISTS `Label`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Label` (
+  `id` bigint(20) NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `Papelera`
 --
 
@@ -25,6 +58,23 @@ DROP TABLE IF EXISTS `Papelera`;
 CREATE TABLE `Papelera` (
   `id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Persona_Grupo`
+--
+
+DROP TABLE IF EXISTS `Persona_Grupo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Persona_Grupo` (
+  `participantesgrupo_id` bigint(20) NOT NULL,
+  `participagrupo_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`participantesgrupo_id`,`participagrupo_id`),
+  KEY `FK79epvchdt0omujlimcn0mntbe` (`participagrupo_id`),
+  CONSTRAINT `FK756dkklxfwxvi22v42pxwa7bf` FOREIGN KEY (`participantesgrupo_id`) REFERENCES `Grupo` (`id`),
+  CONSTRAINT `FK79epvchdt0omujlimcn0mntbe` FOREIGN KEY (`participagrupo_id`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,8 +104,8 @@ DROP TABLE IF EXISTS `Tablero`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tablero` (
   `id` bigint(20) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL,
   `estado` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
   `administradorId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKq82919iay2b8h77msdj8289p0` (`administradorId`),
@@ -128,4 +178,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-27 14:43:02
+-- Dump completed on 2017-12-03 18:49:08

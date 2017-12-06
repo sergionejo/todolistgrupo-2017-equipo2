@@ -26,6 +26,11 @@ public class Usuario {
    private Set<Tablero> administrados = new HashSet<Tablero>();
    @ManyToMany(mappedBy="participantes", fetch=FetchType.EAGER)
    private Set<Tablero> tableros = new HashSet<Tablero>();
+   @OneToMany(mappedBy="admingrupo", fetch=FetchType.EAGER)
+   private Set<Grupo> grupos = new HashSet<Grupo>();
+   @ManyToMany(mappedBy="participagrupo", fetch=FetchType.EAGER)
+   private Set<Grupo> participantesgrupo = new HashSet<Grupo>();
+
    private Long papelera;
 
    // Un constructor vacío necesario para JPA
@@ -109,6 +114,22 @@ public class Usuario {
 
    public void setTableros(Set<Tablero> tableros) {
       this.tableros = tableros;
+   }
+
+   public Set<Grupo> getGrupos() {
+      return grupos;
+   }
+
+   public void setGrupos(Set<Grupo> grupos) {
+      this.grupos = grupos;
+   }
+
+   public Set<Grupo> getGruposParticipa() {
+      return participantesgrupo;
+   }
+
+   public void setGruposParticipa(Set<Grupo> participantesgrupo) {
+      this.participantesgrupo = participantesgrupo;
    }
 
    public String toString() {
