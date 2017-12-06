@@ -1,4 +1,4 @@
-@(usuario: Usuario, activeTareas: Boolean, activeTableros: Boolean)
+@(usuario: Usuario, activeTareas: Boolean, activeTableros: Boolean, activeGrupos: Boolean)
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -22,6 +22,9 @@
                 <li @if(activeTableros){class="active"}>
                     <a href="@routes.TableroController.listaTableros(usuario.getId())">
                     Mis tableros @if(activeTableros){<span class="sr-only">(current)</span>}</a></li>
+                <li @if(activeGrupos){class="active"}>
+                    <a href="@routes.GrupoController.listaGrupos(usuario.getId())">
+                    Mis grupos @if(activeGrupos){<span class="sr-only">(current)</span>}</a></li>
             </ul>
         }
         <ul class="nav navbar-nav navbar-right">

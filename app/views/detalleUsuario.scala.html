@@ -1,5 +1,5 @@
 @(usuario: Usuario)
-@views.html.navbar(usuario,false,false)
+@views.html.navbar(usuario,false,false,false)
 @main("Detalle usuario"){
 	<h1>Detalle de @usuario.getLogin()</h1>
 	<ul>
@@ -13,6 +13,7 @@
 			}</li>
 	</ul>
 	<div class="container">
+		<a href="@routes.GrupoController.listaGrupos(usuario.getId())" class="btn btn-info">Ver grupos</a>
 		<a href="@routes.GestionTareasController.listaTareas(usuario.getId())" class="btn btn-info">Ver tareas</a>
 		<a href="@routes.TableroController.listaTableros(usuario.getId())" class="btn btn-info">Ver tableros</a>
 		<a href="@routes.UsuarioController.formularioEditarUsuario(usuario.getId())" class="btn btn-info">Actualizar Perfil</a>
