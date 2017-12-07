@@ -148,4 +148,14 @@ public class GrupoController extends Controller {
         flash("aviso", "Grupo borrado correctamente");
         return ok();
     }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result formularioGrupoNuevoUsuario(Long idUsuario){
+        //Usar como referencia la función formularioEditaGrupo
+        //Comprobar que el grupo existe
+        //Comprobar que el usuario actual es el administrador del grupo
+        //Añadir el usuario por parámetro de la función a la lista de participantes
+        //Actualizar grupo con la función modificaGrupoParticipantes del GrupoService
+        return ok();
+    }
 }
