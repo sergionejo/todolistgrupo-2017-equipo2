@@ -11,4 +11,5 @@ public interface MensajeRepository {
     public Mensaje add(Mensaje mensaje);
     public Mensaje findById(Long idMensaje);
     public Mensaje update(Mensaje mensaje);
+    public void delete(Long idMensaje);
 }
