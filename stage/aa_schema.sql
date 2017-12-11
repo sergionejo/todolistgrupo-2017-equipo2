@@ -49,6 +49,26 @@ CREATE TABLE `Label` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `Mensaje`
+--
+
+DROP TABLE IF EXISTS `Mensaje`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Mensaje` (
+  `id` bigint(20) NOT NULL,
+  `mensaje` varchar(255) DEFAULT NULL,
+  `grupoId` bigint(20) DEFAULT NULL,
+  `autorId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKkoffo8xba8bise1sxce2x1kou` (`grupoId`),
+  KEY `FKj8lmhtmkwej6bu6smgimu2643` (`autorId`),
+  CONSTRAINT `FKj8lmhtmkwej6bu6smgimu2643` FOREIGN KEY (`autorId`) REFERENCES `Usuario` (`id`),
+  CONSTRAINT `FKkoffo8xba8bise1sxce2x1kou` FOREIGN KEY (`grupoId`) REFERENCES `Grupo` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `Papelera`
 --
 
@@ -178,4 +198,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-03 18:49:08
+-- Dump completed on 2017-12-11  8:26:21
