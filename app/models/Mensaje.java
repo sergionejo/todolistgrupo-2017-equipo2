@@ -20,10 +20,10 @@ public class Mensaje {
     private String mensaje;
     @ManyToOne
     @JoinColumn(name="autorId")
-    public Usuario usuario;
+    public Usuario autor;
     @ManyToOne
     @JoinColumn(name="grupoId")
-    public Grupo grupo;
+    public Grupo grupocontiene;
     
 
     // Un constructor vacío necesario para JPA
@@ -38,14 +38,14 @@ public class Mensaje {
      * @return the grupo
      */
     public Grupo getGrupo() {
-        return grupo;
+        return grupocontiene;
     }
 
     /**
      * @param grupo the grupo to set
      */
     public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
+        this.grupocontiene = grupo;
     }
 
     /**
@@ -77,16 +77,16 @@ public class Mensaje {
     }
 
     /**
-     * @return the usuario
+     * @return the autor
      */
     public Usuario getUsuario() {
-        return usuario;
+        return autor;
     }
 
     /**
-     * @param usuario the usuario to set
+     * @param autor the autor to set
      */
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Usuario autor) {
+        this.autor = autor;
     }
 }

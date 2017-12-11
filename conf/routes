@@ -45,24 +45,26 @@ GET     /tablero/:id/                   controllers.TableroController.detalleTab
 GET     /tablero/:id/editar             controllers.TableroController.formularioEditaTablero(id: Long)
 POST    /tablero/:id/editar             controllers.TableroController.grabaTableroModificado(id: Long)
 DELETE  /tablero/:id                    controllers.TableroController.borraTablero(id: Long)
-POST     /tablero/:id/cerrar             controllers.TableroController.cerrarTablero(id: Long)
-GET    /tablero/:id/cerrar             controllers.TableroController.cerradoTablero(id: Long)
+POST     /tablero/:id/cerrar            controllers.TableroController.cerrarTablero(id: Long)
+GET    /tablero/:id/cerrar              controllers.TableroController.cerradoTablero(id: Long)
 
 GET     /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.seguirTablero(idu: Long,idt: Long)
 DELETE  /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.noSeguirTablero(idu: Long,idt: Long)
 
-GET     /usuarios/:id/papelera      controllers.PapeleraController.listaPapelera(id: Long)
+GET     /usuarios/:id/papelera          controllers.PapeleraController.listaPapelera(id: Long)
 
-GET     /usuarios/:id/labels/nuevo  controllers.LabelController.formularioNuevoLabel(id: Long)
-POST     /usuarios/:id/labels/nuevo  controllers.LabelController.creaNuevoLabel(id: Long)
+GET     /usuarios/:id/labels/nuevo      controllers.LabelController.formularioNuevoLabel(id: Long)
+POST     /usuarios/:id/labels/nuevo     controllers.LabelController.creaNuevoLabel(id: Long)
 
-GET     /usuarios/:id/grupos/nuevo    controllers.GrupoController.formularioNuevoGrupo(id: Long)
-POST    /usuarios/:id/grupos/nuevo    controllers.GrupoController.creaNuevoGrupo(id: Long)
+GET     /usuarios/:id/grupos/nuevo      controllers.GrupoController.formularioNuevoGrupo(id: Long)
+POST    /usuarios/:id/grupos/nuevo      controllers.GrupoController.creaNuevoGrupo(id: Long)
 GET     /usuarios/:id/grupos            controllers.GrupoController.listaGrupos(id: Long)
-GET     /grupo/:id/                     controllers.GrupoController.detalleGrupo(id: Long)
-GET     /grupo/:id/editar               controllers.GrupoController.formularioEditaGrupo(id: Long)
-POST    /grupo/:id/editar               controllers.GrupoController.grabaGrupoModificado(id: Long)
-DELETE  /grupo/:id                      controllers.GrupoController.borraGrupo(id: Long)
+GET     /grupos/:id/                    controllers.GrupoController.detalleGrupo(id: Long)
+GET     /grupos/:id/editar              controllers.GrupoController.formularioEditaGrupo(id: Long)
+POST    /grupos/:id/editar              controllers.GrupoController.grabaGrupoModificado(id: Long)
+DELETE  /grupos/:id                     controllers.GrupoController.borraGrupo(id: Long)
+GET     /grupos/:id/usuarios/nuevo      controllers.GrupoController.formularioGrupoNuevoUsuario(id: Long)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

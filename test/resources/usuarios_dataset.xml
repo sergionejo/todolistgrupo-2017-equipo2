@@ -18,4 +18,5 @@
 	<Persona_Tablero/>
     <Grupo id="1000" nombre="Grupo test 1" admingrupoId="1000"/>
 	<Persona_Grupo/>
+    <Mensaje/>
 </dataset>
