@@ -33,6 +33,12 @@ public class Mensaje {
         this.mensaje = mensaje;
     }
 
+    public Mensaje(String mensaje, Usuario autor, Grupo grupo){
+        this.mensaje = mensaje;
+        this.autor = autor;
+        this.grupocontiene = grupo;
+    }
+
     // Getters and Setters
     /**
      * @return the grupo

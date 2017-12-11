@@ -17,6 +17,7 @@
     <Tablero id="1001" nombre="Tablero test 2" administradorId="1000"/>
 	<Persona_Tablero/>
     <Grupo id="1000" nombre="Grupo test 1" admingrupoId="1000"/>
+    <Grupo id="1001" nombre="Grupo test 2" admingrupoId="1015"/>
 	<Persona_Grupo/>
-    <Mensaje/>
+    <Mensaje id="1000" mensaje="Yeah" autorId="1002" grupoId="1001"/>
 </dataset>
