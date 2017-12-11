@@ -85,8 +85,8 @@ public class MensajeServiceTest {
 
         List<Mensaje> mensajes = mensajeService.allMensajesGrupo(1000L);
 
-        assertEquals(men1.getMensaje(), mensajes.get(1).getMensaje());
-        assertEquals(men2.getMensaje(), mensajes.get(0).getMensaje());
+        assertEquals(men1.getMensaje(), mensajes.get(0).getMensaje());
+        assertEquals(men2.getMensaje(), mensajes.get(1).getMensaje());
         assertEquals(2, mensajes.size());
     }
 }

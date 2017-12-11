@@ -5,6 +5,7 @@ import javax.inject.*;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.List;
+import java.util.Collections;
 
 import models.Grupo;
 import models.GrupoRepository;
@@ -50,6 +51,7 @@ public class MensajeService{
 
         Set<Mensaje> mensajesSet = grupo.getMensajes();
         List<Mensaje> mensajes = new ArrayList<Mensaje>(mensajesSet);
+        Collections.sort(mensajes, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
 
         return mensajes;
     }
