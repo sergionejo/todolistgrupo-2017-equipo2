@@ -23,8 +23,8 @@ public class Grupo {
     @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name="Persona_Grupo")
     private Set<Usuario> participagrupo = new HashSet<Usuario>();
-    @OneToMany(mappedBy="mensaje", fetch=FetchType.EAGER)
-    public Set<Mensaje> mensajes = new HashSet<Mensaje>();
+    @OneToMany(mappedBy="grupocontiene", fetch=FetchType.EAGER)
+    public Set<Mensaje> mensajesgrupo = new HashSet<Mensaje>();
 
     // Un constructor vacío necesario para JPA
     public Grupo() {}
@@ -86,14 +86,14 @@ public class Grupo {
      * @return the mensajes
      */
     public Set<Mensaje> getMensajes() {
-        return mensajes;
+        return mensajesgrupo;
     }
 
     /**
      * @param mensajes the mensajes to set
      */
     public void setMensajes(Set<Mensaje> mensajes) {
-        this.mensajes = mensajes;
+        this.mensajesgrupo = mensajes;
     }
 
     @Override
