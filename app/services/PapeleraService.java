@@ -4,10 +4,12 @@ import javax.inject.*;
 
 import models.Papelera;
 import models.PapeleraRepository;
+import models.Tablero;
 import models.Usuario;
 import models.Papelera;
 import models.Tarea;
 import models.UsuarioRepository;
+import services.TableroServiceException;
 import services.UsuarioService;
 
 import java.util.Set;
@@ -43,5 +45,19 @@ public class PapeleraService{
         tareasList.addAll(tareas);
         Collections.sort(tareasList, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
         return tareasList;
+     }
+
+     public List<Tablero> allTablerosPapelera(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario);
+        if (usuario == null) {
+           throw new TableroServiceException("Usuario no existente");
+        }
+        Papelera papelera = papeleraRepository.findById(usuario.getPapelera());
+        
+        Set<Tablero> tableros = papelera.getTableros();
+        List<Tablero> tablerosList = new ArrayList<Tablero>();
+        tablerosList.addAll(tableros);
+        Collections.sort(tablerosList, (a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1);
+        return tablerosList;
      }
 }

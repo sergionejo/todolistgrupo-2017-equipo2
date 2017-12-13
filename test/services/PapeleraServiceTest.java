@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.util.List;
 
 import models.Usuario;
+import models.Tablero;
 import models.Tarea;
 
 import play.inject.guice.GuiceApplicationBuilder;
@@ -58,5 +59,15 @@ public class PapeleraServiceTest {
        assertEquals(2, tareas.size());
        assertEquals((Long) 1000L, (Long) tareas.get(0).getId());
        assertEquals((Long) 1001L, (Long) tareas.get(1).getId());
+   }
+
+   @Test
+   public void testListarPapeleraTablero(){
+       PapeleraService papeleraService = newPapeleraService();
+
+       List<Tablero> tableros = papeleraService.allTablerosPapelera(1000L);
+
+       assertEquals(1, tableros.size());
+       assertEquals((Long) 1000L, (Long) tableros.get(0).getId());
    }
 }
