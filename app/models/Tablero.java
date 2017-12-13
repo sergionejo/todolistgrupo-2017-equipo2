@@ -27,6 +27,10 @@ public class Tablero {
    private Set<Usuario> participantes = new HashSet<Usuario>();
    private String estado;
 
+   @ManyToOne
+   @JoinColumn(name="papeleraId")
+   public Papelera papeleraTablero;
+
 
    // Un constructor vacío necesario para JPA
    public Tablero() {}
@@ -97,6 +101,20 @@ public class Tablero {
      */
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the papeleraTablero
+     */
+    public Papelera getPapeleraTablero() {
+        return papeleraTablero;
+    }
+
+    /**
+     * @param papeleraTablero the papeleraTablero to set
+     */
+    public void setPapeleraTablero(Papelera papeleraTablero) {
+        this.papeleraTablero = papeleraTablero;
     }
  
     @Override
