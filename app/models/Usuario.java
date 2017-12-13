@@ -30,6 +30,8 @@ public class Usuario {
    private Set<Grupo> grupos = new HashSet<Grupo>();
    @ManyToMany(mappedBy="participagrupo", fetch=FetchType.EAGER)
    private Set<Grupo> participantesgrupo = new HashSet<Grupo>();
+   @OneToMany(mappedBy="autor", fetch=FetchType.EAGER)
+   public Set<Mensaje> mensajesusuario = new HashSet<Mensaje>();
 
    private Long papelera;
 
@@ -155,6 +157,20 @@ public class Usuario {
 
    public void setPapelera(Long papelera) {
      this.papelera = papelera;
+   }
+
+   /**
+    * @return the mensajes
+    */
+   public Set<Mensaje> getMensajes() {
+     return mensajesusuario;
+   }
+
+   /**
+    * @param mensajes the mensajes to set
+    */
+   public void setMensajes(Set<Mensaje> mensajes) {
+     this.mensajesusuario = mensajes;
    }
 
    @Override

@@ -66,6 +66,10 @@
                 data-toggle="tooltip" data-placement="top" title="Eliminar grupo">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </a>
+                <a class="icono" href="@routes.MensajeController.listaMensajes(usuario.getId(), grupo.getId())"
+                data-toggle="tooltip" data-placement="top" title="Ver Mensajes">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                </a>
             </td>
         </tr>
     }

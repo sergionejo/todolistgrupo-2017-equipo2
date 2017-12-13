@@ -22,13 +22,24 @@
         <tr>
             <th>Login</th>
             <th>Email</th>
+            <th>Acciones</th>
         </tr>
     @for(participante <- participantes) {
         <tr>
             <td width="50%">@participante.getLogin()</td>
             <td>@participante.getEmail()</td>
+            <td>Icono de eliminar</td>
         </tr>
       }
+      <tr>
+        <td>
+            <a class="icono" href="@routes.GrupoController.formularioGrupoNuevoUsuario(administrador.getId())"
+            data-toggle="tooltip" data-placement="right" title="Añadir usuario">
+                <span class="glyphicon glyphicon-plus"/>
+            </a>
+        </td>
+        <td>-</td>
+    </tr>
     </table>
 
     @if(mensaje != null) {
