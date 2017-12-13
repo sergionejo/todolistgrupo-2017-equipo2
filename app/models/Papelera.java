@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.*;
 
+import models.Tablero;
 import models.Tarea;
 import models.Usuario;
 
@@ -18,6 +19,8 @@ public class Papelera {
     private Long id;
     @OneToMany(mappedBy="papelera", fetch=FetchType.EAGER)
     private Set<Tarea> tareas = new HashSet<Tarea>();
+    @OneToMany(mappedBy="papeleraTablero", fetch=FetchType.EAGER)
+    private Set<Tablero> tableros = new HashSet<Tablero>();
 
     // Un constructor vacío necesario para JPA
     public Papelera() {}
@@ -37,5 +40,19 @@ public class Papelera {
 
     public void setId(Long id){
         this.id = id;
+    }
+
+    /**
+     * @return the tableros
+     */
+    public Set<Tablero> getTableros() {
+        return tableros;
+    }
+
+    /**
+     * @param tableros the tableros to set
+     */
+    public void setTableros(Set<Tablero> tableros) {
+        this.tableros = tableros;
     }
 }

@@ -58,11 +58,11 @@ DROP TABLE IF EXISTS `Mensaje`;
 CREATE TABLE `Mensaje` (
   `id` bigint(20) NOT NULL,
   `mensaje` varchar(255) DEFAULT NULL,
-  `grupoId` bigint(20) DEFAULT NULL,
   `autorId` bigint(20) DEFAULT NULL,
+  `grupoId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKkoffo8xba8bise1sxce2x1kou` (`grupoId`),
   KEY `FKj8lmhtmkwej6bu6smgimu2643` (`autorId`),
+  KEY `FKkoffo8xba8bise1sxce2x1kou` (`grupoId`),
   CONSTRAINT `FKj8lmhtmkwej6bu6smgimu2643` FOREIGN KEY (`autorId`) REFERENCES `Usuario` (`id`),
   CONSTRAINT `FKkoffo8xba8bise1sxce2x1kou` FOREIGN KEY (`grupoId`) REFERENCES `Grupo` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -127,8 +127,11 @@ CREATE TABLE `Tablero` (
   `estado` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `administradorId` bigint(20) DEFAULT NULL,
+  `papeleraId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKq82919iay2b8h77msdj8289p0` (`administradorId`),
+  KEY `FKfli92jreskkgcv4r08ee1dooo` (`papeleraId`),
+  CONSTRAINT `FKfli92jreskkgcv4r08ee1dooo` FOREIGN KEY (`papeleraId`) REFERENCES `Papelera` (`id`),
   CONSTRAINT `FKq82919iay2b8h77msdj8289p0` FOREIGN KEY (`administradorId`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -198,4 +201,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-11 15:35:28
+-- Dump completed on 2017-12-13  8:31:37
