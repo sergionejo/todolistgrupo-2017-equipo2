@@ -18,6 +18,8 @@ import models.Papelera;
 import models.Usuario;
 import security.ActionAuthenticator;
 
+import play.libs.Json;
+
 public class UsuarioController extends Controller {
 
    @Inject FormFactory formFactory;
@@ -161,5 +163,14 @@ public class UsuarioController extends Controller {
        Editar datos = form.get();
        Usuario usuario = usuarioService.modificarUsuario(idUsuario, datos.pass, datos.nombre, datos.apellidos, datos.fecha);
        return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
+    }
+
+    public Result findAllNombre(){
+        Form<GetFindUsuarioNombre> form = formFactory.form(GetFindUsuarioNombre.class).bindFromRequest();
+        GetFindUsuarioNombre datos = form.get();
+        String nombre = datos.q;
+        List<Usuario> lista = usuarioService.findAllNombre(nombre);
+        String json = Json.stringify(Json.toJson(lista));
+        return ok(jsonAllUsuariosNombre.render(json));
     }
 }

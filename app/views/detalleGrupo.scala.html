@@ -11,8 +11,29 @@
                 }
             });
         }
+
+        $(document).ready(function(){
+            $("#formNuevoUsuario").submit(function(e){e.preventDefault();})
+        });
+
+        $("#buttonNuevoUsuario").click(function(){
+            var nombre = $("#nombreUsuario").val();
+            $.ajax({url:"@routes.UsuarioController.findAllNombre()?q="+nombre})
+            .done(function(data){
+                $.ajax({url:"@routes.GrupoController.formularioGrupoNuevoUsuario(grupo.getId())"})
+                .done(function(){swal('OK',data,'success')})
+                .fail(function(){
+                    swal('Oops...','Something went wrong!2','error')
+                })
+            })
+            .fail(function(){
+                swal('Oops...','Something went wrong!1','error')
+            });
+        });
+
     </script>
 }
+@views.html.navbar(administrador,false,false,true)
 @main("Detalle grupo", scripts) {
     <h2>Detalle del grupo: <b>@grupo.getNombre()</b></h2>
     <h3>Administrador: @administrador.getLogin() (@administrador.getEmail())</h3>
@@ -33,10 +54,17 @@
       }
       <tr>
         <td>
-            <a class="icono" href="@routes.GrupoController.formularioGrupoNuevoUsuario(administrador.getId())"
-            data-toggle="tooltip" data-placement="right" title="Añadir usuario">
-                <span class="glyphicon glyphicon-plus"/>
-            </a>
+            <form class="form-inline" id="formNuevoUsuario">
+                <div class="form-group">
+                    <label for="nombreUsuario">Nuevo usuario</label>
+                    <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Login de usuario">
+                </div>
+                <div class="form-group">
+                    <button class="icono" data-toggle="tooltip" data-placement="bottom" title="Añadir usuario" id="buttonNuevoUsuario">
+                        <span class="glyphicon glyphicon-plus"/>
+                    </button>
+                </div>
+            </form>
         </td>
         <td>-</td>
     </tr>
