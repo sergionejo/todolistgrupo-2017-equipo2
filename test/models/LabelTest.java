@@ -22,15 +22,7 @@ import play.inject.Injector;
 import play.inject.guice.GuiceInjectorBuilder;
 import play.Environment;
 
-import models.Usuario;
-import models.Tarea;
-import models.UsuarioRepository;
-import models.JPAUsuarioRepository;
-import models.TareaRepository;
-import models.JPATareaRepository;
-import models.Label;
-import models.LabelRepository;
-import models.JPALabelRepository;
+import models.*;
 
 public class LabelTest {
    static Database db;
@@ -67,6 +59,25 @@ public class LabelTest {
       assertEquals("Label tech", label.getTitulo());
       assertEquals("Aqui se van a guardar las tareas de tech", label.getDescripcion());
       assertEquals("#60000",label.getColor());
+   }
+
+   @Test
+   public void testAsignarTablero() {
+  
+    
+    Label label = new Label("Label tech","Aqui se van a guardar las tareas de tech","#60000");
+
+      assertEquals("Label tech", label.getTitulo());
+      assertEquals("Aqui se van a guardar las tareas de tech", label.getDescripcion());
+      assertEquals("#60000",label.getColor());
+
+    Usuario usuario = new Usuario("juangutierrez", "juangutierrez@gmail.com");  
+    Tablero tablero = new Tablero(usuario,"TableroNuevo");
+
+    tablero.addLabel(label);
+    assertEquals(tablero.getLabels().iterator().next() ,label);
+
+
    }
 
 }

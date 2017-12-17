@@ -25,15 +25,18 @@ public class Tablero {
    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
    @JoinTable(name="Persona_Tablero")
    private Set<Usuario> participantes = new HashSet<Usuario>();
-   @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
-   @JoinTable(name="Labels_asignados")
-   private Set<Label> labels = new HashSet<Label>();
+   
+
+
+   @ManyToMany(mappedBy="TablerosConLabel", fetch=FetchType.EAGER)
+   private Set<Label> labelsAsignados = new HashSet<Label>();
 
    private String estado;
 
    @ManyToOne
    @JoinColumn(name="papeleraId")
    public Papelera papeleraTablero;
+
 
 
    // Un constructor vacío necesario para JPA
@@ -93,21 +96,7 @@ public class Tablero {
         return participantes.remove(usuario);
     }
 
-    public Set<Label> getLabels() {
-        return labels;
-     }
-  
-     public void setLabels(Set<Label> labels) {
-        this.labels = labels;
-     }
- 
-     public boolean addLabel(Label label){
-         return labels.add(label);
-     }
- 
-     public boolean removeLabel(Label label){
-         return labels.remove(label);
-     }
+
 
     /**
      * @return the estado
@@ -165,4 +154,30 @@ public class Tablero {
        }
        return true;
     }
+
+     
+    public Set<Label> getLabels() {
+        return labelsAsignados;
+    }
+
+    public void setLabels(Set<Label> labels) {
+        this.labelsAsignados = labels;
+    }
+
+    public Set<Label> getLabelsAsignados() {
+        return labelsAsignados;
+    }
+
+    public void setLabelsAsignados(Set<Label> labelsAsignados) {
+        this.labelsAsignados = labelsAsignados;
+    }
+ 
+    public boolean addLabel(Label label){
+        return labelsAsignados.add(label);
+    }
+
+    public boolean removeLabel(Label label){
+        return labelsAsignados.remove(label);
+    }
+
 }
