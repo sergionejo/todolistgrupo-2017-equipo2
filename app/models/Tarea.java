@@ -24,7 +24,12 @@ public class Tarea {
    @ManyToOne
    @JoinColumn(name="papeleraId")
    public Papelera papelera;
-
+   
+   @ManyToOne
+   @JoinColumn(name="tableroId")
+   public Tablero tableroContenedor;
+   
+   public Long tableroContenedorId;
    public Tarea() {}
 
    public Tarea(Usuario usuario, String titulo) {
@@ -67,6 +72,22 @@ public class Tarea {
       this.fCreacion=fechaConFormato;
 
       this.fLimite = fechaLimite;
+   }
+
+   public Tarea(Usuario usuario, String titulo, String descripcion, String fechaLimite, Tablero tableroContenedor) {
+      this.usuario = usuario;
+      this.titulo = titulo;
+      this.descripcion = descripcion;
+      this.estado = "iniciada";
+      this.fLimite = fechaLimite;
+
+      Date ahora = new Date();
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-hh.mm.ss");//ejeplo salida: 21-11-2017-03.44.18
+      String fechaConFormato = formatter.format(ahora);
+      this.fCreacion=fechaConFormato;
+
+      this.fLimite = fechaLimite;
+      this.tableroContenedor = tableroContenedor;
    }
 
    // Getters y setters necesarios para JPA
@@ -132,6 +153,18 @@ public class Tarea {
       return papelera;
    }
 
+   public void setTableroContenedor(Tablero tableroContenedor){
+     this.tableroContenedor = tableroContenedor;
+     this.tableroContenedorId = tableroContenedor.getId();
+   }
+
+   public Tablero getTableroContenedor(){
+      return tableroContenedor;
+   }
+
+   public Long getTableroContenedorId(){
+      return tableroContenedorId;
+   }
    public void setPapelera(Papelera papelera){
       this.papelera = papelera;
    }

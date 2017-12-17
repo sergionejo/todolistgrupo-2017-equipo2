@@ -152,9 +152,13 @@ CREATE TABLE `Tarea` (
   `titulo` varchar(255) DEFAULT NULL,
   `papeleraId` bigint(20) DEFAULT NULL,
   `usuarioId` bigint(20) DEFAULT NULL,
+  `tableroContenedorId` bigint(20) DEFAULT NULL,
+  `tableroId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK8i7qqi8fgjgbskvxiutfif3uu` (`papeleraId`),
   KEY `FKepne2t52y8dmn8l9da0dd7l51` (`usuarioId`),
+  KEY `FK2r7tsv4xu3bjvst83o8xuspud` (`tableroId`),
+  CONSTRAINT `FK2r7tsv4xu3bjvst83o8xuspud` FOREIGN KEY (`tableroId`) REFERENCES `Tablero` (`id`),
   CONSTRAINT `FK8i7qqi8fgjgbskvxiutfif3uu` FOREIGN KEY (`papeleraId`) REFERENCES `Papelera` (`id`),
   CONSTRAINT `FKepne2t52y8dmn8l9da0dd7l51` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -201,4 +205,4 @@ CREATE TABLE `hibernate_sequence` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-13  8:31:37
+-- Dump completed on 2017-12-17 12:14:01
