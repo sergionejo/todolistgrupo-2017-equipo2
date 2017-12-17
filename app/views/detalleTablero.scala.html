@@ -13,24 +13,54 @@
         }
     </script>
 }
+@views.html.navbar(administrador,false,true,false)
 @main("Detalle tablero", scripts) {
     <h2>Detalle del tablero: <b>@tablero.getNombre()</b></h2>
     <h3>Administrador: @administrador.getLogin() (@administrador.getEmail())</h3>
     <br>
-    <h4>Listado de participantes:</h4>
-    <table class="table table-striped">
-        <tr>
-            <th>Login</th>
-            <th>Email</th>
-        </tr>
-    @for(participante <- participantes) {
-        <tr>
-            <td width="50%">@participante.getLogin()</td>
-            <td>@participante.getEmail()</td>
-        </tr>
-      }
-    </table>
-
+    <div class="col-md-5">
+        <h4>Listado de participantes:</h4>
+        <table class="table table-striped">
+            <tr>
+                <th>Login</th>
+                <th>Email</th>
+            </tr>
+        @for(participante <- participantes) {
+            <tr>
+                <td width="50%">@participante.getLogin()</td>
+                <td>@participante.getEmail()</td>
+            </tr>
+        }
+        </table>
+    </div>
+    <div class="col-md-7">
+        <h4>Listado de tareas:</h4>
+        <table class="table table-striped">
+            <tr>
+                <th>Nombre</th>
+                <th>Fecha límite</th>
+                <th>Acciones</th>
+            </tr>
+        @for(tarea <- tablero.getTareas()) {
+            <tr>
+                <td width="40%">@tarea.getTitulo()</td>
+                <td width="40%">@tarea.getFLimite()</td>
+                <td>
+                    <a class="icono" href="@routes.GestionTareasController.formularioEditaTarea(tarea.getId())"
+                    data-toggle="tooltip" data-placement="top" title="Editar tarea">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a class="icono" href="@routes.GestionTareasController.ToPapelera(tarea.getId())">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    <a class="icono" href="@routes.GestionTareasController.cambiaTarea(tarea.getId())"
+                    data-toggle="tooltip" data-placement="top" title="Cerrar tarea">
+                        <span class="glyphicon glyphicon-unchecked"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+        </table>
+    </div>
     @if(mensaje != null) {
         <div class="alert alert-success">
             @mensaje

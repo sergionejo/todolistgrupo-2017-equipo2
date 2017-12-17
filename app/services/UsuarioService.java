@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import java.util.List;
+
 public class UsuarioService {
    UsuarioRepository repository;
 
@@ -65,5 +67,10 @@ public class UsuarioService {
         usuario = repository.update(usuario);
 
         return usuario;
+    }
+
+    public List<String> findAllNombre(String nombre){
+        List<String> usuarios = repository.findAllNombre(nombre);
+        return usuarios; 
     }
 }

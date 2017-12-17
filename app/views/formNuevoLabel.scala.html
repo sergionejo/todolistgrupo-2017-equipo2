@@ -1,4 +1,5 @@
 @(usuario: Usuario, labelForm: Form[Label], mensaje: String)
+@views.html.navbar(usuario,false,false,false)
 @main("Nuevo label") {
     @if(mensaje != "") {
         <div class="alert alert-danger">

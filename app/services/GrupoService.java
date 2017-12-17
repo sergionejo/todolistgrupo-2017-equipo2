@@ -12,15 +12,19 @@ import models.Usuario;
 import models.UsuarioRepository;
 import models.Grupo;
 import models.GrupoRepository;
+import models.MensajeRepository;
+import models.Mensaje;
 
 public class GrupoService {
     UsuarioRepository usuarioRepository;
     GrupoRepository grupoRepository;
+    MensajeRepository mensajeRepository;
 
     @Inject
-    public GrupoService(UsuarioRepository usuarioRepository, GrupoRepository grupoRepository) {
+    public GrupoService(UsuarioRepository usuarioRepository, GrupoRepository grupoRepository,MensajeRepository mensajeRepository) {
         this.usuarioRepository = usuarioRepository;
         this.grupoRepository = grupoRepository;
+        this.mensajeRepository = mensajeRepository;
     }
 
     public List<Grupo> allGrupos() {
@@ -63,6 +67,17 @@ public class GrupoService {
         return grupo;
     }
 
+    public void nuevoUsuario(Long idGrupo, Long idUsuario) {
+        Grupo grupo = grupoRepository.findById(idGrupo);
+        if (grupo == null)
+            throw new GrupoServiceException("No existe grupo");
+        Usuario usuario = usuarioRepository.findById(idUsuario);
+        if (usuario == null)
+            throw new UsuarioServiceException("No existe usuario");
+        grupo.addParticipante(usuario);
+        grupo = grupoRepository.update(grupo);
+    }
+
     public Grupo modificaGrupoParticipantes(Long idGrupo, Set<Usuario> participantes) {
         Grupo grupo = grupoRepository.findById(idGrupo);
         if (grupo == null)
@@ -81,6 +96,13 @@ public class GrupoService {
         Grupo grupo = grupoRepository.findById(idGrupo);
         if (grupo == null)
             throw new GrupoServiceException("No existe grupo");
+
+        //TODO hay que borrar los mensajes pertenecientes a este grupo
+
+        Set<Mensaje> listaMensajes = grupo.getMensajes();
+        for(Mensaje m : listaMensajes){
+            mensajeRepository.delete(m.getId());
+        }
         grupoRepository.delete(idGrupo);
     }
 

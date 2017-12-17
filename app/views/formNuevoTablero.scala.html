@@ -1,4 +1,5 @@
 @(usuario: Usuario, tableroForm: Form[Tablero], mensaje: String)
+@views.html.navbar(usuario,false,true,false)
 @main("Nuevo tablero") {
     @if(mensaje != "") {
         <div class="alert alert-danger">

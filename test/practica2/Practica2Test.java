@@ -30,6 +30,8 @@ import models.PapeleraRepository;
 import models.JPAPapeleraRepository;
 import models.TareaRepository;
 import models.JPATareaRepository;
+import models.TableroRepository;
+import models.JPATableroRepository;
 import services.UsuarioService;
 import services.UsuarioServiceException;
 import services.TareaService;
@@ -53,7 +55,8 @@ public class Practica2Test {
       UsuarioRepository usuarioRepository = new JPAUsuarioRepository(jpaApi);
       TareaRepository tareaRepository = new JPATareaRepository(jpaApi);
       PapeleraRepository papeleraRepository = new JPAPapeleraRepository(jpaApi);
-      return new TareaService(usuarioRepository, tareaRepository, papeleraRepository);
+      TableroRepository tableroRepository = new JPATableroRepository(jpaApi);
+      return new TareaService(usuarioRepository, tareaRepository, papeleraRepository,tableroRepository);
    }
    
    @Test
