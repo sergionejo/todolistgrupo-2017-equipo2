@@ -31,6 +31,9 @@ public class Tablero {
    @JoinColumn(name="papeleraId")
    public Papelera papeleraTablero;
 
+   @OneToMany(mappedBy="tableroContenedor", fetch=FetchType.EAGER)
+   public Set<Tarea> tareasContiene = new HashSet<Tarea>();
+
 
    // Un constructor vacío necesario para JPA
    public Tablero() {}
@@ -87,6 +90,14 @@ public class Tablero {
 
     public boolean removeParticipante(Usuario usuario){
         return participantes.remove(usuario);
+    }
+
+    public Set<Tarea> getTareas() {
+       return tareasContiene;
+    }
+ 
+    public void setTareas(Set<Tarea> tareasContiene) {
+       this.tareasContiene = tareasContiene;
     }
 
     /**

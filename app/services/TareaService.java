@@ -14,19 +14,24 @@ import models.PapeleraRepository;
 import models.Papelera;
 import models.Tarea;
 import models.TareaRepository;
+import models.Tablero;
+import models.TableroRepository;
 
 
 public class TareaService {
    UsuarioRepository usuarioRepository;
    TareaRepository tareaRepository;
    PapeleraRepository papeleraRepository;
+   TableroRepository tableroRepository;
 
    @Inject
-   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository, PapeleraRepository papeleraRepository) {
+   public TareaService(UsuarioRepository usuarioRepository, TareaRepository tareaRepository,
+   PapeleraRepository papeleraRepository, TableroRepository tableroRepository) {
       this.usuarioRepository = usuarioRepository;
       this.tareaRepository = tareaRepository;
       this.papeleraRepository = papeleraRepository;
-   }
+      this.tableroRepository = tableroRepository;
+    }
 
    // Devuelve la lista de tareas de un usuario, ordenadas por su id
    // (equivalente al orden de creación)
@@ -66,6 +71,19 @@ public class TareaService {
          throw new TareaServiceException("Usuario no existente");
       }
       Tarea tarea = new Tarea(usuario, titulo, descripcion, fechaLimite);
+      return tareaRepository.add(tarea);
+   }
+
+   public Tarea nuevaTarea(Long idUsuario, String titulo, String descripcion,String fechaLimite,Long idTablero) {
+      Usuario usuario = usuarioRepository.findById(idUsuario);
+      if (usuario == null) {
+         throw new TareaServiceException("Usuario no existente");
+      }
+      Tablero tablero = tableroRepository.findById(idTablero);
+      if (tablero == null) {
+         throw new TareaServiceException("Tablero no existente");
+      }
+      Tarea tarea = new Tarea(usuario, titulo, descripcion, fechaLimite, tablero);
       return tareaRepository.add(tarea);
    }
 
