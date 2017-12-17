@@ -170,4 +170,27 @@ public class GrupoController extends Controller {
         }
         return ok();
     }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result formularioGrupoBorraUsuario(Long idGrupo){
+        Grupo grupo = grupoService.findGrupoPorId(idGrupo);
+        if (grupo == null) {
+            return notFound("Grupo no encontrado");
+        } else {
+            String connectedUserStr = session("connected");
+            Long connectedUser = Long.valueOf(connectedUserStr);
+            if (!connectedUser.equals(grupo.getAdministrador().getId())) {
+                return unauthorized("Lo siento, no estás autorizado");
+            } else {
+                DynamicForm requestData = formFactory.form().bindFromRequest();
+                Long idUsuario = Long.valueOf(requestData.get("q"));
+                if (connectedUser.equals(idUsuario)) {
+                    return unauthorized("Lo siente, eres administrador de este grupo y no te puedes añadir como seguidor.");
+                }
+                grupoService.borraUsuario(idGrupo,idUsuario);
+            }
+        }
+        flash("aviso", "Usuario borrado correctamente.");
+        return redirect(controllers.routes.GrupoController.detalleGrupo(grupo.getId()));
+    }
 }
