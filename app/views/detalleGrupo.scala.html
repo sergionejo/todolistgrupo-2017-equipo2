@@ -24,7 +24,7 @@
             }
             var id_usuario = $("#containerSearchUser > p").attr("id_usuario");
             $.ajax({url:"@routes.GrupoController.formularioGrupoNuevoUsuario(grupo.getId())?q="+id_usuario})
-            .done(function(){swal('OK',"Añadido",'success')})
+            .done(function(){location.reload();})
             .fail(function(error){
                 swal('Oops...','Error intentando añadir el usuario.','error')
             })
