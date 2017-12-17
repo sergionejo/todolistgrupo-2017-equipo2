@@ -1,4 +1,4 @@
-@(tareas: List[Tarea], usuario: Usuario, mensaje: String)
+@(tareas: List[Tarea], tableros: List[Tablero], usuario: Usuario, mensaje: String)
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -24,6 +24,40 @@
                             swal(
                             'Ooopss...',
                             'Ha habido un error borrando la tarea.',
+                            'Error'
+                            )
+                        }
+                    });
+                }
+            })           
+        }
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip(); //data-toggle="tooltip" data-placement="top" title="Tooltip on top"
+        })
+
+        function delTab(urlBorrar) {
+            swal({
+                title: 'Cuidado',
+                text: 'Borrar este tablero será irrevertible',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, borrar.',
+                showLoaderOnConfirm: true,
+                allowOutsideClick: false
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: urlBorrar,
+                        type: 'DELETE',
+                        success: function(results) {
+                            location.reload();
+                        },
+                        error: function(){
+                            swal(
+                            'Ooopss...',
+                            'Ha habido un error borrando el tablero.',
                             'Error'
                             )
                         }
@@ -61,14 +95,37 @@
                             </tr>
                         }
                 </table>
+
+                <h3>Tableros en la papelera</h3>
+                <table class="table table-striped">
+                        <tr>
+                            <th>Tableros</th>
+                            <th>Acción</th>
+                        </tr>
+                        @for(tablero <- tableros) {
+                            <tr>
+                                <td>@tablero.getNombre()</td>
+                                <td>
+                                    <a href="@routes.TableroController.restaurar(tablero.getId())">
+                                    <span class="glyphicon glyphicon-eject"></span>&nbsp;
+                                    <a onmouseover="" style="cursor: pointer;"
+                                    onclick="delTab('@routes.TableroController.borraTablero(tablero.getId())')">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                        }
+                </table>
             </div>
+            
+            @if(mensaje != null) {
+            <div class="alert alert-success">
+                @mensaje
+            </div>
+            }
+
         </div>
     </div>
 
 
-  @if(mensaje != null) {
-      <div class="alert alert-success">
-          @mensaje
-      </div>
-  }
+  
 }

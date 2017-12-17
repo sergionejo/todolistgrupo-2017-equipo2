@@ -63,7 +63,7 @@
                     <th>Acción</th>
                 </tr>
             @for(tablero <- administrados) {
-                @if(tablero.getEstado() != "cerrado") {
+                @if(tablero.getEstado() != "cerrado" && tablero.getPapeleraTablero() == null) {
                     <tr>
                         <td width="50%">
                             <a class="icono" onmouseover=""
@@ -77,11 +77,8 @@
                             data-toggle="tooltip" data-placement="top" title="Editar tablero">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
-                            <a class="icono" onmouseover=""
-                            onclick="del('@routes.TableroController.borraTablero(tablero.getId())')"
-                            data-toggle="tooltip" data-placement="top" title="Eliminar tablero">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
+                            <a href="@routes.TableroController.ToPapelera(tablero.getId())">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             <a class="icono" href="@routes.TableroController.cerrarTablero(tablero.getId())"
                             data-toggle="tooltip" data-placement="right" title="Cerrar tablero">
                                 <span class="glyphicon glyphicon-remove"></span>
@@ -120,7 +117,7 @@
                         <th>Acción</th>
                     </tr>
                 @for(tablero <- participados) {
-                    @if(tablero.getEstado() != "cerrado") {
+                    @if(tablero.getEstado() != "cerrado" && tablero.getPapeleraTablero() == null) {
                         <tr>
                             <td width="50%">
                                 <a class="icono" onmouseover=""
@@ -154,7 +151,7 @@
                     <th>Acción</th>
                 </tr>
             @for(tablero <- resto) {
-                @if(tablero.getEstado() != "cerrado"){
+                @if(tablero.getEstado() != "cerrado" && tablero.getPapeleraTablero() == null){
                     <tr>
                         <td width="50%">
                             <a class="icono" onmouseover=""
@@ -186,7 +183,7 @@
                         <th>Tableros</th>
                     </tr>
                 @for(tablero <- tableros) {
-                    @if(tablero.getEstado() == "cerrado") {
+                    @if(tablero.getEstado() == "cerrado" && tablero.getPapeleraTablero() == null) {
                         <tr>
                             <td width="50%">
                                 <a class="icono" onmouseover=""
