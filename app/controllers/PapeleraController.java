@@ -16,6 +16,7 @@ import services.UsuarioService;
 import services.PapeleraService;
 import services.TareaService;
 import models.Usuario;
+import models.Tablero;
 import models.Tarea;
 import security.ActionAuthenticator;
 
@@ -35,7 +36,8 @@ public class PapeleraController extends Controller {
        String aviso = flash("aviso");
        Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
        List<Tarea> tareas = papeleraService.allTareasPapelera(idUsuario);
-       return ok(papelera.render(tareas, usuario, aviso));
+       List<Tablero> tableros = papeleraService.allTablerosPapelera(idUsuario);
+       return ok(papelera.render(tareas, tableros, usuario, aviso));
     }
    }
 }

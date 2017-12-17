@@ -49,6 +49,10 @@ POST    /tablero/:id/editar             controllers.TableroController.grabaTable
 DELETE  /tablero/:id                    controllers.TableroController.borraTablero(id: Long)
 POST     /tablero/:id/cerrar            controllers.TableroController.cerrarTablero(id: Long)
 GET    /tablero/:id/cerrar              controllers.TableroController.cerradoTablero(id: Long)
+GET     /tablero/:id/ToPapelera         controllers.TableroController.ToPapelera(id: Long)
+POST    /tablero/:id/ToPapelera         controllers.TableroController.papelera(id: Long)
+GET     /tablero/:id/restaurar          controllers.TableroController.restaurar(id: Long)
+POST    /tablero/:id/restaurar          controllers.TableroController.restaurado(id: Long)
 
 GET     /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.seguirTablero(idu: Long,idt: Long)
 DELETE  /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.noSeguirTablero(idu: Long,idt: Long)

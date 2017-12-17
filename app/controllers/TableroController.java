@@ -165,4 +165,28 @@ public class TableroController extends Controller {
     public Result cerrarTablero(Long idTablero) {
         return ok();
     }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result papelera(Long idTablero) {
+         return ok();
+    }
+ 
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result ToPapelera(Long idTablero) {
+         Tablero tablero = tableroService.ToPapelera(idTablero);
+         flash("aviso", "Tablero movido a la papelera");
+         return redirect(controllers.routes.TableroController.listaTableros(tablero.getAdministrador().getId()));
+     }
+ 
+     @Security.Authenticated(ActionAuthenticator.class)
+     public Result restaurado(Long idTablero) {
+          return ok();
+     }
+ 
+     @Security.Authenticated(ActionAuthenticator.class)
+     public Result restaurar(Long idTablero) {
+         Tablero tablero = tableroService.restaurarTablero(idTablero);
+         flash("aviso", "Tablero restaurado de la papelera");
+         return redirect(controllers.routes.TableroController.listaTableros(tablero.getAdministrador().getId()));
+     }
 }

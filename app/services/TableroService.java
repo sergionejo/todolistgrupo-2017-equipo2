@@ -10,17 +10,21 @@ import java.util.HashSet;
 
 import models.Usuario;
 import models.UsuarioRepository;
+import models.Papelera;
+import models.PapeleraRepository;
 import models.Tablero;
 import models.TableroRepository;
 
 public class TableroService {
     UsuarioRepository usuarioRepository;
     TableroRepository tableroRepository;
+    PapeleraRepository papeleraRepository;
 
     @Inject
-    public TableroService(UsuarioRepository usuarioRepository, TableroRepository tableroRepository) {
+    public TableroService(UsuarioRepository usuarioRepository, TableroRepository tableroRepository, PapeleraRepository papeleraRepository) {
         this.usuarioRepository = usuarioRepository;
         this.tableroRepository = tableroRepository;
+        this.papeleraRepository = papeleraRepository;
     }
 
     public List<Tablero> allTableros() {
@@ -128,4 +132,20 @@ public class TableroService {
         tablero.setEstado("cerrado");
         return tableroRepository.update(tablero);
     }
+
+    public Tablero ToPapelera(Long idTablero){
+        Tablero tablero = tableroRepository.findById(idTablero);
+        Usuario usuario = tablero.getAdministrador();
+        Papelera papelera = papeleraRepository.findById(usuario.getPapelera());
+        tablero.setPapeleraTablero(papelera);
+
+        return tableroRepository.update(tablero);
+   }
+
+   public Tablero restaurarTablero(Long idTablero){
+        Tablero tablero = tableroRepository.findById(idTablero);
+        tablero.setPapeleraTablero(null);
+
+        return tableroRepository.update(tablero);
+   }
 }
