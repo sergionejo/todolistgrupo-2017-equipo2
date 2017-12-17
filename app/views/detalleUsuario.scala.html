@@ -19,4 +19,17 @@
 		<a href="@routes.UsuarioController.formularioEditarUsuario(usuario.getId())" class="btn btn-info">Actualizar Perfil</a>
 		<a href="@routes.UsuarioController.logout()" class="btn btn-info">Salir</a>
 	</div>
+	<h4 style="margin-top:60px;">Grupos a los que perteneces:</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Nombre</th>
+            <th>Administrador</th>
+        </tr>
+		@for(grupo <- usuario.getGruposParticipa()){
+			<tr>
+				<td>@grupo.getNombre()</td>
+				<td>@grupo.getAdministrador().getLogin()</td>
+			</tr>
+		}
+	</table>
 }

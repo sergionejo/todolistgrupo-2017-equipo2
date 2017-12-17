@@ -71,7 +71,9 @@
         <tr>
             <td width="50%">@participante.getLogin()</td>
             <td>@participante.getEmail()</td>
-            <td>Icono de eliminar</td>
+            <td><a class="icono" 
+                onclick="del('@routes.GrupoController.formularioGrupoBorraUsuario(grupo.getId())?q=@participante.getId()')">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
         </tr>
       }
       <tr>

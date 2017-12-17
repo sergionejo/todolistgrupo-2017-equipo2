@@ -78,6 +78,17 @@ public class GrupoService {
         grupo = grupoRepository.update(grupo);
     }
 
+    public void borraUsuario(Long idGrupo, Long idUsuario) {
+        Grupo grupo = grupoRepository.findById(idGrupo);
+        if (grupo == null)
+            throw new GrupoServiceException("No existe grupo");
+        Usuario usuario = usuarioRepository.findById(idUsuario);
+        if (usuario == null)
+            throw new UsuarioServiceException("No existe usuario");
+        grupo.removeParticipante(usuario);
+        grupo = grupoRepository.update(grupo);
+    }
+
     public Grupo modificaGrupoParticipantes(Long idGrupo, Set<Usuario> participantes) {
         Grupo grupo = grupoRepository.findById(idGrupo);
         if (grupo == null)

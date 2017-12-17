@@ -70,6 +70,7 @@ GET     /grupos/:id/editar              controllers.GrupoController.formularioEd
 POST    /grupos/:id/editar              controllers.GrupoController.grabaGrupoModificado(id: Long)
 DELETE  /grupos/:id                     controllers.GrupoController.borraGrupo(id: Long)
 GET     /grupos/:id/usuarios/nuevo      controllers.GrupoController.formularioGrupoNuevoUsuario(id: Long)
+DELETE  /grupos/:id/usuarios/nuevo      controllers.GrupoController.formularioGrupoBorraUsuario(id: Long)
 
 GET     /usuarios/:id/grupos/:idG/mensajes  controllers.MensajeController.listaMensajes(id: Long, idG: Long)
 POST    /usuarios/:id/grupos/:idG/mensajes  controllers.MensajeController.creaNuevoMensaje(id: Long, idG: Long)

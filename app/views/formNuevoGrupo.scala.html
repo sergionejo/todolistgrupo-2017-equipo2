@@ -1,4 +1,5 @@
 @(usuario: Usuario, grupoForm: Form[Grupo], mensaje: String)
+@views.html.navbar(usuario,false,false,true)
 @main("Nuevo grupo") {
     @if(mensaje != "") {
         <div class="alert alert-danger">
