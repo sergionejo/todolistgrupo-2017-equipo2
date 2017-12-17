@@ -150,12 +150,24 @@ public class GrupoController extends Controller {
     }
 
     @Security.Authenticated(ActionAuthenticator.class)
-    public Result formularioGrupoNuevoUsuario(Long idUsuario){
-        //Usar como referencia la función formularioEditaGrupo
-        //Comprobar que el grupo existe
-        //Comprobar que el usuario actual es el administrador del grupo
-        //Añadir el usuario por parámetro de la función a la lista de participantes
-        //Actualizar grupo con la función modificaGrupoParticipantes del GrupoService
+    public Result formularioGrupoNuevoUsuario(Long idGrupo){
+        Grupo grupo = grupoService.findGrupoPorId(idGrupo);
+        if (grupo == null) {
+            return notFound("Grupo no encontrado");
+        } else {
+            String connectedUserStr = session("connected");
+            Long connectedUser = Long.valueOf(connectedUserStr);
+            if (!connectedUser.equals(grupo.getAdministrador().getId())) {
+                return unauthorized("Lo siento, no estás autorizado");
+            } else {
+                DynamicForm requestData = formFactory.form().bindFromRequest();
+                Long idUsuario = Long.valueOf(requestData.get("q"));
+                if (connectedUser.equals(idUsuario)) {
+                    return unauthorized("Lo siente, eres administrador de este grupo y no te puedes añadir como seguidor.");
+                }
+                grupoService.nuevoUsuario(idGrupo,idUsuario);
+            }
+        }
         return ok();
     }
 }

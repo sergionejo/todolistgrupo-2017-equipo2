@@ -1,5 +1,5 @@
 package models;
-
+import java.util.List;
 import com.google.inject.ImplementedBy;
 
 // Interfaz que define los métodos del UsuarioRepository
@@ -12,4 +12,5 @@ public interface UsuarioRepository {
    Usuario findById(Long id);
    Usuario findByLogin(String login);
    Usuario update(Usuario usuario);
+   List<String> findAllNombre(String nombre);
 }

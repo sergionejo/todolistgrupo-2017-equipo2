@@ -6,6 +6,8 @@ import play.db.jpa.JPAApi;
 import javax.persistence.TypedQuery;
 import javax.persistence.NoResultException;
 
+import java.util.List;
+
 public class JPAUsuarioRepository implements UsuarioRepository {
    // Objeto definido por Play para acceder al API de JPA
    // https://www.playframework.com/documentation/2.5.x/JavaJPA#Using-play.db.jpa.JPAApi
@@ -69,6 +71,19 @@ public class JPAUsuarioRepository implements UsuarioRepository {
         }
 
         return usuarioBD;
+      });
+    }
+    public List<String> findAllNombre(String nombre) {
+      return jpaApi.withTransaction(entityManager -> {
+         TypedQuery<String> query = entityManager.createQuery(
+                   "select concat(t.id,concat(':',t.login)) from Usuario t where login like :nombreabuscar ", String.class);
+         query.setParameter("nombreabuscar","%"+nombre+"%");
+         try {
+             List<String> listUsuarios = query.getResultList();
+             return listUsuarios;
+         } catch (NoResultException ex) {
+             return null;
+         }
       });
     }
 }
