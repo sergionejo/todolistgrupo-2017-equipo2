@@ -73,13 +73,13 @@ public class JPAUsuarioRepository implements UsuarioRepository {
         return usuarioBD;
       });
     }
-    public List<Usuario> findAllNombre(String nombre) {
+    public List<String> findAllNombre(String nombre) {
       return jpaApi.withTransaction(entityManager -> {
-         TypedQuery<Usuario> query = entityManager.createQuery(
-                   "select t from Usuario t where login like :nombreabuscar ", Usuario.class);
+         TypedQuery<String> query = entityManager.createQuery(
+                   "select concat(t.id,concat(':',t.login)) from Usuario t where login like :nombreabuscar ", String.class);
          query.setParameter("nombreabuscar","%"+nombre+"%");
          try {
-             List<Usuario> listUsuarios = query.getResultList();
+             List<String> listUsuarios = query.getResultList();
              return listUsuarios;
          } catch (NoResultException ex) {
              return null;

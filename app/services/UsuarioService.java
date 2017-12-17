@@ -69,8 +69,8 @@ public class UsuarioService {
         return usuario;
     }
 
-    public List<Usuario> findAllNombre(String nombre){
-        List<Usuario> usuarios = repository.findAllNombre(nombre);
+    public List<String> findAllNombre(String nombre){
+        List<String> usuarios = repository.findAllNombre(nombre);
         return usuarios; 
     }
 }

@@ -67,6 +67,17 @@ public class GrupoService {
         return grupo;
     }
 
+    public void nuevoUsuario(Long idGrupo, Long idUsuario) {
+        Grupo grupo = grupoRepository.findById(idGrupo);
+        if (grupo == null)
+            throw new GrupoServiceException("No existe grupo");
+        Usuario usuario = usuarioRepository.findById(idUsuario);
+        if (usuario == null)
+            throw new UsuarioServiceException("No existe usuario");
+        grupo.addParticipante(usuario);
+        grupo = grupoRepository.update(grupo);
+    }
+
     public Grupo modificaGrupoParticipantes(Long idGrupo, Set<Usuario> participantes) {
         Grupo grupo = grupoRepository.findById(idGrupo);
         if (grupo == null)

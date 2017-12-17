@@ -17,19 +17,40 @@
         });
 
         $("#buttonNuevoUsuario").click(function(){
+            var nombres = $("#containerSearchUser > p")
+            if(nombres.length != 1){
+                swal('Oops...','Necesitas un nombre en la lista, como máximo y como mínimo.','error')
+                return false;
+            }
+            var id_usuario = $("#containerSearchUser > p").attr("id_usuario");
+            $.ajax({url:"@routes.GrupoController.formularioGrupoNuevoUsuario(grupo.getId())?q="+id_usuario})
+            .done(function(){swal('OK',"Añadido",'success')})
+            .fail(function(error){
+                swal('Oops...','Error intentando añadir el usuario.','error')
+            })
+        });
+
+        $("#nombreUsuario").on("input",function(){
             var nombre = $("#nombreUsuario").val();
+            if(nombre.length<1){
+                $("#containerSearchUser").html("<p><small><i>Busca usuarios...</i></small></p>");
+                return false;
+            }
+            $("#containerSearchUser").html("");
             $.ajax({url:"@routes.UsuarioController.findAllNombre()?q="+nombre})
             .done(function(data){
-                $.ajax({url:"@routes.GrupoController.formularioGrupoNuevoUsuario(grupo.getId())"})
-                .done(function(){swal('OK',data,'success')})
-                .fail(function(){
-                    swal('Oops...','Something went wrong!2','error')
+                data = data.replace(/&quot;/g,'"')
+                console.log(data)
+                var obj = JSON.parse(data)
+                $.each(obj,function(){
+                    console.log($(this))
+                    $("#containerSearchUser").append("<p id_usuario='"+$(this)[0].id+"'>"+$(this)[0].login+"</p>")
                 })
             })
             .fail(function(){
-                swal('Oops...','Something went wrong!1','error')
+                swal('Oops...','Error buscando usuarios.','error')
             });
-        });
+        })
 
     </script>
 }
@@ -66,7 +87,11 @@
                 </div>
             </form>
         </td>
-        <td>-</td>
+        <td>
+            <div id="containerSearchUser">
+                <p><small><i>Busca usuarios...</i></small></p>
+            </div>
+        </td>
     </tr>
     </table>
 

@@ -169,8 +169,15 @@ public class UsuarioController extends Controller {
         Form<GetFindUsuarioNombre> form = formFactory.form(GetFindUsuarioNombre.class).bindFromRequest();
         GetFindUsuarioNombre datos = form.get();
         String nombre = datos.q;
-        List<Usuario> lista = usuarioService.findAllNombre(nombre);
-        String json = Json.stringify(Json.toJson(lista));
-        return ok(jsonAllUsuariosNombre.render(json));
+        List<String> lista = usuarioService.findAllNombre(nombre);
+        //String json = Json.stringify(Json.toJson(lista));
+        int contador = 0;
+        for(String l : lista){
+            String[] split = l.split(":",2);
+            l = "{\"id\":\""+split[0]+"\",\"login\":\""+split[1]+"\"}";
+            lista.set(contador,l);
+            contador++;
+        }
+        return ok(jsonAllUsuariosNombre.render(lista));
     }
 }

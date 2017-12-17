@@ -12,5 +12,5 @@ public interface UsuarioRepository {
    Usuario findById(Long id);
    Usuario findByLogin(String login);
    Usuario update(Usuario usuario);
-   List<Usuario> findAllNombre(String nombre);
+   List<String> findAllNombre(String nombre);
 }
