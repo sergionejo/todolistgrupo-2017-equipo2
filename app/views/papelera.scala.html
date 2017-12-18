@@ -86,9 +86,9 @@
                             <tr>
                                 <td>@tarea.getTitulo()</td>
                                 <td>
-                                    <a href="@routes.GestionTareasController.restaurar(tarea.getId())">
+                                    <a class="icono" href="@routes.GestionTareasController.restaurar(tarea.getId())">
                                     <span class="glyphicon glyphicon-eject"></span>&nbsp;
-                                    <a onmouseover="" style="cursor: pointer;"
+                                    <a class="icono" onmouseover="" style="cursor: pointer;"
                                     onclick="del('@routes.GestionTareasController.borraTarea(tarea.getId())')">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
@@ -106,9 +106,9 @@
                             <tr>
                                 <td>@tablero.getNombre()</td>
                                 <td>
-                                    <a href="@routes.TableroController.restaurar(tablero.getId())">
+                                    <a class="icono" href="@routes.TableroController.restaurar(tablero.getId())">
                                     <span class="glyphicon glyphicon-eject"></span>&nbsp;
-                                    <a onmouseover="" style="cursor: pointer;"
+                                    <a class="icono" onmouseover="" style="cursor: pointer;"
                                     onclick="delTab('@routes.TableroController.borraTablero(tablero.getId())')">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
