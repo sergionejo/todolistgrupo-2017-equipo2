@@ -7,5 +7,6 @@ public interface LabelRepository {
    Label add(Label label);
    Label update(Label label);
    void delete(Long idLabel);
+   List<Label> findAll();
    Label findById(Long idLabel);
 }

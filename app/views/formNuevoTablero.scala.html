@@ -1,4 +1,5 @@
-@(usuario: Usuario, tableroForm: Form[Tablero], mensaje: String)
+
+@(usuario: Usuario, tableroForm: Form[Tablero], mensaje: String,labels: List[Label])
 @main("Nuevo tablero") {
     @if(mensaje != "") {
         <div class="alert alert-danger">
@@ -15,20 +16,21 @@
         </div>
         
         <div class="form-group">
-                
             <legend>Labels</legend>
-            <ul class="list-inline">
-                <p>Labels asignados</p>
-                <li><span class="label label-primary">Label nuevo</span></li>               
-            </ul> 
-            
                 
-            <select name="label">  
-                <p>Añadir nuevo label </p>              
-                <option value="volvo">Label 1</option>
-                <option value="saab">Label 2</option>
+            <select name="label" class="selectpickerr" >  
+                <p>Añadir nuevo label </p> 
+                @for(label <- labels) {
+                    <option value="volvo">@label.getTitulo()</option>
+                    <option value="volvo">@label.getId()</option>
+
+                }             
             </select>
 
+            @helper.inputText(tableroForm("nombres"), '_label -> "Label", 'size -> 70 ,'class-> "form-control")
+            
+
+              
             <input type="submit" class="btn btn-primary" value="Añadir">
                 
         </div>
@@ -38,4 +40,5 @@
             </p>
         
     }
+   
 }

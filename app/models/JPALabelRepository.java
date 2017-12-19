@@ -6,6 +6,8 @@ import play.db.jpa.JPAApi;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.NoResultException;
 
 public class JPALabelRepository implements LabelRepository {
    JPAApi jpaApi;
@@ -47,4 +49,18 @@ public class JPALabelRepository implements LabelRepository {
          return entityManager.find(Label.class, idLabel);
       });
    }
+
+   public List<Label> findAll(){
+       return jpaApi.withTransaction(entityManager -> {
+              TypedQuery<Label> query = entityManager.createQuery(
+                        "select l from Label l ", Label.class);
+              try {
+                  List<Label> listLabel = query.getResultList();
+                  return listLabel;
+              } catch (NoResultException ex) {
+                  return null;
+              }
+           });    
+   }
+
 }

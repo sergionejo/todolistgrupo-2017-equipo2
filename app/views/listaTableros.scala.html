@@ -1,4 +1,4 @@
-@(tableros:List[Tablero], administrados: List[Tablero], participados: List[Tablero], resto: List[Tablero], usuario: Usuario, mensaje: String)
+@(tableros:List[Tablero], administrados: List[Tablero], participados: List[Tablero], resto: List[Tablero], usuario: Usuario, mensaje: String,labels: List[Label])
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -86,6 +86,10 @@
                             data-toggle="tooltip" data-placement="right" title="Cerrar tablero">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
+                        </td>
+
+                        <td>
+                            @tablero.getLabelsAsignados().size()
                         </td>
                     </tr>
                 }
@@ -202,8 +206,11 @@
             </div>
     </div>
 </div> 
-<div class="labels col-md-4">
+<div class="labels col-md-4 "style="text-align: center;">
     <h2>Labels</h2>
     <a class="crear-label" href="@routes.LabelController.formularioNuevoLabel(usuario.getId())">Crear nuevo label</a>
+            @for(label <- labels) {
+                <h4 style="padding:3px;"><span class="label label-default " style="background-color: @label.getColor()">@label.getTitulo() </span></h4>
+            }    
 </div>
 }

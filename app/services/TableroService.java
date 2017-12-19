@@ -8,10 +8,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.HashSet;
 
-import models.Usuario;
-import models.UsuarioRepository;
-import models.Tablero;
-import models.TableroRepository;
+import models.*;
 
 public class TableroService {
     UsuarioRepository usuarioRepository;
@@ -65,12 +62,17 @@ public class TableroService {
         return tableros;
     }
 
-    public Tablero nuevoTablero(Long idUsuario, String nombre) {
+    public Tablero nuevoTablero(Long idUsuario, String nombre,Set<Label> labels) {
         Usuario administrador = usuarioRepository.findById(idUsuario);
         if (administrador == null) {
             throw new TableroServiceException("Usuario no existente");
         }
-        Tablero tablero = new Tablero(administrador, nombre);
+        Tablero tablero = new Tablero(administrador, nombre,labels.iterator().next());
+        System.out.println("me han por referencia estos labels");
+        System.out.println(labels.size());
+        tablero.setLabelsAsignados(labels);
+        System.out.println("lo he asignado y tengo:");
+        System.out.println(tablero.getLabels().size());
         return tableroRepository.add(tablero);
     }
 

@@ -37,4 +37,14 @@ public class LabelService {
     Label label = new Label(titulo,descripcion,color );
     return labelRepository.add(label);
  }
+
+    public List<Label> allLabels() {
+        List<Label> labelList = labelRepository.findAll();
+        return labelList;
+    }
+
+    public Label obtenerLabel(Long idLabel){
+        return labelRepository.findById(idLabel);
+    }
+   
 }

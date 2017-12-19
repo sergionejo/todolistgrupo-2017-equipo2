@@ -10,9 +10,12 @@ import play.data.DynamicForm;
 import play.Logger;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import services.UsuarioService;
 import services.TableroService;
+import services.LabelService;
 import models.Usuario;
 import models.Tablero;
 import models.Label;
@@ -26,6 +29,8 @@ public class TableroController extends Controller {
     UsuarioService usuarioService;
     @Inject
     TableroService tableroService;
+    @Inject
+    LabelService labelService;
 
     // Comprobamos si hay alguien logeado con @Security.Authenticated(ActionAuthenticator.class)
     // https://alexgaribay.com/2014/06/15/authentication-in-play-framework-using-java/
@@ -37,7 +42,8 @@ public class TableroController extends Controller {
             return unauthorized("Lo siento, no estás autorizado");
         } else {
             Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
-            return ok(formNuevoTablero.render(usuario, formFactory.form(Tablero.class), ""));
+            List<Label> labels = labelService.allLabels();
+            return ok(formNuevoTablero.render(usuario, formFactory.form(Tablero.class), "",labels));
         }
     }
 
@@ -51,11 +57,30 @@ public class TableroController extends Controller {
             Form<Tablero> tableroForm = formFactory.form(Tablero.class).bindFromRequest();
             if (tableroForm.hasErrors()) {
                 Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
+                List<Label> labels = labelService.allLabels();
                 return badRequest(formNuevoTablero.render(usuario, formFactory.form(Tablero.class),
-                        "Hay errores en el formulario"));
+                        "Hay errores en el formulario",labels));
             }
+            System.out.println("estoy cogiendo:");
             Tablero tablero = tableroForm.get();
-            tableroService.nuevoTablero(idUsuario, tablero.getNombre());
+
+            System.out.println(tablero.getNombreslabel());
+            System.out.println(tablero.getNombre());
+
+            Label label = labelService.obtenerLabel(Long.valueOf(tablero.getNombreslabel()));
+
+            System.out.println("he recuperado el label:");
+            System.out.println(label.getTitulo());
+
+            tablero.addLabel(label);
+
+            Set<Label> setLabels = new HashSet<Label>();
+            setLabels.add(label);
+            System.out.println(setLabels.size());
+            tablero.setLabels(setLabels);
+            
+
+            tableroService.nuevoTablero(idUsuario, tablero.getNombre(),setLabels);
             flash("aviso", "El tablero se ha grabado correctamente");
             return redirect(controllers.routes.TableroController.listaTableros(idUsuario));
         }
@@ -74,9 +99,11 @@ public class TableroController extends Controller {
             List<Tablero> tablerosParticipados = tableroService.allTablerosUsuarioParticipados(idUsuario);
             List<Tablero> tablerosResto = tableroService.allTablerosNoUsuario(idUsuario);
             List<Tablero> tableros = tableroService.allTableros();
+            List<Label> labels = labelService.allLabels();
+
 
             return ok(listaTableros.render(tableros, tablerosAdministrados, tablerosParticipados, tablerosResto,
-                    usuario, aviso));
+                    usuario, aviso,labels));
         }
     }
 
@@ -131,11 +158,13 @@ public class TableroController extends Controller {
         } else {
             String connectedUserStr = session("connected");
             Long connectedUser = Long.valueOf(connectedUserStr);
+            List<Label> labels = labelService.allLabels();
+
             if (!connectedUser.equals(tablero.getAdministrador().getId())) {
                 return unauthorized("Lo siento, no estás autorizado");
             } else {
                 return ok(formModificacionTablero.render(tablero.getAdministrador().getId(), tablero.getId(),
-                        tablero.getNombre(), ""));
+                        tablero.getNombre(), "",labels));
             }
         }
     }

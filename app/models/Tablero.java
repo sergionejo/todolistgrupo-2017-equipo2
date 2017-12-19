@@ -30,6 +30,7 @@ public class Tablero {
 
    @ManyToMany(mappedBy="TablerosConLabel", fetch=FetchType.EAGER)
    private Set<Label> labelsAsignados = new HashSet<Label>();
+   private String nombreslabel;
 
    private String estado;
 
@@ -43,10 +44,11 @@ public class Tablero {
    public Tablero() {}
 
    // El constructor principal con los campos obligatorios
-   public Tablero(Usuario administrador, String nombre) {
+   public Tablero(Usuario administrador, String nombre,Label label) {
       this.administrador = administrador;
       this.nombre = nombre;
       this.estado = "abierto";
+      labelsAsignados.add(label);
    }
 
    // Getters y setters necesarios para JPA
@@ -62,6 +64,11 @@ public class Tablero {
    public String getNombre() {
       return nombre;
    }
+
+   public Set<Label> getLabelsAsignados() {
+    return labelsAsignados;
+}
+
 
    public void setNombre(String nombre) {
       this.nombre = nombre;
@@ -164,20 +171,33 @@ public class Tablero {
         this.labelsAsignados = labels;
     }
 
-    public Set<Label> getLabelsAsignados() {
-        return labelsAsignados;
-    }
 
     public void setLabelsAsignados(Set<Label> labelsAsignados) {
+        
+        System.out.println("finalmente me paso: "+labelsAsignados.size());
         this.labelsAsignados = labelsAsignados;
+        
+        System.out.println("y tengo"+this.labelsAsignados.size()+getLabelsAsignados().iterator().next().getTitulo());
+
     }
  
     public boolean addLabel(Label label){
-        return labelsAsignados.add(label);
+        labelsAsignados.add(label);
+        System.out.println("acabo de meter"+label.getTitulo()+labelsAsignados.size());
+        return true;
     }
 
     public boolean removeLabel(Label label){
         return labelsAsignados.remove(label);
+    }
+
+
+   public String getNombreslabel(){
+       return nombreslabel;
+    }
+
+   public void setNombres(String nombreslabel){
+       this.nombreslabel=nombreslabel;
     }
 
 }

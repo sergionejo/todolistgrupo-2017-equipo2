@@ -1,4 +1,4 @@
-@(idUsuario: Long, idTablero: Long, nombre: String, mensaje: String)
+@(idUsuario: Long, idTablero: Long, nombre: String, mensaje: String,labels: List[Label])
 @main("Modificar Tablero") {
    @if(mensaje != "") {
       <div class="alert alert-danger">
@@ -26,8 +26,9 @@
             
         <select name="label">  
             <p>Añadir nuevo label </p>              
-            <option value="volvo">Label 1</option>
-            <option value="saab">Label 2</option>
+            @for(label <- labels) {
+                <option value="volvo">@label.getTitulo()</option>
+            }     
         </select>
 
         <input type="submit" class="btn btn-primary" value="Añadir">
