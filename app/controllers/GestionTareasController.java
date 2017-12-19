@@ -13,8 +13,10 @@ import java.util.List;
 
 import services.UsuarioService;
 import services.TareaService;
+import services.TableroService;
 import models.Usuario;
 import models.Tarea;
+import models.Papelera;
 import security.ActionAuthenticator;
 
 public class GestionTareasController extends Controller {
@@ -22,6 +24,7 @@ public class GestionTareasController extends Controller {
    @Inject FormFactory formFactory;
    @Inject UsuarioService usuarioService;
    @Inject TareaService tareaService;
+   @Inject TableroService tableroService;
 
    // Comprobamos si hay alguien logeado con @Security.Authenticated(ActionAuthenticator.class)
    // https://alexgaribay.com/2014/06/15/authentication-in-play-framework-using-java/
@@ -45,12 +48,12 @@ public class GestionTareasController extends Controller {
          return unauthorized("Lo siento, no estás autorizado");
       } else {
          Form<Tarea> tareaForm = formFactory.form(Tarea.class).bindFromRequest();
+         Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
          if (tareaForm.hasErrors()) {
-            Usuario usuario = usuarioService.findUsuarioPorId(idUsuario);
             return badRequest(formNuevaTarea.render(usuario, formFactory.form(Tarea.class),"", "Hay errores en el formulario"));
          }
          Tarea tarea = tareaForm.get();
-         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(),tarea.getDescripcion(),tarea.getFLimite());
+         tareaService.nuevaTarea(idUsuario, tarea.getTitulo(),tarea.getDescripcion(),tarea.getFLimite(),tarea.getTableroContenedorId());
          flash("aviso", "La tarea se ha grabado correctamente");
          return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
       }
@@ -120,4 +123,28 @@ public class GestionTareasController extends Controller {
         flash("aviso", "Cambiado estado correctamente");
         return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
    }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result papelera(Long idTarea) {
+        return ok();
+   }
+
+   @Security.Authenticated(ActionAuthenticator.class)
+   public Result ToPapelera(Long idTarea) {
+        Tarea tarea = tareaService.ToPapelera(idTarea);
+        flash("aviso", "Tarea movida a la papelera");
+        return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
+    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result restaurado(Long idTarea) {
+         return ok();
+    }
+
+    @Security.Authenticated(ActionAuthenticator.class)
+    public Result restaurar(Long idTarea) {
+        Tarea tarea = tareaService.restaurarTarea(idTarea);
+        flash("aviso", "Tarea restaurada de la papelera");
+        return redirect(controllers.routes.GestionTareasController.listaTareas(tarea.getUsuario().getId()));
+    }
 }

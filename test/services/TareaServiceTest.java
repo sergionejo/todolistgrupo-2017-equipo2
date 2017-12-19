@@ -178,4 +178,22 @@ public class TareaServiceTest {
       assertEquals("12/12/2012", tarea.getFLimite());
     }
 
+    @Test 
+    public void testToPapelera(){
+        TareaService tareaService = newTareaService();
+
+        Tarea tarea = tareaService.ToPapelera(1000L);
+
+        assertEquals((Long) 1000L, (Long) tarea.getPapelera().getId());
+    }
+
+    @Test 
+    public void testRestaurarPapelera(){
+        TareaService tareaService = newTareaService();
+
+        Tarea tarea = tareaService.restaurarTarea(1000L);
+
+        assertNull(tarea.getPapelera());
+    }
+
 }

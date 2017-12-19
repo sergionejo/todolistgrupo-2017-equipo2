@@ -1,0 +1,28 @@
+@(usuario: Usuario, labelForm: Form[Label], mensaje: String)
+@views.html.navbar(usuario,false,false,false)
+@main("Nuevo label") {
+    @if(mensaje != "") {
+        <div class="alert alert-danger">
+            @mensaje
+        </div>
+    }
+    <h1>Nuevo label para @usuario.getLogin()</h1>
+    @helper.form(action = routes.LabelController.creaNuevoLabel(usuario.getId())) {
+        <div class="form-group">
+        <fieldset>
+            <legend>Nueva label</legend>
+            @helper.inputText(labelForm("titulo"), '_label -> "Titulo", 'size -> 70 ,'class-> "form-control")
+        </fieldset>
+        <fieldset>
+            @helper.inputText(labelForm("color"), '_label -> "Color", 'size -> 30 ,'class-> "form-control")
+          </fieldset>
+        <fieldset>
+            @helper.textarea(labelForm("descripcion"), '_label -> "Descripcion", 'rows -> 5, 'class-> "form-control")
+        </fieldset>
+
+        </div>
+        <p>
+           <input type="submit" class="btn btn-primary" value="Guardar">
+        </p>
+    }
+}

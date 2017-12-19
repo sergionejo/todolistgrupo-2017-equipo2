@@ -25,6 +25,14 @@ public class Tablero {
    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
    @JoinTable(name="Persona_Tablero")
    private Set<Usuario> participantes = new HashSet<Usuario>();
+   private String estado;
+
+   @ManyToOne
+   @JoinColumn(name="papeleraId")
+   public Papelera papeleraTablero;
+
+   @OneToMany(mappedBy="tableroContenedor", fetch=FetchType.EAGER)
+   public Set<Tarea> tareasContiene = new HashSet<Tarea>();
 
 
    // Un constructor vacío necesario para JPA
@@ -34,6 +42,7 @@ public class Tablero {
    public Tablero(Usuario administrador, String nombre) {
       this.administrador = administrador;
       this.nombre = nombre;
+      this.estado = "abierto";
    }
 
    // Getters y setters necesarios para JPA
@@ -81,6 +90,42 @@ public class Tablero {
 
     public boolean removeParticipante(Usuario usuario){
         return participantes.remove(usuario);
+    }
+
+    public Set<Tarea> getTareas() {
+       return tareasContiene;
+    }
+ 
+    public void setTareas(Set<Tarea> tareasContiene) {
+       this.tareasContiene = tareasContiene;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    /**
+     * @return the papeleraTablero
+     */
+    public Papelera getPapeleraTablero() {
+        return papeleraTablero;
+    }
+
+    /**
+     * @param papeleraTablero the papeleraTablero to set
+     */
+    public void setPapeleraTablero(Papelera papeleraTablero) {
+        this.papeleraTablero = papeleraTablero;
     }
  
     @Override

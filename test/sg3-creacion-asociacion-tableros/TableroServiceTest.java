@@ -72,4 +72,22 @@ public class TableroServiceTest {
       tableroService.borraTablero(idTablero);
       assertNull(tableroService.obtenerTablero(idTablero));
    }
+
+   @Test 
+   public void testToPapelera(){
+       TableroService tableroService = newTableroService();
+
+       Tablero tablero = tableroService.ToPapelera(1000L);
+
+       assertEquals((Long) 1000L, (Long) tablero.getPapeleraTablero().getId());
+   }
+
+   @Test 
+   public void testRestaurarPapelera(){
+       TableroService tableroService = newTableroService();
+
+       Tablero tablero = tableroService.restaurarTablero(1000L);
+
+       assertNull(tablero.getPapeleraTablero());
+   }
 }

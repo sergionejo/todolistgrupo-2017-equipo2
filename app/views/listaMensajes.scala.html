@@ -1,0 +1,32 @@
+@(mensajes: List[Mensaje], usuario: Usuario, grupo: Grupo, mensaje: String, mensajeForm: Form[Mensaje])
+@views.html.navbar(usuario,false,false,true)
+@main("Mensajes del grupo") {
+    <div class="container col-md-8">
+        <h2>Mensajes del grupo @grupo.getNombre()</h2>
+        <div style="background-color: #f8f3f3;border-radius: 20px;margin-bottom: 2em;height: 65%; overflow-y: scroll;">
+            @for(mensaje <- mensajes) {
+                @if(mensaje.getUsuario().getId() == usuario.getId()){
+                    <div style="background-color: #00FF7F;width:45%;margin-left: 55%;padding: 5px 10px;border-radius: 20px;">
+                        <h4>Tú<h3>
+                        <h5>@mensaje.getMensaje()</h4>
+                    </div>
+                } else {
+                    <div style="background-color: #6fa0e9;width:40%;padding: 5px 10px;border-radius: 20px;">
+                        <h4>@mensaje.getUsuario().getLogin()<h3>
+                        <h5>@mensaje.getMensaje()</h4>
+                    </div>
+                }
+            }
+        </div>
+
+        @helper.form(action = routes.MensajeController.creaNuevoMensaje(usuario.getId(), grupo.getId())) {
+            <div class="form-group">
+                <fieldset>
+                    @helper.inputText(mensajeForm("Mensaje"), 'size -> 40 ,'class-> "form-control")
+                </fieldset>
+
+                <input type="submit" class="btn btn-primary" value="Enviar">
+            </div>
+        }
+    </div>
+}

@@ -16,9 +16,11 @@ import play.inject.guice.GuiceInjectorBuilder;
 import play.Environment;
 
 import play.db.jpa.JPAApi;
-
+import models.Papelera;
 import models.Usuario;
 import models.UsuarioRepository;
+
+import models.Papelera;
 
 import services.UsuarioService;
 import services.UsuarioServiceException;
@@ -57,7 +59,7 @@ public class UsuarioServiceTest {
    @Test
    public void crearNuevoUsuarioCorrectoTest(){
       UsuarioService usuarioService = newUsuarioService();
-      Usuario usuario = usuarioService.creaUsuario("luciaruiz", "lucia.ruiz@gmail.com", "123456");
+      Usuario usuario = usuarioService.creaUsuario("luciaruiz", "lucia.ruiz@gmail.com", "123456", new Papelera());
       assertNotNull(usuario.getId());
       assertEquals("luciaruiz", usuario.getLogin());
       assertEquals("lucia.ruiz@gmail.com", usuario.getEmail());
@@ -69,7 +71,7 @@ public class UsuarioServiceTest {
    public void crearNuevoUsuarioLoginRepetidoLanzaExcepcion(){
       UsuarioService usuarioService = newUsuarioService();
       // En la BD de prueba usuarios_dataset se ha cargado el usuario juangutierrez
-      Usuario usuario = usuarioService.creaUsuario("juangutierrez", "juan.gutierrez@gmail.com", "123456");
+      Usuario usuario = usuarioService.creaUsuario("juangutierrez", "juan.gutierrez@gmail.com", "123456", new Papelera());
    }
 
    //Test 7: findUsuarioPorLogin

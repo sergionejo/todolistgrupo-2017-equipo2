@@ -14,6 +14,7 @@ import play.db.Databases;
 import java.sql.*;
 
 import models.Usuario;
+import models.Papelera;
 import models.Tablero;
 import models.TableroRepository;
 import models.UsuarioRepository;

@@ -1,0 +1,106 @@
+@(grupo: Grupo, administrador: Usuario, participantes: List[Usuario], mensaje: String)
+@scripts = {
+    <script type="text/javascript">
+        function del(urlBorrar) {
+            $.ajax({
+                url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            $("#formNuevoUsuario").submit(function(e){e.preventDefault();})
+            $("#nombreUsuario").val("");
+        });
+
+        $("#buttonNuevoUsuario").click(function(){
+            var nombres = $("#containerSearchUser > p")
+            if(nombres.length != 1){
+                swal('Oops...','Necesitas un nombre en la lista, como máximo y como mínimo.','error')
+                return false;
+            }
+            var id_usuario = $("#containerSearchUser > p").attr("id_usuario");
+            $.ajax({url:"@routes.GrupoController.formularioGrupoNuevoUsuario(grupo.getId())?q="+id_usuario})
+            .done(function(){location.reload();})
+            .fail(function(error){
+                swal('Oops...','Error intentando añadir el usuario.','error')
+            })
+        });
+
+        $("#nombreUsuario").on("input",function(){
+            var nombre = $("#nombreUsuario").val();
+            if(nombre.length<1){
+                $("#containerSearchUser").html("<p><small><i>Busca usuarios...</i></small></p>");
+                return false;
+            }
+            $("#containerSearchUser").html("");
+            $.ajax({url:"@routes.UsuarioController.findAllNombre()?q="+nombre})
+            .done(function(data){
+                data = data.replace(/&quot;/g,'"')
+                console.log(data)
+                var obj = JSON.parse(data)
+                $.each(obj,function(){
+                    console.log($(this))
+                    $("#containerSearchUser").append("<p id_usuario='"+$(this)[0].id+"'>"+$(this)[0].login+"</p>")
+                })
+            })
+            .fail(function(){
+                swal('Oops...','Error buscando usuarios.','error')
+            });
+        })
+
+    </script>
+}
+@views.html.navbar(administrador,false,false,true)
+@main("Detalle grupo", scripts) {
+    <h2>Detalle del grupo: <b>@grupo.getNombre()</b></h2>
+    <h3>Administrador: @administrador.getLogin() (@administrador.getEmail())</h3>
+    <br>
+    <h4>Listado de participantes:</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+    @for(participante <- participantes) {
+        <tr>
+            <td width="50%">@participante.getLogin()</td>
+            <td>@participante.getEmail()</td>
+            <td><a class="icono" 
+                onclick="del('@routes.GrupoController.formularioGrupoBorraUsuario(grupo.getId())?q=@participante.getId()')">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+        </tr>
+      }
+      <tr>
+        <td>
+            <form class="form-inline" id="formNuevoUsuario">
+                <div class="form-group">
+                    <label for="nombreUsuario">Nuevo usuario</label>
+                    <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Login de usuario">
+                </div>
+                <div class="form-group">
+                    <button class="icono" data-toggle="tooltip" data-placement="bottom" title="Añadir usuario" id="buttonNuevoUsuario">
+                        <span class="glyphicon glyphicon-plus"/>
+                    </button>
+                </div>
+            </form>
+        </td>
+        <td>
+            <div id="containerSearchUser">
+                <p><small><i>Busca usuarios...</i></small></p>
+            </div>
+        </td>
+    </tr>
+    </table>
+
+    @if(mensaje != null) {
+        <div class="alert alert-success">
+            @mensaje
+        </div>
+    }
+}

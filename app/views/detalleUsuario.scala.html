@@ -1,5 +1,5 @@
 @(usuario: Usuario)
-@views.html.navbar(usuario,false,false)
+@views.html.navbar(usuario,false,false,false)
 @main("Detalle usuario"){
 	<h1>Detalle de @usuario.getLogin()</h1>
 	<ul>
@@ -13,9 +13,29 @@
 			}</li>
 	</ul>
 	<div class="container">
+		<a href="@routes.GrupoController.listaGrupos(usuario.getId())" class="btn btn-info">Ver grupos</a>
 		<a href="@routes.GestionTareasController.listaTareas(usuario.getId())" class="btn btn-info">Ver tareas</a>
 		<a href="@routes.TableroController.listaTableros(usuario.getId())" class="btn btn-info">Ver tableros</a>
 		<a href="@routes.UsuarioController.formularioEditarUsuario(usuario.getId())" class="btn btn-info">Actualizar Perfil</a>
 		<a href="@routes.UsuarioController.logout()" class="btn btn-info">Salir</a>
 	</div>
+	<h4 style="margin-top:60px;">Grupos a los que perteneces:</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Nombre</th>
+            <th>Administrador</th>
+        </tr>
+		@for(grupo <- usuario.getGruposParticipa()){
+			<tr>
+				<td>@grupo.getNombre()</td>
+				<td>@grupo.getAdministrador().getLogin()</td>
+				<td>
+					<a class="icono" href="@routes.MensajeController.listaMensajes(usuario.getId(), grupo.getId())"
+					data-toggle="tooltip" data-placement="top" title="Ver Mensajes">
+						<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+					</a>
+				</td>
+			</tr>
+		}
+	</table>
 }

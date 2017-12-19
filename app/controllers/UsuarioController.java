@@ -12,9 +12,13 @@ import play.Logger;
 import java.util.List;
 import java.util.ArrayList;
 
+import services.PapeleraService;
 import services.UsuarioService;
+import models.Papelera;
 import models.Usuario;
 import security.ActionAuthenticator;
+
+import play.libs.Json;
 
 public class UsuarioController extends Controller {
 
@@ -23,6 +27,7 @@ public class UsuarioController extends Controller {
    // Play injecta un usuarioService junto con todas las dependencias necesarias:
    // UsuarioRepository y JPAApi
    @Inject UsuarioService usuarioService;
+   @Inject PapeleraService papeleraService;
 
    public Result saludo(String mensaje) {
       return ok(saludo.render("El mensaje que he recibido es: " + mensaje));
@@ -46,7 +51,8 @@ public class UsuarioController extends Controller {
       if (!datosRegistro.password.equals(datosRegistro.confirmacion)) {
          return badRequest(formRegistro.render(form, "No coinciden la contraseña y la confirmación"));
       }
-      Usuario usuario = usuarioService.creaUsuario(datosRegistro.login, datosRegistro.email, datosRegistro.password);
+      Papelera papelera = papeleraService.nuevaPapelera();
+      Usuario usuario = usuarioService.creaUsuario(datosRegistro.login, datosRegistro.email, datosRegistro.password, papelera);
       return redirect(controllers.routes.UsuarioController.formularioLogin());
    }
 
@@ -157,5 +163,21 @@ public class UsuarioController extends Controller {
        Editar datos = form.get();
        Usuario usuario = usuarioService.modificarUsuario(idUsuario, datos.pass, datos.nombre, datos.apellidos, datos.fecha);
        return redirect(controllers.routes.GestionTareasController.listaTareas(idUsuario));
+    }
+
+    public Result findAllNombre(){
+        Form<GetFindUsuarioNombre> form = formFactory.form(GetFindUsuarioNombre.class).bindFromRequest();
+        GetFindUsuarioNombre datos = form.get();
+        String nombre = datos.q;
+        List<String> lista = usuarioService.findAllNombre(nombre);
+        //String json = Json.stringify(Json.toJson(lista));
+        int contador = 0;
+        for(String l : lista){
+            String[] split = l.split(":",2);
+            l = "{\"id\":\""+split[0]+"\",\"login\":\""+split[1]+"\"}";
+            lista.set(contador,l);
+            contador++;
+        }
+        return ok(jsonAllUsuariosNombre.render(lista));
     }
 }

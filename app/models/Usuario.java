@@ -26,6 +26,14 @@ public class Usuario {
    private Set<Tablero> administrados = new HashSet<Tablero>();
    @ManyToMany(mappedBy="participantes", fetch=FetchType.EAGER)
    private Set<Tablero> tableros = new HashSet<Tablero>();
+   @OneToMany(mappedBy="admingrupo", fetch=FetchType.EAGER)
+   private Set<Grupo> grupos = new HashSet<Grupo>();
+   @ManyToMany(mappedBy="participagrupo", fetch=FetchType.EAGER)
+   private Set<Grupo> participantesgrupo = new HashSet<Grupo>();
+   @OneToMany(mappedBy="autor", fetch=FetchType.EAGER)
+   public Set<Mensaje> mensajesusuario = new HashSet<Mensaje>();
+
+   private Long papelera;
 
    // Un constructor vacío necesario para JPA
    public Usuario() {}
@@ -110,6 +118,22 @@ public class Usuario {
       this.tableros = tableros;
    }
 
+   public Set<Grupo> getGrupos() {
+      return grupos;
+   }
+
+   public void setGrupos(Set<Grupo> grupos) {
+      this.grupos = grupos;
+   }
+
+   public Set<Grupo> getGruposParticipa() {
+      return participantesgrupo;
+   }
+
+   public void setGruposParticipa(Set<Grupo> participantesgrupo) {
+      this.participantesgrupo = participantesgrupo;
+   }
+
    public String toString() {
       String fechaStr = null;
       if (fechaNacimiento != null) {
@@ -125,6 +149,28 @@ public class Usuario {
    }
    public void setTareas(Set<Tarea> tareas){
       this.tareas = tareas;
+   }
+
+   public Long getPapelera(){
+     return papelera;
+   }
+
+   public void setPapelera(Long papelera) {
+     this.papelera = papelera;
+   }
+
+   /**
+    * @return the mensajes
+    */
+   public Set<Mensaje> getMensajes() {
+     return mensajesusuario;
+   }
+
+   /**
+    * @param mensajes the mensajes to set
+    */
+   public void setMensajes(Set<Mensaje> mensajes) {
+     this.mensajesusuario = mensajes;
    }
 
    @Override

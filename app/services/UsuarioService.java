@@ -2,12 +2,15 @@ package services;
 
 import javax.inject.*;
 
+import models.Papelera;
 import models.Usuario;
 import models.UsuarioRepository;
 
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+
+import java.util.List;
 
 public class UsuarioService {
    UsuarioRepository repository;
@@ -19,12 +22,13 @@ public class UsuarioService {
       this.repository = repository;
    }
 
-   public Usuario creaUsuario(String login, String email, String password) {
+   public Usuario creaUsuario(String login, String email, String password, Papelera papelera) {
       if(repository.findByLogin(login) != null){
       	throw new UsuarioServiceException("Login ya existente");
       }
       Usuario usuario = new Usuario(login, email);
       usuario.setPassword(password);
+      usuario.setPapelera(papelera.getId());
       return repository.add(usuario);
    }
 
@@ -63,5 +67,10 @@ public class UsuarioService {
         usuario = repository.update(usuario);
 
         return usuario;
+    }
+
+    public List<String> findAllNombre(String nombre){
+        List<String> usuarios = repository.findAllNombre(nombre);
+        return usuarios; 
     }
 }

@@ -24,6 +24,8 @@ GET     /aboutus                controllers.UsuarioController.aboutUs()
 GET     /usuarios/:id           controllers.UsuarioController.detalleUsuario(id: Long)
 GET     /usuarios/:id/editar    controllers.UsuarioController.formularioEditarUsuario(id: Long)
 POST    /usuarios/:id/editar    controllers.UsuarioController.actualizarUsuario(id: Long)
+GET     /usuariosbyname        controllers.UsuarioController.findAllNombre()
+
 
 GET     /usuarios/:id/tareas/nueva  controllers.GestionTareasController.formularioNuevaTarea(id: Long)
 POST    /usuarios/:id/tareas/nueva  controllers.GestionTareasController.creaNuevaTarea(id: Long)
@@ -31,8 +33,12 @@ GET     /usuarios/:id/tareas        controllers.GestionTareasController.listaTar
 GET     /tareas/:id/editar          controllers.GestionTareasController.formularioEditaTarea(id: Long)
 POST    /tareas/:id/editar          controllers.GestionTareasController.grabaTareaModificada(id: Long)
 DELETE  /tareas/:id                 controllers.GestionTareasController.borraTarea(id: Long)
-POST    /tablero/:id/terminarTarea  controllers.GestionTareasController.cambiaTarea(id: Long)
-GET     /tablero/:id/terminarTarea  controllers.GestionTareasController.cambioEstado(id: Long)
+POST    /tareas/:id/terminarTarea   controllers.GestionTareasController.cambiaTarea(id: Long)
+GET     /tareas/:id/terminarTarea   controllers.GestionTareasController.cambioEstado(id: Long)
+GET     /tareas/:id/ToPapelera      controllers.GestionTareasController.ToPapelera(id: Long)
+POST    /tareas/:id/ToPapelera      controllers.GestionTareasController.papelera(id: Long)
+GET     /tareas/:id/restaurar       controllers.GestionTareasController.restaurar(id: Long)
+POST    /tareas/:id/restaurar       controllers.GestionTareasController.restaurado(id: Long)
 
 GET     /usuarios/:id/tableros/nuevo    controllers.TableroController.formularioNuevoTablero(id: Long)
 POST    /usuarios/:id/tableros/nuevo    controllers.TableroController.creaNuevoTablero(id: Long)
@@ -41,9 +47,33 @@ GET     /tablero/:id/                   controllers.TableroController.detalleTab
 GET     /tablero/:id/editar             controllers.TableroController.formularioEditaTablero(id: Long)
 POST    /tablero/:id/editar             controllers.TableroController.grabaTableroModificado(id: Long)
 DELETE  /tablero/:id                    controllers.TableroController.borraTablero(id: Long)
+POST     /tablero/:id/cerrar            controllers.TableroController.cerrarTablero(id: Long)
+GET    /tablero/:id/cerrar              controllers.TableroController.cerradoTablero(id: Long)
+GET     /tablero/:id/ToPapelera         controllers.TableroController.ToPapelera(id: Long)
+POST    /tablero/:id/ToPapelera         controllers.TableroController.papelera(id: Long)
+GET     /tablero/:id/restaurar          controllers.TableroController.restaurar(id: Long)
+POST    /tablero/:id/restaurar          controllers.TableroController.restaurado(id: Long)
 
 GET     /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.seguirTablero(idu: Long,idt: Long)
 DELETE  /usuarios/:idu/tableros/seguir/:idt    controllers.TableroController.noSeguirTablero(idu: Long,idt: Long)
+
+GET     /usuarios/:id/papelera          controllers.PapeleraController.listaPapelera(id: Long)
+
+GET     /usuarios/:id/labels/nuevo      controllers.LabelController.formularioNuevoLabel(id: Long)
+POST     /usuarios/:id/labels/nuevo     controllers.LabelController.creaNuevoLabel(id: Long)
+
+GET     /usuarios/:id/grupos/nuevo      controllers.GrupoController.formularioNuevoGrupo(id: Long)
+POST    /usuarios/:id/grupos/nuevo      controllers.GrupoController.creaNuevoGrupo(id: Long)
+GET     /usuarios/:id/grupos            controllers.GrupoController.listaGrupos(id: Long)
+GET     /grupos/:id/                    controllers.GrupoController.detalleGrupo(id: Long)
+GET     /grupos/:id/editar              controllers.GrupoController.formularioEditaGrupo(id: Long)
+POST    /grupos/:id/editar              controllers.GrupoController.grabaGrupoModificado(id: Long)
+DELETE  /grupos/:id                     controllers.GrupoController.borraGrupo(id: Long)
+GET     /grupos/:id/usuarios/nuevo      controllers.GrupoController.formularioGrupoNuevoUsuario(id: Long)
+DELETE  /grupos/:id/usuarios/nuevo      controllers.GrupoController.formularioGrupoBorraUsuario(id: Long)
+
+GET     /usuarios/:id/grupos/:idG/mensajes  controllers.MensajeController.listaMensajes(id: Long, idG: Long)
+POST    /usuarios/:id/grupos/:idG/mensajes  controllers.MensajeController.creaNuevoMensaje(id: Long, idG: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
