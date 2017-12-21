@@ -80,7 +80,7 @@
   - Para cerrar un tablero simplemente el administrador de este tendrá que clickar en el botón que aparecerá en el listado de tableros, en la fila del que se desee cerrar.
 
 - Enviar mensajes a grupo (M)
-  - AAAAA
+  - Añadida entidad mensaje con relacion entre Usuario y Mensaje 1-N y entre Grupo y Mensaje 1-N de manera que dentro de un grupo pueda existir una conversacion clickando en el icono del email, de forma que exista una comunicacion que permita conversar antes de tomar decisiones o incluso para organizar los tableros y las tareas.
 
 - Papelera de Tableros (S)
   - Ampliación de la tarea de Papelera de Tareas de forma que además de poder tener en ésta las tareas tambien pueda contener tableros, para lo cual se añade una relacion 1-N entre Papelera y Tablero y permita el borrado en dos fases como se ha explicado en la funcionalidad de Papelera de Tareas.
