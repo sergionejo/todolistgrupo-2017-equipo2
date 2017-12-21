@@ -64,13 +64,13 @@
 ## **Funcionalidades implementadas**
 
 - Tableros contienen tareas (M)
-  - //TODO
+  - Relacionamos las tareas con los tableros, ahora las tareas están obligadas a decir a qué tablero pertenecen cuando se crean desde la parte visual. Esta relación era esencial para darle sentido a la aplicación, sobretodo cuando teníamos pensado crear grupos.
 
 - Crear grupos (M)
-  - //TODO
+  - Añadimos la entidad Grupo a la aplicación, con la capacidad de agrupar usuarios de forma muy simple, permitiendo así en un futuro la posibilidad de invitar a usuarios a trabajar en un tablero directamente desde grupos, en lugar de añadirlos uno a uno.
 
 - Confirmación borrar tarea (S)
-  - //TODO
+  - Cambiamos la forma en la que se hacen los delete de tareas y tableros, en lugar de hacer un redirect y render, nos centramos en que por ajax devuelva el ok o no, para permitir al usuario un aviso y la confirmación consiguiente a haber eliminado definitivamente un tablero o una tarea.
 
 - Papelera de tareas (M)
   - Creación de la entidad papelera, relacionada 1-1 con Usuario y 1-N con Tarea de manera que se pueda ver en la barra de navegacion un enlace a la papelera y también las tareas sean borradas en dos fases (primero a la papelera y luego borrado definitivo) de manera que se puedan enmendar errores y desde la papelera se pueda devolver la tarea a su estado anterior o bien eliminarla definitivamente.
